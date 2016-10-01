@@ -1,0 +1,9 @@
+.row div{
+        height: 250px;
+    background: #4cae4c;
+
+}
+
+.col-md-4 {
+    border: 5px;
+}
