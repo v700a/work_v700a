@@ -10,7 +10,7 @@
     <?php
     echo 'Задано масив:';
     echo '<br><br>';
-    $massyv = array('green'=>'зелениый', 'red'=>'красный','blue'=>'голубой');
+    $massyv = array('green'=>'зелений', 'red'=>'червоний','blue'=>'блакитний');
     echo '<pre>';
     print_r($massyv);
     echo '</pre>';

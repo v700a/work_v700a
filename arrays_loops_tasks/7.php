@@ -19,7 +19,7 @@
     echo '<br><br>';
     foreach ($massyv as $key => $element) :
 
-        if ($element > 3) :
+        if ($element > 3 && $element < 10) :
             echo "<br>{$element}";
         endif;
 
