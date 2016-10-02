@@ -18,8 +18,9 @@
     <br><br>
     <input type="submit" value="Відправити методом - GET">
     <br><br>
+</form>
 
-    <?php
+<?php
     if ($_GET !== null) {
         echo 'Значення змінної $_GET :';
         echo '<br>';
@@ -27,9 +28,9 @@
         print_r($_GET);
         echo '</pre>';
     }
-    ?>
+?>
 
-</form><form action="dev_8.php" method="post">
+<form action="dev_8.php" method="post">
     Ваше ім'я:<br>
     <input type="text" name="name" placeholder="Введіть ім'я">
     <br><br>
@@ -41,8 +42,9 @@
     <br><br>
     <input type="submit" value="Відправити методом - POST">
     <br><br>
+</form>
 
-    <?php
+<?php
     if ($_POST !== null) {
         echo 'Значення змінної $_POST :';
         echo '<br>';
@@ -50,8 +52,6 @@
         print_r($_POST);
         echo '</pre>';
     }
-    ?>
-</form>
-
+?>
 </body>
 </html>
