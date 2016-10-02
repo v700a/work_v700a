@@ -8,7 +8,7 @@
 
 <form action="dev_8.php" method="get">
     Ваше ім'я:<br>
-    <input type="text" name="name" placeholder="Введіть ім'я">
+    <input type="text" name="name" placeholder="Введіть ім'я" autofocus>
     <br><br>
     Ваш Email:<br>
     <input type="email" name="email" placeholder="Введіть ваш Email">
