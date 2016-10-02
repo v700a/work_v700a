@@ -6,12 +6,10 @@
 </head>
 <body>
 <b>
-
 <?php
 echo '<br>';
-$age = 50;
-echo 'Мені ',$age, ' років';
-
+    $age = 50;
+    echo 'Мені ',$age, ' років';
 ?>
 </b>
 </body>

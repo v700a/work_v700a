@@ -21,7 +21,7 @@
     </form>
     <br><br>
 
-    <?php
+<?php
     if ($_POST == null) {
         $_POST = 0;
     }
@@ -52,8 +52,7 @@
         else {
             echo "Результат {$diya} = {$rezultat}";
         }
-
-    ?>
+?>
 </b>
 </body>
 </html>

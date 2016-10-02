@@ -6,17 +6,14 @@
 </head>
 <body>
 <b>
-
-
 <?php
-echo '<br>';
-$age = 50;
-echo 'Змінна $age = ';
-echo($age);
-echo '<br><br>';
-echo 'Тип змінної - ';
-var_dump($age);
-
+    echo '<br>';
+    $age = 50;
+    echo 'Змінна $age = ';
+    echo($age);
+    echo '<br><br>';
+    echo 'Тип змінної - ';
+    var_dump($age);
 ?>
 </b>
 </body>

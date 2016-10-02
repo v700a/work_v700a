@@ -5,7 +5,6 @@
     <title>Завдання 9 - 12</title>
 </head>
 <body>
-
 <b>
     <br><br>
     <form action="9_12.php" method="POST">
@@ -14,26 +13,25 @@
         <input type="text"   name="day"  placeholder="Номер дня тижня" autofocus>
     </form>
     <br><br>
-    <?php
 
+<?php
 // Перевірка $_POST на NULL для уникнення появи повідомлення - "Notice: Undefined index:"
     if ($_POST == null) {
         $_POST = 0;
     }
-
    $day = $_POST ['day'];
 
-switch ($day) {
-    case 1: echo "Понеділок - робочий день"; break;
-    case 2: echo "Вівторок - робочий день"; break;
-    case 3: echo "Середа - робочий день"; break;
-    case 4: echo "Четвер - робочий день"; break;
-    case 5: echo "П'ятниця - робочий день"; break;
-    case 6: echo "Субота - вихідний день"; break;
-    case 7: echo "Неділя - вихідний день"; break;
-    default: echo "Такого дня не існує!...";
-}
-    ?>
+    switch ($day) {
+        case 1: echo "Понеділок - робочий день"; break;
+        case 2: echo "Вівторок - робочий день"; break;
+        case 3: echo "Середа - робочий день"; break;
+        case 4: echo "Четвер - робочий день"; break;
+        case 5: echo "П'ятниця - робочий день"; break;
+        case 6: echo "Субота - вихідний день"; break;
+        case 7: echo "Неділя - вихідний день"; break;
+        default: echo "Такого дня не існує!...";
+    }
+?>
 </b>
 </body>
 </html>

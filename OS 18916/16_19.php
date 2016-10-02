@@ -19,14 +19,12 @@
     </form>
     <br><br>
 
-    <?php
-
+<?php
     if ($_POST == null) {
         $_POST = 0;
     }
     $a = $_POST ['chyslo_a'];
     $b = $_POST ['chyslo_b'];
-
     if ($a !== null && $b !== null) {
         $b = (int)$b;
         echo "Тип даних числа a - "; var_dump($a);
@@ -37,7 +35,6 @@
         echo "<br><br>";
         echo "Значення числа b = {$b}";
         echo "<br><br>";
-
         if ($a < $b) {
             echo "Максимальне з двох чисел число b = {$b}";
         }
@@ -55,8 +52,7 @@
             echo "Елементи a i b не еквівалентні";
         }
     }
-
-    ?>
+?>
 </b>
 </body>
 </html>

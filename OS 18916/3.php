@@ -6,13 +6,10 @@
 </head>
 <body>
 <b>
-
-
 <?php
-$name = 'Віктор';
-echo '<br>';
-echo 'Моє ім\'я ',$name;
-
+    $name = 'Віктор';
+    echo '<br>';
+    echo 'Моє ім\'я ',$name;
 ?>
 </b>
 </body>

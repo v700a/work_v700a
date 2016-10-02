@@ -6,16 +6,14 @@
 </head>
 <body>
 <b>
-
 <?php
-echo '<br>';
-$name = 'Віктор';
-echo 'Змінна $name = ';
-echo($name);
-echo '<br><br>';
-echo 'Тип змінної - ';
-var_dump($name);
-
+    echo '<br>';
+    $name = 'Віктор';
+    echo 'Змінна $name = ';
+    echo($name);
+    echo '<br><br>';
+    echo 'Тип змінної - ';
+    var_dump($name);
 ?>
 </b>
 </body>
