@@ -6,30 +6,20 @@
 </head>
 <body>
 <b>
-    <br><br>
     <form action="20_26.php" method="POST">
 
-        <br><br>
-
-        <br><br>
+        <br>
         <input type="text"   name="chyslo_a" placeholder="Введіть число a" autofocus>
-        <br><br>
-
-
 
     </form>
     <br><br>
 
     <?php
 
-    // Перевірка $_POST на NULL для уникнення появи повідомлення - "Notice: Undefined index:"
     if ($_POST == null) {
         $_POST = 0;
     }
-
     $a = $_POST ['chyslo_a'];
-
-    //var_dump($a, $b);
 
     if ($a !== null) {
         $a= (int)$a;
@@ -47,7 +37,6 @@
 
         }
     }
-    echo "<br><br>";
     echo "<br><br>";
     print 'Текст на екран можна виводити за допомогою функції "print"';
     echo "<br><br>";

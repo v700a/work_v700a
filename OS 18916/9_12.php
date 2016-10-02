@@ -21,10 +21,7 @@
         $_POST = 0;
     }
 
-//    var_dump($_POST);
    $day = $_POST ['day'];
-
-//var_dump($day);
 
 switch ($day) {
     case 1: echo "Понеділок - робочий день"; break;
@@ -36,9 +33,6 @@ switch ($day) {
     case 7: echo "Неділя - вихідний день"; break;
     default: echo "Такого дня не існує!...";
 }
-
-
-    echo '<br><br>';
     ?>
 </b>
 </body>

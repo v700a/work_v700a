@@ -24,23 +24,25 @@
 
 <?php
 
-// Перевірка $_POST на NULL для уникнення появи повідомлення - "Notice: Undefined index:"
 if ($_POST == null) {
     $_POST = 0;
 }
 
 $vidstan = $_POST ['vidstan'];
 $chas = $_POST ['chas'];
+$shvydkist_km_god = 0;
+$shvydkist_m_hv = 0;
 
-//echo $vidstan, $chas;
-
+if ($chas !== null) :
 if ($chas == 0) {
-    $shvydkist = 0;
+    echo 'Якщо час руху рівний нулю, то ніхто нікуди не їхав... напевно.';
+    echo '<br><br>';
 }
 else {
     $shvydkist_km_god = round(($vidstan / $chas),2);
     $shvydkist_m_hv = round((($vidstan*1000) / ($chas*60)),2);
 }
+endif;
 
 echo "Відстань - {$vidstan}<br><br>";
 echo "Час - {$chas}<br><br>";

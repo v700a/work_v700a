@@ -24,8 +24,6 @@ if ($_POST == null) {
 }
 
 $age = $_POST ['age'];
-//var_dump(isset($_GET['age']));
-//var_dump($age);
 
 if ($age < 0) {
     echo 'Ваш вік - ( ',$age, ') років. Ще цікавенніше значення!';

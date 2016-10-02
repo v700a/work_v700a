@@ -10,7 +10,6 @@
     <form action="15.php" method="POST">
         Калькулятор
         <br><br>
-
         <br><br>
         <input type="number"   name="chyslo_a" placeholder="Введіть 1-ше число" autofocus>
         <br><br>
@@ -19,28 +18,18 @@
         <input type="number"   name="chyslo_b" placeholder="Введіть 2-ге число">
         <br><br>
         <input type="submit" value="Виконати">
-
-
-
     </form>
     <br><br>
 
     <?php
-
-    // Перевірка $_POST на NULL для уникнення появи повідомлення - "Notice: Undefined index:"
     if ($_POST == null) {
         $_POST = 0;
     }
-
-//    echo $_POST ['znak'];
     $a = $_POST ['chyslo_a'];
     $b = $_POST ['chyslo_b'];
-
-
-
-        $operator = $_POST ['znak'];
-        $rezultat = 0;
-        $diya = '';
+    $operator = $_POST ['znak'];
+    $rezultat = 0;
+    $diya = '';
             if ($operator == '+') {
                 $rezultat = $a + $b;
                 $diya = 'додавання';
