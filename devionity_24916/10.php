@@ -6,7 +6,6 @@
 </head>
 <body>
 <b>
-
     <form action="10.php" method="post">
         Введіть межі діапазону в якому буде вибране перше просте число:<br>
         <br><br>
@@ -22,11 +21,10 @@
         <br><br>
     </form>
 
-    <?php
+<?php
     echo '<br><br>';
     echo "Завдання виконане за допомогою циклу for...";
     echo '<br><br>';
-
     if ($_POST == null):
         $a1 = 1;
         $a2 = 1;
@@ -34,7 +32,6 @@
         $a1 = $_POST['n_1'];
         $a2 = $_POST['n_2'];
     endif;
-
     if ($a1 !== $a2) :
         for ($i = $a1; $i <= $a2; $i++) :
             $j_ne_i = 0;
@@ -55,9 +52,7 @@
         endfor;
         echo "Перше просте число діапазону {$i}";
     endif;
-
-
-    ?>
+?>
 </b>
 </body>
 </html>

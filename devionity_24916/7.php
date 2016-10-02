@@ -21,7 +21,7 @@
         <br><br>
     </form>
 
-    <?php
+<?php
     if ($_POST == null) {
         $a1 = 1;
         $a2 = 1;
@@ -34,7 +34,6 @@
         $a1 = $_POST['n_1'];
         $a2 = $_POST['n_2'];
     }
-
     if ($a1 !== $a2) {
         for ($i = $a1; $i <= $a2; $i++) {
             $a = 0;
@@ -48,16 +47,13 @@
             }
         }
     }
-
     echo '<br><br>';
     echo "Те ж саме завдання виконане за допомогою циклу while...";
     echo '<br><br>';
-
     $aa1 = $a1;
     $aa2 = $a2;
     $aaa1 = 1;
     $aaa2 = $a2;
-
     while ($aa1 <= $aa2) {
         $d = 0;
         while ($aaa1 <= $aaa2) {
@@ -72,7 +68,7 @@
         $aa1 = $aa1 + 1;
         $aaa1 = 1;
     }
-      ?>
+?>
 </b>
 </body>
 </html>

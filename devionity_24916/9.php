@@ -21,12 +21,10 @@
         <br><br>
     </form>
 
-    <?php
-
+<?php
     echo '<br><br>';
     echo "Завдання виконане за допомогою циклу for...";
     echo '<br><br>';
-
     if ($_POST == null) :
         $a1 = 1;
         $a2 = 1;
@@ -37,7 +35,6 @@
         $a1 = $_POST['n_1'];
         $a2 = $_POST['n_2'];
     endif;
-
     if ($a1 !== $a2) :
         for ($i = $a1; $i <= $a2; $i++) :
             $a = 0;
@@ -51,11 +48,9 @@
             endif;
         endfor;
     endif;
-
     echo '<br><br>';
     echo "Те ж саме завдання виконане за допомогою циклу while...";
     echo '<br><br>';
-
     $aa1 = $a1;
     $aa2 = $a2;
     $aaa1 = 1;
@@ -75,8 +70,7 @@
         $aa1 = $aa1 + 1;
         $aaa1 = 1;
     endwhile;
-
-    ?>
+?>
 </b>
 </body>
 </html>

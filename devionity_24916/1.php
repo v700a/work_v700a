@@ -18,12 +18,12 @@
     <br><br>
 </form>
 
-    <?php
+<?php
     $forma = $_POST;
     echo 'Дані серіалізації масиву змінної $_POST отримані за допомогою функції serialize()';
     echo '<br><br>';
     echo serialize($forma);
-    ?>
+?>
 </b>
 </body>
-</html
+</html>

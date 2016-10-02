@@ -12,7 +12,7 @@
         <br><br>
     </form>
 
-    <?php
+<?php
     if ($_POST == null) {
         $_POST = 0;
     }
@@ -44,8 +44,7 @@
         $sec_2 = $sekund % 2;
         echo "Залишок від ділення кількості секунд на 2 = {$sec_2}";
     }
-
-    ?>
+?>
 </b>
 </body>
-</html
+</html>
