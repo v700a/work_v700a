@@ -5,25 +5,20 @@
     <title>Title</title>
 </head>
 <body>
-
-
 <?php
-echo '<br><br>';
-echo 'Вивести піраміду з 20 рядків...';
-echo '<br><br>';
-echo '</b>';
-$a = 1;
+    echo '<br><br>';
+    echo 'Вивести піраміду з 20 рядків...';
+    echo '<br><br>';
+    echo '</b>';
+    $a = 1;
 
-    for ($i = 1; $i < 20; $i++) :
-        for ($j = 0; $j < $a; $j = ($j + 1) ) :
-            echo "x ";
-        endfor;
+        for ($i = 1; $i < 20; $i++) :
+            for ($j = 0; $j < $a; $j = ($j + 1) ) :
+                echo "x ";
+            endfor;
         $a = $a + 1;
         echo '<br>';
-    endfor;
-
-
+        endfor;
 ?>
-
 </body>
-</html
+</html>

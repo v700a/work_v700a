@@ -5,7 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-
 <b>
     <form action="24.php" method="post">
         Введіть будь-яке багатозначне число:<br>
@@ -19,13 +18,10 @@
         <input type="submit">
     </form>
 
-
-    <?php
+<?php
     if ($_POST == null){
         $_POST = 0;
     }
-
-
     $a = $_POST['n_1'];
     $b = $_POST['n_2'];
     echo '<br><br>';
@@ -48,12 +44,10 @@
     endfor;
 
     echo '<br><br>';
-
     echo "Кількість входжень цифри ( {$b} ) у число ( {$a} ) рівне - ( {$d} )";
     echo '<br><br>';
     echo '</b>';
-
-    ?>
+?>
 </b>
 </body>
 </html>

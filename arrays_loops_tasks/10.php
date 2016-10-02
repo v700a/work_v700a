@@ -6,18 +6,17 @@
 </head>
 <body>
 <b>
-    <?php
+<?php
     echo '<br><br>';
     echo 'Вивести на екран у стовпчик числа від 11 до 33...';
     echo '<br><br>';
     $a = 11;
-    while ($a <= 33) :
 
+    while ($a <= 33) :
         echo "{$a}<br>";
         $a = $a + 1;
-
     endwhile;
-    ?>
+?>
 </b>
 </body>
-</html
+</html>

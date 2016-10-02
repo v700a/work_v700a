@@ -10,10 +10,12 @@
     echo 'Задано масив за допомогою функції - rand:';
     echo '<br><br>';
     $massyv = array();
+
     for ($i = 0; $i <= 100; $i++) :
         $a = rand(1, 200);
         $massyv [] = $a;
     endfor;
+
     echo '<pre>';
     print_r($massyv);
     echo '</pre>';
@@ -29,6 +31,7 @@
     $e = 0;
     $f = 0;
     $g = 0;
+
     foreach ($massyv as $key =>$element1) :
             if ($element1 > 0 && $key % 2 == 0) :
                 if ($b == 0) {
@@ -49,12 +52,14 @@
                 break;
             endif;
     endforeach;
+
     echo 'Добуток вищевказаних елементів становить - ';
     echo $c;
     echo '<br><br>';
     echo '<br><br>';
     echo 'Список елементів більших нуля і непарними індексами:';
     echo '<br><br>';
+
     foreach ($massyv as $key =>$element1) :
             if ($element1 > 0 && $key % 2 == 1) :
                     $e = $element1;
@@ -62,9 +67,7 @@
                     echo "Ключ - ({$g}). число - ({$e}) <br><br>";
             endif;
     endforeach;
-
-
-    ?>
+?>
 </b>
 </body>
 </html>

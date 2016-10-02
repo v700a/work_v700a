@@ -6,8 +6,7 @@
 </head>
 <body>
 <b>
-
-    <?php
+<?php
     echo 'Задано масив:';
     echo '<br><br>';
     $massyv = array(4, 2, 5, 19, 13, 0, 10);
@@ -20,9 +19,7 @@
     $a = 0;
     $b = 0;
 
-
     foreach ($massyv as $key => $element) :
-
         if ($element  == ($b = 2)) :
             echo "<br> Число {$element} присутнє в масиві";
             $a = 0;
@@ -30,7 +27,6 @@
         else :
             $a = 1;
         endif;
-
      endforeach;
 
     if ($a !== 0) {
@@ -39,7 +35,6 @@
     }
 
     foreach ($massyv as $key => $element) :
-
         if ($element  == ($b = 3)) :
             echo "<br><br> Число {$element} присутнє в масиві";
             $a = 0;
@@ -47,7 +42,6 @@
         else :
             $a = 1;
         endif;
-
      endforeach;
 
     if ($a !== 0) {
@@ -56,7 +50,6 @@
     }
 
     foreach ($massyv as $key => $element) :
-
         if ($element  == ($b = 4)) :
             echo "<br><br> Число {$element} присутнє в масиві";
             $a = 0;
@@ -64,15 +57,13 @@
         else :
             $a = 1;
         endif;
-
      endforeach;
 
     if ($a !== 0) {
         echo "<br><br> Число - {$b} - в масиві відсутнє";
         $a = 0;
     }
-
-    ?>
+?>
 </b>
 </body>
-</html
+</html>

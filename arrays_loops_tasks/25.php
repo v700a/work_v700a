@@ -6,9 +6,7 @@
 </head>
 <body>
 <b>
-
-    <?php
-
+<?php
     echo 'Задано масив за допомогою функції - rand:';
     echo '<br><br>';
     $massyv = array();
@@ -24,13 +22,13 @@
     echo '<br><br>';
     echo 'Знайти мінімальне та максимальне значення:';
     echo '<br><br>';
-
     $b = 0;
     $c = 0;
     $d = 0;
     $e = 0;
     $f = 0;
     $g = 0;
+
     foreach ($massyv as $key =>$element1) :
         foreach ($massyv as $element2) :
                 if ($element1 >= $element2) :
@@ -47,6 +45,7 @@
                 $b = 0;
             endif;
     endforeach;
+
     foreach ($massyv as $key => $element1) :
         foreach ($massyv as $element2) :
                 if ($element1 <= $element2) :
@@ -72,8 +71,7 @@
     echo '<pre>';
     print_r($massyv);
     echo '</pre>';
-
-    ?>
+?>
 </b>
 </body>
-</html
+</html>

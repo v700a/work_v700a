@@ -6,8 +6,7 @@
 </head>
 <body>
 <b>
-
-    <?php
+<?php
     echo 'Задано масив:';
     echo '<br><br>';
     $massyv = array(2, 5, 9, 15, 0, 4);
@@ -15,16 +14,15 @@
     print_r($massyv);
     echo '</pre>';
     echo '<br><br>';
-    echo 'Вивести на екран елементи масиву зі значенням більше 3-х в стовпчик:';
+    echo 'Вивести на екран елементи масиву зі значенням більше 3-х і менше 10 в стовпчик:';
     echo '<br><br>';
-    foreach ($massyv as $key => $element) :
 
+    foreach ($massyv as $key => $element) :
         if ($element > 3 && $element < 10) :
             echo "<br>{$element}";
         endif;
-
     endforeach;
-    ?>
+?>
 </b>
 </body>
-</html
+</html>

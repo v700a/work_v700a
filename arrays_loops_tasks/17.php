@@ -5,9 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-
-
-    <?php
+<?php
     echo '<b>';
     echo 'Задано масив:';
     echo '<br><br>';
@@ -24,18 +22,11 @@
     $count = 0;
 
     foreach ($massyv as $key => $element) :
-
         echo "<br> $element";
-
         if ($key == ($month - 1)) {
-
             echo "<br><b> $element </b>";
-
         }
-
     endforeach;
-
-    ?>
-
+?>
 </body>
-</html
+</html>

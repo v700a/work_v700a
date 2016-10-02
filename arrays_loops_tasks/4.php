@@ -6,8 +6,7 @@
 </head>
 <body>
 <b>
-
-    <?php
+<?php
     echo 'Задано масив:';
     echo '<br><br>';
     $massyv = array('green'=>'зелений', 'red'=>'червоний','blue'=>'блакитний');
@@ -17,23 +16,19 @@
     echo '<br><br>';
     echo 'Вивести на екран ключі масиву:';
     echo '<br><br>';
+
     foreach ($massyv as $key => $element) :
-
         echo "<br>{$key}";
-
     endforeach;
-    echo '<br><br>';
 
+    echo '<br><br>';
     echo 'Вивести на екран елементи масиву:';
     echo '<br><br>';
 
     foreach ($massyv as $key => $element) :
-
         echo "<br>{$element}";
-
     endforeach;
-
-    ?>
+?>
 </b>
 </body>
-</html
+</html>
