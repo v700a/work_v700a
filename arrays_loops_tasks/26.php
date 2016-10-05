@@ -19,7 +19,6 @@
     echo '<pre>';
     print_r($massyv);
     echo '</pre>';
-//    echo '<br>';
     echo 'Знайти добуток тих елементів більших нуля і парними індексами:';
     echo '<br>';
     echo '<br><br>';

@@ -42,7 +42,24 @@
             endfor;
         echo '</tr>';
     endfor;
+    echo '</table>';
 
+    echo '<table border="3px" cellpadding="5px" cellspacing="5px">';
+    $colors = array('red','yellow','blue','gray','maroon','brown','green');
+    echo '<br><br>';
+    echo 'Таблиця з випадковою кількістю рядків та колонок';
+    $a = rand (1,10);
+    $b = rand (1,10);
+    for ($i = 1; $i <= $a; $i++) :
+        echo '<tr>';
+            for ($j = 1; $j <= $b; $j++) :
+                $c = rand(0,6);
+                echo "<td bgcolor=$colors[$c]>";
+                echo rand(1,200);
+                echo '</td>';
+            endfor;
+        echo '</tr>';
+    endfor;
     echo '</table>';
 ?>
 </b>
