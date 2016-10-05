@@ -46,66 +46,11 @@
 
 <br>
 <p>
-
+    Определить рекурсивную функцию - аналог функции print_r
 </p>
 
-<a href="/devionity_011016/2.php" target="_blank">Перейти</a>
+<a href="/devionity_011016/6.php" target="_blank">Перейти</a>
 
-<br>
-<p>
-
-</p>
-
-<a href="/devionity_011016/2.php" target="_blank">Перейти</a>
-
-<br>
-<p>
-
-</p>
-
-<a href="/devionity_011016/2.php" target="_blank">Перейти</a>
-
-<br>
-<p>
-
-</p>
-
-<a href="/devionity_011016/2.php" target="_blank">Перейти</a>
-
-<br>
-<p>
-
-</p>
-
-<a href="/devionity_011016/2.php" target="_blank">Перейти</a>
-
-<br>
-<p>
-
-</p>
-
-<a href="/devionity_011016/2.php" target="_blank">Перейти</a>
-
-<br>
-<p>
-
-</p>
-
-<a href="/devionity_011016/2.php" target="_blank">Перейти</a>
-
-<br>
-<p>
-
-</p>
-
-<a href="/devionity_011016/2.php" target="_blank">Перейти</a>
-
-<br>
-<p>
-
-</p>
-
-<a href="/devionity_011016/2.php" target="_blank">Перейти</a>
 
 </body>
 </html>
