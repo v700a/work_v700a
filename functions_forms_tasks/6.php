@@ -13,6 +13,7 @@
     </form>
 
     <?php
+//Проблеми, поки що, з кириличними назвами файлів
 
     function read_dir($a)
     {
@@ -44,15 +45,16 @@
 
     if (@$_FILES ['f'] !== null):
         $n_1 =  $_FILES ['f'];
+    var_dump($n_1);
         $q = $n_1['tmp_name'];
         $r = $n_1 ['name'];
         $ui = "c:/xampp/htdocs/functions_forms_tasks/gallery/{$r}";
         $ui3 = "c:/xampp/htdocs/functions_forms_tasks/gallery/";
         copy($q, $ui);
-    endif;
+        read_dir($ui3);
+   endif;
     echo '<div style="margin-top: 50px">';
     echo '<div>';
-    read_dir($ui3)
     ?>
 
 </b>
