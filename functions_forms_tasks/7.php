@@ -19,8 +19,9 @@
 
     function read_write_file($a)
     {
-        $open_file = fopen('comment_file.txt', 'w');
         $file_content = file_get_contents('comment_file.txt');
+
+        $open_file = fopen('comment_file.txt', 'w');
         //$file_size = filesize('comment_file.txt');
         echo 'a', $a;
         echo '<br><br>';
