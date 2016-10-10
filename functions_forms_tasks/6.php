@@ -83,27 +83,29 @@ function delete_files($b)
 {
     $query_string_explode = explode('_' , $b);
     print_r($query_string_explode);
-    $current_dir_fun = getcwd();
-    $back_dir = $current_dir_fun;
-    echo $current_dir_fun;
-    chdir($current_dir_fun . '\\gallery');
-    $current_dir_fun = getcwd();
-    echo $current_dir_fun;
+    $current_dir = getcwd();
+    $back_dir = $current_dir;
+    echo $current_dir;
+    chdir($current_dir . '\\gallery');
+    $current_dir = getcwd();
+    echo $current_dir;
     array_shift($query_string_explode);
+    $delete_file = '';
     foreach ($query_string_explode as $element):
         $count = 1;
         $int_element = (int)$element;
-        $open_dir = opendir($current_dir_fun);
-    while (($item_dir_fun = readdir($open_dir)) !== false):
-        if (is_file($item_dir_fun) == 1):
+        $open_dir = opendir($current_dir);
+    while (($item_dir = readdir($open_dir)) !== false):
+        if (is_file($item_dir) == 1):
             if ($count == $int_element):
-                $current_file_fun = "{$item_dir_fun}";
-                unlink($current_file_fun);
+                $delete_file[] = $item_dir;
             endif;
             $count++;
         endif;
     endwhile;
-
+    endforeach;
+    foreach ($delete_file as $file):
+        unlink($file);
     endforeach;
     chdir($back_dir);
 
