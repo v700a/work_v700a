@@ -62,7 +62,7 @@
 */
 function file_types($c)
 {
-    $count = 0;
+    $count = false;
     $array_types = array(
         'image/x-jg',
         'image/bmp',
@@ -84,8 +84,11 @@ function file_types($c)
         'image/x-tiff'
         );
             foreach ($array_types as $type):
-                if ($c !== $type):
-                    return $count = 1;
+//                echo '<br><br>';
+//                var_dump($c);
+//                var_dump($type);
+                if ($c === $type):
+                    return $count = true;
                 endif;
             endforeach;
     return $count;
@@ -105,6 +108,8 @@ function copy_file (array $b)
                     $value_tmp = current($b['tmp_name']);
                     next($b['tmp_name']);
                     $value_type = current($b['type']);
+             //    var_dump($value_type);
+             //    echo '<br><br>';
                     next($b['type']);
     //                $value_error = current($b['error']);
     //                next($b['error']);
@@ -115,7 +120,7 @@ function copy_file (array $b)
                     $file_extention = '.' . end($file_name_arr);
                     $file_name_new = uniqid() . $file_extention;
                     $copy_to = $target_path . '\\' . $file_name_new;
-                        if (file_types($value_type == 1)):
+                        if (file_types($value_type) == true):
                             if ($value_size < 2000000):
                                 copy($file_tmp_path, $copy_to);
                             endif;
@@ -224,11 +229,10 @@ function delete_files($b)
     endif;
 
 ?>
-    <br><br>
     <div style="margin-top: 10px">
-        Галерея
+        <h2>Галерея</h2>
         <p>
-
+!Увага! При виборі декількох файлів, файли розміром більше 2 Мб та файли відмінні від зображень завантажені не будуть.
         </p>
     </div>
 
