@@ -11,7 +11,6 @@
 
     function read_write_file($a)
     {
-//        echo $a;
         if ($a !== ''):
             $string_array = serialize($a);
             $file_content = file_get_contents('comment_file.txt');
@@ -22,10 +21,10 @@
 
 //****************************************FUNCTIONS**************************************************************
 
-
     if (!$_POST){
         $_POST = 0;
     }
+
     if ($_POST ['ar1'] !== null):
         $arr_1 = $_POST ['ar1'];
         read_write_file($arr_1);
@@ -48,7 +47,6 @@
 <?php
     $item_unserialise = '';
     $name_button_delete = 0;
-    $value_button_delete = 0;
     foreach ($explode_string as $item):
         if ($item !== ''):
             if ($item !== 's:0:"";'):
@@ -75,10 +73,6 @@
         <input type="submit">
         <br><br>
     </form>
-
-
-
-
 
 </b>
 </body>
