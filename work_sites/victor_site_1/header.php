@@ -6,6 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/starter-template.css" rel="stylesheet">
+
 </head>
 <body>
 
@@ -26,11 +29,18 @@
                 <li><a href="index.php?page=comments">Коментарі</a></li>
                 <li><a href="index.php?page=gallery">Галерея</a></li>
                 <li><a href="index.php?page=login">Авторизація</a></li>
+                <li><a href="index.php?page=registration">Реєстрація</a></li>
+            </ul>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
 
+<!-- JavaScript-ядро Bootstrap
+================================================== -->
+<!-- Розміщуйте підключення JavaScript в кінці документа щоб сторінки завантажувались швидше -->
+<script src="/js/jquery-3.1.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 
 </body>
 </html>

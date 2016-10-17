@@ -6,23 +6,23 @@
         endif;
     endif;
 
-    $users = array_map('str_getcsv', file('include_files/users.csv'));
+    $users = array_map('str_getcsv', file('users.csv'));
     $login2 = '';
     if(!isset($_COOKIE['username_in'])):
         if ((is_login_form_valid ('login', 'password')) !== null) :
             $reorg_users = array_pull_array($users);
-            $login = $_POST['login'];
-            $password = $_POST['password'];
+            $login = md5($_POST['login']);
+            $password = md5($_POST['password']);
             $result = 0;
                 foreach ($reorg_users as $log => $pass) :
                     if ($login == $log && $password == $pass) :
                         $result = 1;
-                        $login2 = $login;
+                        $login2 = $_POST['login'];
                         break;
                     endif;
                 endforeach;
             if ($result == 1):
-                setcookie('username_in', $login, time() + 60*60);
+                setcookie('username_in', $login2, time() + 60*60);
                 header('location: index.php?page=login');
                 die;
             else:
@@ -30,7 +30,7 @@
                 die;
             endif;
         endif;
-endif;
+    endif;
     if (isset($_GET['msg'])):
         if ($_GET['msg'] == 'end'):
             setcookie('username_in',$login2, time(0));

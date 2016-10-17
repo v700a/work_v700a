@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,13 @@
 <body>
 
 <?php
+
+session_start();
+
 require ('include_files/functions.php');
+require ('header.php');
+
+//echo session_status();
 
 //print_r($_COOKIE);
 
@@ -21,16 +27,12 @@ $page_content = is_get('page');
 if ($page_content !== null):
 require ('/include_files/' . $page_content . '.php');
 endif;
-?>
-
-<?php require ('primary_layout.php'); ?>
 
 
-<!-- JavaScript-ядро Bootstrap
-================================================== -->
-<!-- Розміщуйте підключення JavaScript в кінці документа щоб сторінки завантажувались швидше -->
-<script src="/js/jquery-3.1.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+require ('primary_layout.php');
 
-</body>
-</html>
+
+
+
+//</body>
+//</html>
