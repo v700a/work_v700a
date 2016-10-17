@@ -1,8 +1,5 @@
 <?php
 
-//    var_dump($_SESSION);
-//    print_r($_GET);
-
     $_GET['msg'] = is_get('msg');
     $_POST['login'] = is_post('login');
     $_POST['password'] = is_post('password');
@@ -19,20 +16,9 @@
         $login_md5 = md5($_SESSION['login']);
         $pass_md5 = md5($_SESSION['password']);
         $array_csv = array($login_md5,$pass_md5);
-//        print_r(fgetcsv($file_csv));
-//        if (isset($_GET['msg3'])):
-//            if ($_GET['msg3'] == 'log_err'):
-//
-//                echo '<h3>', "Користувач!", '</h3>';
-//            endif;
-//        endif;
-
         $users = array_map('str_getcsv', file('users.csv'));
-//        $login2 = '';
         $result = 0;
         $reorg_users = array_pull_array($users);
-//        print_r($reorg_users);
-//        echo $login_md5;
             if ($reorg_users !== ''):
                 foreach ($reorg_users as $log => $pass) :
                     if ($login_md5 == $log) :
@@ -42,25 +28,23 @@
                     $result = 0;
                 endforeach;
             endif;
-
-//    if (($_SESSION['login'] !== null) && ($_SESSION['password'] !== null)):
         if ($result == 0):?>
 
-        <h3>Ви зареєстровані. Перейдіть на сторінку авторизації.</h3>
+            <h3>Ви зареєстровані. Перейдіть на сторінку авторизації.</h3>
 
 <?php
             fputcsv($file_csv,$array_csv);
             fclose($file_csv);
         else: ?>
-        <h3>Користувач з таким іменем уже зареєстрований. Виберіть інше ім'я.</h3>
-<?php   $result = 0;
+            <h3>Користувач з таким іменем уже зареєстрований. Виберіть інше ім'я.</h3>
+<?php       $result = 0;
         endif;
     endif;?>
         <form method="post">
             <br><br>
             Введіть своє майбутнє ім'я (логін)<br>
             <input type="text" name="login" value="<?= $login ?>"><br><br>
-            Введіть пароль (не менше 5 символів):<br>
+            Введіть пароль:<br>
             <input type="text" name="password"><br><br>
             Повторіть пароль:<br>
             <input type="text" name="password_repeat"><br><br>
