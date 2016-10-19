@@ -6,8 +6,7 @@
 </head>
 <body>
 
-
-    <?php
+<?php
 
     function read_write_file($a)
     {
@@ -22,10 +21,6 @@
 //****************************************FUNCTIONS**************************************************************
     if (isset($_COOKIE)):
         if (isset($_COOKIE['username_in'])):
-                echo $_SESSION['que'];
-                print_r($_GET);
-            echo 'post';
-                print_r($_POST);
                     if (!$_POST){
                         $_POST = 0;
                     }
@@ -35,28 +30,23 @@
                         read_write_file($arr_1);
                     endif;
 
-            $read_file_content = file_get_contents('comment_file.txt');
-            $explode_string = explode('PHP_EQL', $read_file_content);
-                    //$query_string = $_SERVER ['QUERY_STRING'];
+                    $read_file_content = file_get_contents('comment_file.txt');
+                    $explode_string = explode('PHP_EQL', $read_file_content);
                     if (isset($_POST['button_delete'])):
                         $query_string = $_POST['button_delete'];
                         if ((int)$query_string !== null):
                             unset($explode_string [(int)$query_string]);
                             file_put_contents('comment_file.txt', implode('PHP_EQL',$explode_string));
                             $read_file_content = file_get_contents('comment_file.txt');
-                            //header("location:/index.php?page=comments");
-                            //die;
+                            header("location:/index.php?page=comments");
+                            die;
                         endif;
                     endif;
-//            if ($_SERVER ['REQUEST_METHOD'] == "POST"):
-//                header("location:/index.php?page=comments&button=");
-//                die;
-//            endif;
-                ?>
+?>
 
                     <form method="post">
 
-                <?php
+<?php
                     $item_unserialise = '';
                     $name_button_delete = 0;
                     foreach ($explode_string as $item):
@@ -72,7 +62,7 @@
                         endif;
                     endforeach;
 
-                    ?>
+?>
 
                     <hr>
                         Залиште коментар на сторінці:<br>
@@ -82,7 +72,7 @@
                         <input type="submit">
                         <br><br>
                     </form>
-                <?php
+<?php
         else:
             echo '<h2>Ви не авторизовані! Доступ до цієї сторінки заборонено!</h2>';
         endif;

@@ -6,7 +6,6 @@
 </head>
 <body>
 <?php
-//require 'out.php';
 
 function file_types($c)
 {
@@ -109,13 +108,6 @@ function delete_files($b)
      }
 //*******************************************************FUNCTIONS***************************************************
 
-//    echo '<pre>';
-//    print_r($_SERVER);
-//    print_r($_POST);
-//    print_r($_FILES);
-//    echo '</pre>';
-//        echo '<br><br>';
-//echo $_SESSION['types'];
 
 if (isset($_COOKIE)):
     if (isset($_COOKIE['username_in'])):
@@ -150,18 +142,14 @@ if (isset($_COOKIE)):
                 $checked = 'all';
             endif;
 
-//            if ($query_string['count'] !== ''):
-                $query_string_explode_ext = explode('_' , $get_query_string_count);
-                if (array_search('delete',$query_string_explode_ext) == true):
-                    delete_files($query_string['count']);
-                    header("location:/index.php?page=gallery&count=");
-                    die;
-                endif;
-//            endif;
-
-
-
+            $query_string_explode_ext = explode('_' , $get_query_string_count);
+            if (array_search('delete',$query_string_explode_ext) == true):
+                delete_files($query_string['count']);
+                header("location:/index.php?page=gallery&count=");
+                die;
+            endif;
         endif;
+
         if ($_SERVER ['REQUEST_METHOD'] == "POST"):
             $a = '';
             foreach ($_POST as $key => $value):
@@ -171,7 +159,7 @@ if (isset($_COOKIE)):
             die;
         endif;
 
-        ?>
+?>
     <div style="margin-top: 10px">
         <h2>Галерея</h2>
         <p>
