@@ -5,7 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-<b>
 <?php
 //require 'out.php';
 
@@ -30,8 +29,10 @@ function file_types($c)
         'image/png',
         'image/x-quicktime',
         'image/tiff',
-        'image/x-tiff'
+        'image/x-tiff',
+        'application/octet-stream'
         );
+//        $_SESSION['types'] = $c;
             foreach ($array_types as $type):
                 if ($c === $type):
                     return $count = true;
@@ -77,6 +78,9 @@ function delete_files($b)
         $query_string_explode = explode('_' , $b);
         $current_dir = getcwd();
         $back_dir = $current_dir;
+        if (opendir($current_dir . '\\gallery') == false):
+            mkdir($current_dir . '\\gallery');
+        endif;
         chdir($current_dir . '\\gallery');
         $current_dir = getcwd();
         array_shift($query_string_explode);
@@ -111,66 +115,76 @@ function delete_files($b)
 //    print_r($_FILES);
 //    echo '</pre>';
 //        echo '<br><br>';
+//echo $_SESSION['types'];
 
 if (isset($_COOKIE)):
     if (isset($_COOKIE['username_in'])):
-
-    $checked = 0;
-    $query_string = $_SERVER ['QUERY_STRING'];
-    $query_string_explode_all = explode('_' , $query_string);
-    if (array_search('all',$query_string_explode_all) == true):
-        $checked = 'all';
-    endif;
-
-    if ($query_string == 'sss'):
-        echo 'Кількість одночасно завантажуваних файлів не може перевищувати - 19 !';
-    else:
-        if ($query_string !== ''):
-            delete_files($query_string);
-            $query_string_explode_ext = explode('_' , $query_string);
-            if (array_search('delete',$query_string_explode_ext) == true):
-                header("location:/functions_forms_tasks/6.php");
-                die;
+        if (!isset($_FILES['file'])):
+            $_FILES ['file'] = 0;
+        endif;
+        $checked = 0;
+        $over = '';
+        $query_string = $_GET;
+        if (isset($query_string['quantity'])):
+            if ($query_string['quantity'] == 'over'):
+                $over = 'Кількість одночасно завантажуваних файлів не може перевищувати - 19 !';
+            else:
+                if ($_FILES ['file']!== 0):
+                    $arr_tmp = $_FILES ['file'];
+                    $arr_in_tmp = $arr_tmp['name'];
+                    $count_arr_tmp = count($arr_in_tmp);
+                    $over_add_files = '';
+                    if ($count_arr_tmp <= 19):
+                        copy_file ($_FILES ['file']);
+                    else:
+                        $over_add_files =  'over';
+                    endif;
+                endif;
             endif;
         endif;
-    endif;
 
-    if ((bool)$_FILES == false):
-        $_FILES ['file'] = 0;
-    endif;
+        if (isset($query_string['count'])):
+            $get_query_string_count = $query_string['count'];
+            $query_string_explode_all = explode('_' , $get_query_string_count);
+            if (array_search('all',$query_string_explode_all) == true):
+                $checked = 'all';
+            endif;
 
-    if ($_FILES ['file']!== 0):
-        $arr_tmp = $_FILES ['file'];
-        $arr_in_tmp = $arr_tmp['name'];
-        $count_arr_tmp = count($arr_in_tmp);
-        $over_add_files = '';
-        if ($count_arr_tmp <= 19):
-            copy_file ($_FILES ['file']);
-        else:
-            $over_add_files =  'sss';
+//            if ($query_string['count'] !== ''):
+                $query_string_explode_ext = explode('_' , $get_query_string_count);
+                if (array_search('delete',$query_string_explode_ext) == true):
+                    delete_files($query_string['count']);
+                    header("location:/index.php?page=gallery&count=");
+                    die;
+                endif;
+//            endif;
+
+
+
         endif;
-    endif;
+        if ($_SERVER ['REQUEST_METHOD'] == "POST"):
+            $a = '';
+            foreach ($_POST as $key => $value):
+                $a = $a . $key;
+            endforeach;
+            header("location:/index.php?page=gallery&count={$a}&quantity={$over_add_files}");
+            die;
+        endif;
 
-    if ($_SERVER ['REQUEST_METHOD'] == "POST"):
-        $a = '';
-        foreach ($_POST as $key => $value):
-                $a = $a . '_' . $key;
-        endforeach;
-      header("location:/functions_forms_tasks/6.php?{$a}{$over_add_files}");
-      die;
-    endif;
-
-?>
+        ?>
     <div style="margin-top: 10px">
         <h2>Галерея</h2>
         <p>
-!Увага! При виборі декількох файлів, файли розміром більше 2 Мб та файли відмінні від зображень завантажені не будуть.
+        !Увага! Файли розміром більше 2 Мб та файли відмінні від зображень завантажені не будуть.
         </p>
+        <b><?= $over ?></b>
     </div>
 
-    <form enctype="multipart/form-data" action="6.php" method="post" id = "gallery">
+    <form enctype="multipart/form-data" method="post" id = "gallery">
+        <br>
         <input name="file[]" type="file" multiple >
-        <input type="submit">
+        <br>
+        <button> "Додати до галереї" </button>
         <hr>
 
 <?php
@@ -181,11 +195,11 @@ if (isset($_COOKIE)):
         $count = 1;
         while (($item_dir = readdir($open_dir)) !== false):
             if (is_file($item_dir) == 1):
-                $checkbox = '.' . $count;
-                $current_file = "/functions_forms_tasks/gallery/{$item_dir}";
+                $checkbox = '_' . $count;
+                $current_file = "\\gallery\\{$item_dir}";
 ?>
 
-            <a href= "<?php echo $current_file; ?>" target='_blank'><img src = '<?php echo $current_file; ?>' width="150" height="120"></a>
+            <a href= "<?= $current_file; ?>" target='_blank'><img src = '<?= $current_file; ?>' width="150" height="120"></a>
 <?php
                 if ($checked === "all"):
                     echo "<input type=\"checkbox\" form=\"gallery\" name=\"$checkbox\" checked >";
@@ -197,21 +211,19 @@ if (isset($_COOKIE)):
         endwhile;
 ?>
         <div >
-        </div>
-        <div >
             <hr>
-            <button formaction="6.php" formmethod="post" name="delete" value="delete">Видалити вибрані файли</button>
-            <button formaction="6.php" formmethod="post" name ="all" value="all">Вибрати усі файли</button>
-            <button formaction="6.php" formmethod="post" name="reset" value="reset">Скинути вибір</button>
+            <button formmethod="post" name="_delete_"">Видалити вибрані файли</button>
+            <button formmethod="post" name ="_all_">Вибрати усі файли</button>
+            <button formmethod="post" name="_reset_"">Скинути вибір</button>
         </div>
     </form>
-    <?php
-//    else:
+<?php
+    else:
+        echo '<h2>Ви не авторизовані! Доступ до цієї сторінки заборонено!</h2>';
     endif;
 endif;
-echo '<h2>Ви не авторизовані! Доступ до цієї сторінки заборонено!</h2>';
 
-    ?>
-</b>
+?>
+
 </body>
 </html>

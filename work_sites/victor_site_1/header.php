@@ -31,7 +31,6 @@
                 <li><a href="index.php?page=login">Авторизація</a></li>
                 <li><a href="index.php?page=registration">Реєстрація</a></li>
             </ul>
-            </ul>
         </div><!--/.nav-collapse -->
     </div>
 </nav>
