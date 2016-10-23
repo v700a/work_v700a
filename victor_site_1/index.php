@@ -1,15 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/starter-template.css" rel="stylesheet">
-
-
-</head>
-<body>
 
 <?php
 
@@ -31,8 +19,11 @@ endif;
 
 require ('primary_layout.php');
 
+if ($_GET == null):
+?>
 
+<h1><u><i>Тестовий сайт</i></u></h1>
 
+<?php
+endif;
 
-//</body>
-//</html>
