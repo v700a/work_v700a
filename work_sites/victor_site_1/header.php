@@ -21,7 +21,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Проект 1</a>
+            <a class="navbar-brand" ><?=isset($_COOKIE['username_in']) ? "Вітаємо, ". $_COOKIE['username_in'] : '!' ?></a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">

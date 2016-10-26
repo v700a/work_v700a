@@ -10,7 +10,9 @@
     if ($_SESSION['login'] !== ''):
         $login = $_SESSION['login'];
     endif;
-
+?>
+<h2>Реєстрація нового користувача</h2>
+<?php
     if (($_SESSION['login'] !== null) && ($_SESSION['password'] !== null)):
         $file_csv = fopen('users.csv', 'a');
         $login_md5 = md5($_SESSION['login']);
@@ -41,13 +43,13 @@
         endif;
     endif;?>
         <form method="post">
-            <br><br>
+            <br>
             Введіть своє майбутнє ім'я (логін)<br>
             <input type="text" name="login" value="<?= $login ?>"><br><br>
             Введіть пароль:<br>
-            <input type="text" name="password"><br><br>
+            <input type="password" name="password"><br><br>
             Повторіть пароль:<br>
-            <input type="text" name="password_repeat"><br><br>
+            <input type="password" name="password_repeat"><br><br>
             <button>Зареєструватись</button>
 
         </form>
