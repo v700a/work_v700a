@@ -15,19 +15,23 @@ function is_session ($g)
     return isset($_SESSION[$g]) ? $_SESSION[$g] : null;
 }
 
-function is_login_form_valid ($e, $j)
+function is_login_form_valid ($name, $pass, $email)
 {
-if (!isset($_POST[$e])):
-    $_POST[$e] = null;
-endif;
-if (!isset($_POST[$j])):
-    $_POST[$j] = null;
-endif;
+    if (!isset($_POST[$name])):
+        $_POST[$name] = null;
+    endif;
+    if (!isset($_POST[$pass])):
+        $_POST[$pass] = null;
+    endif;
+    if (!isset($_POST[$email])):
+        $_POST[$email] = null;
+    endif;
 
-if ($_POST[$e] !== null && $_POST[$j] !== null):
-    return $_POST[$e] && $_POST[$j];
-elseif ($_POST[$e] !== null || $_POST[$j] !== null):
-    return $_POST[$e] && $_POST[$j];
+
+if ($_POST[$name] !== null && $_POST[$pass] !== null && $_POST[$email] !== null):
+    return $_POST[$name] && $_POST[$pass] && $_POST[$email];
+elseif ($_POST[$name] !== null || $_POST[$pass] !== null || $_POST[$email] !== null):
+    return $_POST[$name] && $_POST[$pass] && $_POST[$email];
 else:
     return null;
 endif;

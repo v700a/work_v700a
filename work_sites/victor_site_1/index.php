@@ -1,10 +1,14 @@
 
 <?php
 
+$link = mysqli_connect("127.0.0.1","root","","mvc_group_1009");
+
+
 session_start();
 
 require ('include_files/functions.php');
 require ('header.php');
+require ('models/user.php');
 
 //echo session_status();
 

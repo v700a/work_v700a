@@ -6,23 +6,20 @@
         endif;
     endif;
 
-    $users = array_map('str_getcsv', file('users.csv'));
-    $login2 = '';
+//    $users = array_map('str_getcsv', file('users.csv'));
+//    $users = find_user()
+    $login = 0;
     if(!isset($_COOKIE['username_in'])):
-        if ((is_login_form_valid ('login', 'password')) !== null) :
-            $reorg_users = array_pull_array($users);
-            $login = md5($_POST['login']);
-            $password = md5($_POST['password']);
+        if ((is_login_form_valid ('login', 'password', 'email')) !== null) :
+            $login = $_POST['login'];
+            $password = md5($_POST['password'] . 'php');
+            $email = md5($_POST['email'] . 'php');
+            $db_users = find_user($login, $password, $email);
+            var_dump($db_users);
             $result = 0;
-                foreach ($reorg_users as $log => $pass) :
-                    if ($login == $log && $password == $pass) :
-                        $result = 1;
-                        $login2 = $_POST['login'];
-                        break;
-                    endif;
-                endforeach;
-            if ($result == 1):
-                setcookie('username_in', $login2, time() + 60*60);
+//                foreach ($db_users as $log => $pass) :
+            if ($db_users) :
+                setcookie('username_in', $login, time() + 60*60);
                 header('location: index.php?page=login');
                 die;
             else:
@@ -33,7 +30,7 @@
     endif;
     if (isset($_GET['msg'])):
         if ($_GET['msg'] == 'end'):
-            setcookie('username_in',$login2, time(0));
+            setcookie('username_in',$login, time(0));
             unset($_COOKIE{'username_in'});
         endif;
     endif;
@@ -56,6 +53,9 @@
                     <input type="text" name="login" id="login"><br><br>
                     <label for="password">Пароль</label><br>
                     <input type="password" name="password" id="password"><br><br>
+                    <label for="email">e_mail</label><br>
+                    <input type="email" name="email" id="login"><br><br>
+
                     <button>Авторизуватись</button>
 <?php           endif;?>
             </form>
