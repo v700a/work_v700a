@@ -9,6 +9,8 @@ session_start();
 require ('include_files/functions.php');
 require ('header.php');
 require ('models/user.php');
+require ('models/book.php');
+
 
 //echo session_status();
 

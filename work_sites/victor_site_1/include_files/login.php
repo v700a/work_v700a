@@ -1,13 +1,10 @@
 <?php
     if (isset($_GET['msg2'])):
         if ($_GET['msg2'] == 'log_err'):
-
             echo '<h3>', "Помилка авторизації! Невірний Логін/Пароль!", '</h3>';
         endif;
     endif;
 
-//    $users = array_map('str_getcsv', file('users.csv'));
-//    $users = find_user()
     $login = 0;
     if(!isset($_COOKIE['username_in'])):
         if ((is_login_form_valid ('login', 'password', 'email')) !== null) :
@@ -17,7 +14,6 @@
             $db_users = find_user($login, $password, $email);
             var_dump($db_users);
             $result = 0;
-//                foreach ($db_users as $log => $pass) :
             if ($db_users) :
                 setcookie('username_in', $login, time() + 60*60);
                 header('location: index.php?page=login');
@@ -34,28 +30,27 @@
             unset($_COOKIE{'username_in'});
         endif;
     endif;
-
 ?>
             <form method="post">
-<?php           if (isset($_COOKIE['username_in'])): ?>
+            <?php if (isset($_COOKIE['username_in'])): ?>
                     <h2>Ви авторизовані як <?=$_COOKIE['username_in']?></h2>
                     <br>
                     <button formmethod="post">Вихід</button>
-<?php
+            <?php
                     if ($_SERVER['REQUEST_METHOD'] == 'POST'):
                         header('location: index.php?page=login&msg=end');
                         die;
                     endif;
                 else:
-?>
+            ?>
                     <h2>Авторизація</h2>
                     <label for="login">Логін</label><br>
                     <input type="text" name="login" id="login"><br><br>
-                    <label for="password">Пароль</label><br>
-                    <input type="password" name="password" id="password"><br><br>
-                    <label for="email">e_mail</label><br>
+                    <label for="email">E_mail</label><br>
                     <input type="email" name="email" id="login"><br><br>
+                   <label for="password">Пароль</label><br>
+                    <input type="password" name="password" id="password"><br><br>
 
                     <button>Авторизуватись</button>
-<?php           endif;?>
+            <?php endif;?>
             </form>

@@ -26,10 +26,15 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="index.php">Головна</a></li>
+                <li><a href="index.php?page=book_list">Книги</a></li>
                 <li><a href="index.php?page=comments">Коментарі</a></li>
                 <li><a href="index.php?page=gallery">Галерея</a></li>
-                <li><a href="index.php?page=login">Авторизація</a></li>
-                <li><a href="index.php?page=registration">Реєстрація</a></li>
+                <?php if (!isset($_COOKIE['username_in'])):
+                echo '<li><a href="index.php?page=login">Авторизація</a></li>';
+                echo '<li><a href="index.php?page=registration">Реєстрація</a></li>';
+                else:
+                    echo '<li><a href="index.php?page=login&msg=end">Вихід</a></li>';
+                endif; ?>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
