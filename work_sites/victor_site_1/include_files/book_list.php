@@ -1,9 +1,22 @@
 <?php
 
 $book_list = find_book_all();
+//var_dump($_POST);
+if (isset($_POST['add'])):
+header('location: index.php?page=book_add');
+die;
+endif;
 
+if (isset($_GET['delete_id'])):
+    remove_book_by_id($_GET['delete_id']);
+header('location: index.php?page=book_list');
+die;
+endif;
 ?>
 
+<form method="post">
+    <button  name="add" value="add"><b>Додати нову книгу до каталогу.</b></button>
+</form>
 <table border="3" width="100%">
     <tr>
         <th bgcolor="#87cefa" >Номер книги</th>
@@ -23,7 +36,8 @@ $book_list = find_book_all();
         <td><?= $value['price'] ?></td>
         <td><?= $value['is_active'] ?></td>
         <td><a href="index.php?page=book_edit&id=<?=$value['id']?>">Редагувати</a></td>
-        <td><a href="#">Видалити</a></td>
+        <td><a href="index.php?page=book_list&delete_id=<?=$value['id']?>"">Видалити</a></td>
     </tr>
     <?php endforeach;?>
 </table>
+

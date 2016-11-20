@@ -57,13 +57,17 @@ function save_book_by_id(array $update_book)
                                   WHERE id = '$update_book_id'";
         $result_query_find = mysqli_query($link, $sql_query_string_update);
     else:
+        if (isset($update_book['title'])):
+        if ($update_book['title'] !== '' && $update_book['title'] !== null):
         $insert_book_title = $update_book['title'];
         $insert_book_description = $update_book['description'];
         $insert_book_price = $update_book['price'];
         $insert_book_is_active = $update_book['is_active'];
-        $sql_query_string_insert = "INSERT INTO book VALUES ( '$insert_book_title', '$insert_book_description',
+        $sql_query_string_insert = "INSERT INTO book (title, description, price, is_active) VALUES ( '$insert_book_title', '$insert_book_description',
                                   '$insert_book_price', '$insert_book_is_active')";
         $result_query_find = mysqli_query($link, $sql_query_string_insert);
+        endif;
+        endif;
     endif;
     return $result_query_find;
 }

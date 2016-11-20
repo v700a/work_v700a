@@ -8,6 +8,9 @@ if (isset($_GET)):
 endif;
 
 ?>
+    <br>
+    <h4><b>Форма для редагування книги з каталогу.</b></h4>
+    <br><br>
 
 <form method="post">
     <br><br>
