@@ -1,7 +1,6 @@
 <?php
 
 $book_list = find_book_all();
-//var_dump($_POST);
 if (isset($_POST['add'])):
 header('location: index.php?page=book_add');
 die;

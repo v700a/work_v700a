@@ -4,7 +4,7 @@
 if (isset($_GET)):
     $update_book_id = $_GET['id'];
     $update_book_array = find_book_by_id($update_book_id);
-    $update_book = $update_book_array['0'];
+    $update_book = $update_book_array;
 endif;
 
 ?>
