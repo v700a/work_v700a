@@ -1,9 +1,11 @@
 <?php
-//$update_book = '';
+$update_book = '';
+
+$book_model = new book_model();
 
 if (isset($_GET)):
     $update_book_id = $_GET['id'];
-    $update_book_array = find_book_by_id($update_book_id);
+    $update_book_array = $book_model->find_by_id($update_book_id);
     $update_book = $update_book_array;
 endif;
 
@@ -31,8 +33,8 @@ endif;
     <br>
     <textarea type="text" name = "description" cols="150" rows="15" ><?= $update_book['description']?></textarea>
     <br><br>
-    <button>Зберегти зміни</button>
     <button name="no" value="no">Сасувати зміни</button>
+    <button>Зберегти зміни</button>
 </form>
 
 <?php
@@ -40,7 +42,7 @@ endif;
 
 
 if (!isset($_POST['no']) && isset($_POST['id'])):
-    save_book_by_id($_POST);
+    $book_model->save_by_id($_POST);
 endif;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'):

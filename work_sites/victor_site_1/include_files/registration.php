@@ -1,10 +1,13 @@
 <?php
-    $_GET['msg'] = is_get('msg');
-    $_POST['login'] = is_post('login');
-    $_POST['email'] = is_post('email');
-    $_POST['password'] = is_post('password');
-    $_POST['password_repeat'] = is_post('password_repeat');
-    $_SESSION['login'] = is_session('login');
+$functions = new functions();
+$user_model = new user_model();
+
+    $_GET['msg'] = $functions->is_get('msg');
+    $_POST['login'] = $functions->is_post('login');
+    $_POST['email'] = $functions->is_post('email');
+    $_POST['password'] = $functions->is_post('password');
+    $_POST['password_repeat'] = $functions->is_post('password_repeat');
+    $_SESSION['login'] = $functions->is_session('login');
     $login_for_form = '';
     if ($_SESSION['login'] !== ''):
         $login_for_form = $_SESSION['login'];
@@ -19,7 +22,7 @@
         $pass_md5 = md5($_SESSION['password'] . 'php');
         $email_md5 = md5($_SESSION['email'] . 'php');
         $email_ = $_SESSION['email'];
-        $sql_db = find_user_all();
+        $sql_db = $user_model->find_all();
             if ($sql_db !== null):
                 $is_name = 0;
                 $is_email = 0;
@@ -37,8 +40,9 @@
                     endforeach;
                 endforeach;
                 if ($is_email == 0 && $is_name == 0):
-                    insert_user($login, $pass_md5, $email_md5);
-                    echo ' <h3>Ви зареєстровані.</h3>';
+                    $user_model->insert($login, $pass_md5, $email_md5);
+                    echo "<h3>Ви зареєстровані як - {$login}.</h3>";
+                    die();
                 endif;
             endif;
     endif;

@@ -1,4 +1,6 @@
 <?php
+$functions = new functions();
+$user_model = new user_model();
     if (isset($_GET['msg2'])):
         if ($_GET['msg2'] == 'log_err'):
             echo '<h3>', "Помилка авторизації! Невірний Логін/Пароль!", '</h3>';
@@ -7,11 +9,11 @@
 
     $login = 0;
     if(!isset($_COOKIE['username_in'])):
-        if ((is_login_form_valid ('login', 'password', 'email')) !== null) :
+        if (($functions->is_login_form_valid ('login', 'password', 'email')) !== null) :
             $login = $_POST['login'];
             $password = md5($_POST['password'] . 'php');
             $email = md5($_POST['email'] . 'php');
-            $db_users = find_user($login, $password, $email);
+            $db_users = $user_model->find($login, $password, $email);
             var_dump($db_users);
             $result = 0;
             if ($db_users) :

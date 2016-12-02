@@ -25,11 +25,12 @@ function __autoload($class_name)
 $request = new Request_functions();
 
 
-require ('include_files/functions.php');
+//require('include_files/functions.php');
 require ('header.php');
-require ('models/user.php');
-require ('models/book.php');
-require ('models/comment.php');
+//require('models/user_model.php');
+//require('models/book_model.php');
+//require ('models/comment.php');
+$functions = new functions();
 
 
 //echo session_status();
@@ -37,7 +38,7 @@ require ('models/comment.php');
 //print_r($_COOKIE);
 
 
-$page_content = is_get('page');
+$page_content = $functions->is_get('page');
 if ($page_content !== null):
 require ('/include_files/' . $page_content . '.php');
 endif;

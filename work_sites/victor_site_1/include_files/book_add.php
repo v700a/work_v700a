@@ -1,4 +1,6 @@
 <?php
+    $book_model = new book_model();
+print_r($_GET);
 
     $update_book['title'] = null;
     $update_book['price'] = null;
@@ -26,8 +28,8 @@
         <br>
         <textarea type="text" name = "description" cols="150" rows="15" ><?= $update_book['description']?></textarea>
         <br><br>
-        <button>Зберегти зміни</button>
         <button name="no" value="no">Сасувати зміни</button>
+        <button>Зберегти зміни</button>
         <button name="exit" value="exit">Вийти</button>
     </form>
 
@@ -37,14 +39,14 @@
 
 if (!isset($_POST['no']) && !isset($_POST['exit'])):
     $_POST['id'] = 'no_id';
-    save_book_by_id($_POST);
+
+    $book_model->save_by_id($_POST);
 elseif (isset($_POST['no'])):
     header('location: index.php?page=book_add');
     die;
 elseif (isset($_POST['exit'])):
     header('location: index.php?page=book_list');
     die;
-
 endif;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'):

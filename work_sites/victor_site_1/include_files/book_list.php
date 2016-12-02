@@ -1,13 +1,15 @@
 <?php
 
-$book_list = find_book_all();
+$book_model = new book_model();
+
+$book_list = $book_model->find_all();
 if (isset($_POST['add'])):
 header('location: index.php?page=book_add');
 die;
 endif;
 
 if (isset($_GET['delete_id'])):
-    remove_book_by_id($_GET['delete_id']);
+    $book_model->remove_by_id($_GET['delete_id']);
 header('location: index.php?page=book_list');
 die;
 endif;
