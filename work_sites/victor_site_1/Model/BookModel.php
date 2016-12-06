@@ -23,15 +23,15 @@ class BookModel
 
     function find_by_id($id)
     {
-    //    global $pdo;
+        global $pdo;
         $sql_query_string_find = $pdo->prepare("SELECT * FROM book WHERE id = :id");
         $sql_query_string_find->execute(compact('id'));
-        return $sql_query_string_find->fetch(PDO::FETCH_ASSOC);
+        return $sql_query_string_find->fetch(\PDO::FETCH_ASSOC);
     }
 
     function remove_by_id($id)
     {
-    //    global $pdo;
+        global $pdo;
         $sql_query_string_find = $pdo->prepare("DELETE FROM book WHERE id = :id");
         $sql_query_string_find->execute(compact('id'));
         return $sql_query_string_find;
@@ -39,11 +39,11 @@ class BookModel
 
     function save_by_id(array $update_book)
     {
-     //   global $pdo;
+        global $pdo;
         $update_book_id = $update_book['id'];
         $sql_query_string_find = $pdo->prepare("SELECT id FROM book WHERE id = :update_book_id");
         $sql_query_string_find->execute(compact('update_book_id'));
-        $result_fetch_assoc = $sql_query_string_find->fetch(PDO::FETCH_ASSOC);
+        $result_fetch_assoc = $sql_query_string_find->fetch(\PDO::FETCH_ASSOC);
         if ($result_fetch_assoc !== false):
             $update_book_title = $update_book['title'];
             $update_book_description = $update_book['description'];

@@ -20,18 +20,18 @@
     </tr>
 
     <?php
-    foreach ($book_list as $value):
+    foreach ($array as $value):
         ?>
         <tr>
             <td><?= $value['id'] ?></td>
             <td><a href="#" title="<?= $value['description'] ?>"><?= $value['title'] ?></a></td>
             <td><?= $value['price'] ?></td>
             <td><?= $value['is_active'] ?></td>
-            <td><a href="/">Редагувати</a></td>
-            <td><a href="/">Видалити</a></td>
+            <td><a href="index.php?route=book/edit&id=<?=$value['id']?>">Редагувати</a></td>
+            <td><a href="index.php?route=book/delete&id=<?=$value['id']?>"">Видалити</a></td>
         </tr>
     <?php endforeach;?>
-</table>
+</table></table>
 
 </body>
 </html>

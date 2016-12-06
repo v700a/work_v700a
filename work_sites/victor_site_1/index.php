@@ -29,13 +29,22 @@ function __autoload($class_name)
 try {
     $request = new \Library\Request();
 //$functions = new functions();
-
     $route = $request->isGetOf('route', 'site/index');
+    $id = $request->isGetOf('id');
     $route = explode('/', $route);
     $controller = 'Controller\\' . ucfirst($route[0]) . 'Controller';
     $action = $route[1] . 'Action';
     $controller = new $controller ();
-    $content = $controller->$action();
+    if ($request->isPostOf('no') !== null):
+        $c =$route[0] . '/' .  $request->isPostOf('no');
+        header("location:index.php?route={$c}");
+        die;
+    endif;
+    if ($id !== null):
+        $content = $controller->$action($id);
+    else:
+        $content = $controller->$action();
+    endif;
 }
 catch (\Exception $exception) {
 
@@ -44,9 +53,10 @@ catch (\Exception $exception) {
 
 require VIEW_DIR . 'layout.phtml';
 
-//echo '<pre>';
+echo '<pre>';
+echo $c;
 //print_r($route);
-//echo '<br><br>';
+echo '<br><br>';
 //var_dump($controller);
 //echo '<br><br>';
 //echo $action;
