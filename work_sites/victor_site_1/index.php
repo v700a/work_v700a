@@ -1,56 +1,61 @@
-
 <?php
 
-//$link = mysqli_connect("127.0.0.1","root","","mvc_group_1009");
-
-//$dsn = 'mysql: host=localhost; dbname=mvc_group_1009';
-//$user = 'root';
-//$pass = '';
-
-$pdo = new PDO('mysql: host=localhost; dbname=mvc_group_1009', 'root', '');
-//$a = $pdo->query('SELECT * FROM book');
-//var_dump($a);
+//$pdo = new PDO('mysql: host=localhost; dbname=mvc_group_1009', 'root', '');
+$pdo = \Library\ConnectionPDO::getInstance()->getPDO();
 session_start();
+//var_dump($pdo);
+define('DS', DIRECTORY_SEPARATOR);
+define('ROOT', __DIR__ . DS );
+define('VIEW_DIR', ROOT . 'View' . DS);
+
+$content = '';
+
 
 function __autoload($class_name)
 {
-    $file = "classes/$class_name.php";
+    $a = str_replace(['Model', '\\'], '', $class_name);
+//    echo $a;    echo '<br>';
+
+    if ($a !== 'PDO'):
+    $file = "$class_name.php";
     if (!file_exists($file)):
-        die("Файл {$file} не знайдено");
+        echo("Файл {$file} не знайдено");
     endif;
 
     require $file;
+    endif;
 }
 
-$request = new Request_functions();
+try {
+    $request = new \Library\Request();
+//$functions = new functions();
+
+    $route = $request->isGetOf('route', 'site/index');
+    $route = explode('/', $route);
+    $controller = 'Controller\\' . ucfirst($route[0]) . 'Controller';
+    $action = $route[1] . 'Action';
+    $controller = new $controller ();
+    $content = $controller->$action();
+}
+catch (\Exception $exception) {
+
+}
 
 
-//require('include_files/functions.php');
-require ('header.php');
-//require('models/user_model.php');
-//require('models/book_model.php');
-//require ('models/comment.php');
-$functions = new functions();
+require VIEW_DIR . 'layout.phtml';
+
+//echo '<pre>';
+//print_r($route);
+//echo '<br><br>';
+//var_dump($controller);
+//echo '<br><br>';
+//echo $action;
+//echo '</pre>';
 
 
-//echo session_status();
-
-//print_r($_COOKIE);
-
-
-$page_content = $functions->is_get('page');
-if ($page_content !== null):
-require ('/include_files/' . $page_content . '.php');
-endif;
-
-
-require ('primary_layout.php');
-
-if ($_GET == null):
-?>
-
-<h1><u><i>Тестовий сайт</i></u></h1>
-
-<?php
-endif;
+//$page_content = $functions->is_get('page');
+//if ($page_content !== null):
+//require ('/include_files/' . $page_content . '.php');
+//endif;
+//require ('primary_layout.php');
 
