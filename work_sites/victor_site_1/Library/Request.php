@@ -23,6 +23,16 @@ class Request
         return $this->server['REQUEST_METHOD'];
     }
 
+    function isPost ()
+    {
+        return isset($this->post) ? $this->post : null;
+    }
+
+    function isGet ()
+    {
+        return isset($this->get) ? $this->get : null;
+    }
+
     function isPostOf ($a, $b = null)
     {
         return isset($this->post[$a]) ? $this->post[$a] : $b;

@@ -13,40 +13,42 @@ $content = '';
 
 function __autoload($class_name)
 {
-    $a = str_replace(['Model', '\\'], '', $class_name);
-//    echo $a;    echo '<br>';
 
-    if ($a !== 'PDO'):
     $file = "$class_name.php";
     if (!file_exists($file)):
         echo("Файл {$file} не знайдено");
     endif;
 
     require $file;
-    endif;
 }
 
 try {
     $request = new \Library\Request();
-//$functions = new functions();
     $route = $request->isGetOf('route', 'site/index');
     $id = $request->isGetOf('id');
     $route = explode('/', $route);
     $controller = 'Controller\\' . ucfirst($route[0]) . 'Controller';
     $action = $route[1] . 'Action';
     $controller = new $controller ();
-    if ($request->isPostOf('no') !== null):
-        $c =$route[0] . '/' .  $request->isPostOf('no');
-        header("location:index.php?route={$c}");
-        die;
-    endif;
-    if ($id !== null):
+    if ($request->isPostOf('save') !== null):
+        if ($request->isPostOf('title') == ''):
+            throw new Exception('Не заповнено поле "Назва книги"');
+        endif;
+        $action = 'saveAction';
+        $content = $controller->$action($request->isPost());
+    elseif ($request->isPostOf('cancel') !== null):
+        $action = 'cancelAction';
+        $content = $controller->$action();
+    elseif ($id !== null):
         $content = $controller->$action($id);
     else:
         $content = $controller->$action();
     endif;
 }
-catch (\Exception $exception) {
+catch (\Exception $exception_1) {
+    echo $exception_1->getMessage();
+    $action = 'addAction';
+    $content = $controller->$action();
 
 }
 
@@ -54,8 +56,9 @@ catch (\Exception $exception) {
 require VIEW_DIR . 'layout.phtml';
 
 echo '<pre>';
-echo $c;
-//print_r($route);
+echo $action;echo '<br><br>';
+
+print_r($_POST);
 echo '<br><br>';
 //var_dump($controller);
 //echo '<br><br>';

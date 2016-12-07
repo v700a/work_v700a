@@ -12,27 +12,44 @@ class BookController extends Controller
     {
         $book = new BookModel();
         $array = $book->find_all();
-     //   print_r($book_list);
         return $this->render('index.phtml', $array);
+    }
 
+    function addAction ()
+    {
+        //$book = new BookModel();
+        $array = array();
+        return $this->render('add.phtml', $array);
     }
 
     function editAction ($id)
     {
-
-     //   echo 'edit',$id;
         $book = new BookModel();
         $array = $book->find_by_id($id);
         return $this->render('edit.phtml', $array);
-
-        //   print_r($book_list);
-     //   return $this->render('index.phtml', $book_list);
-
     }
+
+    function saveAction ($id)
+    {
+        $book = new BookModel();
+        $book->save_by_id($id);
+        $array = $book->find_all();
+        return $this->render('index.phtml', $array);
+    }
+
 
     function deleteAction ($id)
     {
-        echo 'delete - ',$id;
+        $book = new BookModel();
+        $book->remove_by_id($id);
+        $array = $book->find_all();
+        return $this->render('index.phtml', $array);
+    }
 
+    function cancelAction ()
+    {
+        $book = new BookModel();
+        $array = $book->find_all();
+        return $this->render('index.phtml', $array);
     }
 }
