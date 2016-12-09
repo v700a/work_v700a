@@ -13,11 +13,25 @@ class BookModel
 //        self::$pdo = ConnectionPDO::getInstance()->getPDO();
 //    }
 
-    function find_all()
+    function find_count_all()
     {
         global $pdo;
         //var_dump(self::$pdo);
-        $result_query_find = $pdo -> query("SELECT * FROM book");
+        $re = $pdo->query("SELECT COUNT(*) as count FROM book");
+        $w = $re->fetch(\PDO::FETCH_ASSOC);
+        return $w['count'];
+    }
+    function read_limit($count, $limit=1, $page = 0)
+    {
+        global $pdo;
+        if ($page !== 0):
+            $offset = ($page - 1) * $limit;
+        else:
+            $offset = $page;
+        endif;
+        $c = round($count/$limit);
+        echo $c;
+        $result_query_find = $pdo -> query("SELECT * FROM book LIMIT $offset, $limit");
         return $result_query_find->fetchAll(\PDO::FETCH_ASSOC);
     }
 

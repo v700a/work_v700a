@@ -37,7 +37,11 @@ try {
         $action = 'saveAction';
         $content = $controller->$action($request->isPost());
     elseif ($request->isPostOf('cancel') !== null):
-        $action = 'cancelAction';
+        $action = 'indexAction';
+        $content = $controller->$action();
+    elseif ($request->isGetOf('page') !== null):
+        \Controller\BookController::$page = $request->isGetOf('page');
+        $action = 'indexAction';
         $content = $controller->$action();
     elseif ($id !== null):
         $content = $controller->$action($id);
@@ -58,7 +62,7 @@ require VIEW_DIR . 'layout.phtml';
 echo '<pre>';
 echo $action;echo '<br><br>';
 
-print_r($_POST);
+print_r($_GET);
 echo '<br><br>';
 //var_dump($controller);
 //echo '<br><br>';
