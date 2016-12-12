@@ -10,7 +10,7 @@ class UserModel
         global $pdo;
         $result_find_all = null;
         $result_find_all = $pdo->query("SELECT * FROM user");
-        return $result_find_all->fetchAll(PDO::FETCH_ASSOC);
+        return $result_find_all->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     function find($name, $pass, $email)
@@ -19,7 +19,7 @@ class UserModel
         $sql_query_string_find = $pdo->prepare("SELECT * FROM user WHERE name = :name AND password = :pass 
                                             AND email = :email");
         $sql_query_string_find->execute(compact('name', 'pass', 'email'));
-        return $sql_query_string_find->fetch(PDO::FETCH_ASSOC);
+        return $sql_query_string_find->fetch(\PDO::FETCH_ASSOC);
     }
 
     function insert ($name, $pass, $email)

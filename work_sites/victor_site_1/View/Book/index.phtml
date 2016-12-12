@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+    .bold {
+        color: crimson;
+        font-size: large;
+        text-decoration: underline;
+    }
+    </style>
 </head>
 <body>
 
@@ -33,9 +40,67 @@
     <?php endforeach;?>
 </table></table>
     <tr>
-        <?php for ($i = 1; $i<=$count_pages; $i++): ?>
-        <td>&nbsp&nbsp<a href="index.php?route=book/index&page=<?=$i ?>"><b><?=$i ?></b></a></td>
-        <?php endfor; ?>
+        <?php   $nbsp = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                if (!isset($_GET['page'])):
+                    $page = 1;
+                else:
+                    $page = $_GET['page'];
+                endif;
+        ?>
+        <td><?= $nbsp ?><a href="index.php?route=book/index&page=1"><b>
+                    <?= $page == 1 ? '<b class="bold">1</b>' : 1 ?></b></a></td>
+        <td><?= $nbsp ?><a href="index.php?route=book/index&page=2"><b>
+                    <?= $page == 2 ? '<b class="bold">2</b>' : 2 ?></b></a></td>
+        <td><?= $nbsp ?><a href="index.php?route=book/index&page=3"><b>
+                    <?= $page == 3 ? '<b class="bold">3</b>' : 3 ?></b></a></td>
+        <?php if ($page == 1 || $page == 2): ?>
+            <td><?= $nbsp ?><b>...</b></td>
+        <?php elseif ($page == 3): ?>
+        <td><?= $nbsp ?><a href="index.php?route=book/index&page=4"><b>4</b></a></td>
+                <td><?= $nbsp ?><b>...</b></td>
+        <?php elseif ($page == 4): ?>
+        <td><?= $nbsp ?><a href="index.php?route=book/index&page=4"><b>
+                    <?= $page == 4 ? '<b class="bold">4</b>' : 4 ?></b></a></td>
+        <td><?= $nbsp ?><a href="index.php?route=book/index&page=5"><b>5</b></a></td>
+                <td><?= $nbsp ?><b>...</b></td>
+        <?php elseif ($page == 5): ?>
+            <td><?= $nbsp ?><a href="index.php?route=book/index&page=4"><b>4</b></a></td>
+            <td><?= $nbsp ?><a href="index.php?route=book/index&page=5"><b>
+                        <?= $page == 5 ? '<b class="bold">5</b>' : 5 ?></b></a></td>
+            <td><?= $nbsp ?><a href="index.php?route=book/index&page=6"><b>6</b></a></td>
+            <td><?= $nbsp ?><b>...</b></td>
+        <?php elseif ($page > 5 && $page < ($count_pages - 4)): ?>
+            <td><?= $nbsp ?><b>...</b></td>
+            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
+            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page ?>"><b class="bold">
+                        <?= $page ?></b></a></td>
+            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page + 1 ?>"><b><?= $page + 1 ?></b></a></td>
+            <td><?= $nbsp ?><b>...</b></td>
+        <?php elseif ($page == ($count_pages - 4)): ?>
+            <td><?= $nbsp ?><b>...</b></td>
+            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
+            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page ?>"><b class="bold"><?= $page ?></b></a></td>
+            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page + 1 ?>"><b><?= $page + 1 ?></b></a></td>
+        <?php elseif ($page == ($count_pages - 3)): ?>
+            <td><?= $nbsp ?><b>...</b></td>
+            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
+            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page ?>"><b class="bold"><?= $page ?></b></a></td>
+        <?php elseif ($page == ($count_pages - 2)): ?>
+            <td><?= $nbsp ?><b>...</b></td>
+            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
+        <?php else: ?>
+            <td><?= $nbsp ?><b>...</b></td>
+        <?php endif; ?>
+        <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= ($count_pages - 2) ?>">
+                <b><?= $page == ($count_pages - 2) ? "<b class=\"bold\">{$page}</b>" : ($count_pages - 2) ?>
+                </b></a></td>
+        <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= ($count_pages - 1) ?>">
+                <b><?= $page == ($count_pages - 1) ? "<b class=\"bold\">{$page}</b>" : ($count_pages - 1) ?>
+                </b></a></td>
+        <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= ($count_pages) ?>">
+                <b><?= $page == $count_pages ? "<b class=\"bold\">{$page}</b>" : $count_pages ?>
+                </b></a></td>
+
     </tr>
 
 </body>

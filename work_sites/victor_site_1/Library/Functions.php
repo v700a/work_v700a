@@ -6,7 +6,7 @@ class Functions
 {
 
 
-    function is_login_form_valid ($name, $pass, $email)
+    function isLoginFormValid ($name, $pass, $email)
     {
         if (!isset($_POST[$name])):
             $_POST[$name] = null;
