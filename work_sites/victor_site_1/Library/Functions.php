@@ -28,5 +28,27 @@ class Functions
         endif;
     }
 
+    function isCommentFormValid (array $array)
+    {
+        $notice_username = '';
+        $notice_email = '';
+        $notice_comment_text = '';
+        if ($array['username'] == ''):
+            $notice_username = '"Логін"';
+        endif;
+        if ($array['email'] == ''):
+            $notice_email = '"E-mail"';
+        endif;
+        if ($array['comment_text'] == ''):
+            $notice_comment_text = '"Текст коментаря"';
+        endif;
+        if ($notice_username == '' && $notice_email == '' && $notice_comment_text == ''):
+            return;
+        else:
+            $notice = "Не заповнено поле - {$notice_username}  {$notice_email}  {$notice_comment_text}";
+            return $notice;
+        endif;
+    }
+
 
 }

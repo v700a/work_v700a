@@ -64,6 +64,7 @@ echo $action;echo '<br><br>';
 
 print_r($_GET);
 echo '<br><br>';
+print_r($_POST);
 //var_dump($controller);
 //echo '<br><br>';
 //echo $action;

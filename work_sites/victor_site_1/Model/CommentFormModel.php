@@ -9,29 +9,9 @@ class CommentFormModel
     {
         global $pdo;
         $result_query_find = $pdo -> query("SELECT * FROM comment");
-        return $result_query_find->fetchAll(PDO::FETCH_ASSOC);
+        return $result_query_find->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    function validation_form (array $array)
-    {
-        $notice_username = '';
-        $notice_email = '';
-        $notice_comment_text = '';
-        if ($array['username'] == ''):
-            $notice_username = '"Логін"';
-        endif;
-        if ($array['email'] == ''):
-            $notice_email = '"E-mail"';
-        endif;
-        if ($array['comment_text'] == ''):
-            $notice_comment_text = '"Текст коментаря"';
-        endif;
-        if ($notice_username == '' && $notice_email == '' && $notice_comment_text == ''):
-            return;
-        else:
-            return "<b><big>Не заповнено поле - {$notice_username}  {$notice_email}  {$notice_comment_text}</big></b>";
-        endif;
-    }
 
     function add(array $add_comment)
     {
@@ -68,7 +48,7 @@ class CommentFormModel
             $find_comment_by_id =$pdo->prepare("SELECT * FROM comment WHERE id = :comment_id");
             $find_comment_by_id->execute(compact('comment_id'));
         endif;
-        $res_find = $find_comment_by_id->fetch(PDO::FETCH_ASSOC);
+        $res_find = $find_comment_by_id->fetch(\PDO::FETCH_ASSOC);
 
 //    print_r($res_find);
 
