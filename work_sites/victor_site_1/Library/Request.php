@@ -16,6 +16,7 @@ class Request
         $this->get = $_GET;
         $this->post = $_POST;
         $this->session = $_SESSION;
+        $this->files = $_FILES;
     }
 
     function isMethod()
@@ -23,14 +24,39 @@ class Request
         return $this->server['REQUEST_METHOD'];
     }
 
+    function isGet ()
+    {
+        return isset($this->get) ? $this->get : null;
+    }
+
     function isPost ()
     {
         return isset($this->post) ? $this->post : null;
     }
 
-    function isGet ()
+    function isFiles ()
     {
-        return isset($this->get) ? $this->get : null;
+        return isset($this->files) ? $this->files : null;
+    }
+
+    function isServer ()
+    {
+        return isset($this->server) ? $this->server : null;
+    }
+
+    function isSsession ()
+    {
+        return isset($this->session) ? $this->session : null;
+    }
+
+    function isFilesOf ($g, $f = null)
+    {
+        return isset($this->files[$g]) ? $this->files[$g] : $f;
+    }
+
+    function isServerOf ($i, $j = null)
+    {
+        return isset($this->server[$i]) ? $this->server[$i] : $j;
     }
 
     function isPostOf ($a, $b = null)
@@ -48,9 +74,6 @@ class Request
         return isset($this->session[$e]) ? $this->session[$e] : $f;
     }
 
-    function issetSsession ()
-    {
-        return isset($this->session) ? $this->session : null;
-    }
+
 
 }

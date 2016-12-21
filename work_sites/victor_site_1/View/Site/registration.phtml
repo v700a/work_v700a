@@ -6,7 +6,22 @@
 </head>
 <body>
 
-uuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+
+<h2>Реєстрація нового користувача</h2>
+<form method="post">
+    <br>
+    Введіть своє майбутнє ім'я (логін):<br>
+    <input type="text" name="login" value="<?= $login_for_form ?>"><br><br>
+    Введіть свою електронну пошту: <br>
+    <input type="email" name="email" value=""><br><br>
+    Введіть пароль:<br>
+    <input type="password" name="password"><br><br>
+    Повторіть пароль:<br>
+    <input type="password" name="password_repeat"><br><br>
+    <button>Зареєструватись</button>
+
+</form>
+
 
 </body>
 </html>

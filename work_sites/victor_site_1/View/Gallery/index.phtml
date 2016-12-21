@@ -5,6 +5,54 @@
     <title>Title</title>
 </head>
 <body>
-444444444444444444444444444
+<div style="margin-top: 10px">
+    <h2>Галерея</h2>
+    <p>
+        !Увага! Файли розміром більше 2 Мб та файли відмінні від зображень завантажені не будуть.
+    </p>
+    <b><?= $over ?></b>
+</div>
+
+<form enctype="multipart/form-data" method="post" id = "gallery">
+    <br>
+    <input name="file[]" type="file" multiple >
+    <br>
+    <button> "Додати до галереї" </button>
+    <hr>
+
+    <?php
+
+    $current_dir = getcwd();
+    chdir($current_dir . '\\gallery');
+    $current_dir = getcwd();
+    $open_dir = opendir($current_dir);
+    $count = 1;
+    while (($item_dir = readdir($open_dir)) !== false):
+        if (is_file($item_dir) == 1):
+            $checkbox = $count;
+            $current_file = "\\gallery\\{$item_dir}";
+            ?>
+
+            <a href= "<?= $current_file; ?>" target='_blank'><img src = '<?= $current_file; ?>' width="150" height="120"></a>
+            <?php
+            if (isset($_SESSION['all'])):
+                echo "<input type=\"checkbox\" form=\"gallery\" name=\"$checkbox\" checked >";
+            else:
+                echo "<input type=\"checkbox\" form=\"gallery\" name=\"$checkbox\">";
+            endif;
+            $count++;
+        endif;
+    endwhile;
+    if (isset($_SESSION['all'])):
+        unset($_SESSION['all']);
+    endif;
+    ?>
+    <div >
+        <hr>
+        <button formmethod="post" name="delete" value="delete">Видалити вибрані файли</button>
+        <button formmethod="post" name ="all" value="all">Вибрати усі файли</button>
+        <button formmethod="post" name="reset" value="reset">Скинути вибір</button>
+    </div>
+</form>
 </body>
 </html>

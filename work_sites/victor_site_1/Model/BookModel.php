@@ -30,7 +30,6 @@ class BookModel
             $offset = $page;
         endif;
         $c = round($count/$limit);
-        echo $c;
         $result_query_find = $pdo -> query("SELECT * FROM book LIMIT $offset, $limit");
         return $result_query_find->fetchAll(\PDO::FETCH_ASSOC);
     }

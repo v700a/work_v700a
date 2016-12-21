@@ -14,4 +14,38 @@ abstract class Controller
         require $path . $view;
         return ob_get_clean();
     }
+
+    function file_types($c)
+    {
+        $count = false;
+        $array_types = array(
+            'image/x-jg',
+            'image/bmp',
+            'image/x-windows-bmp',
+            'image/vnd.dwg',
+            'image/x-dwg',
+            'image/gif',
+            'image/x-icon',
+            'image/jpeg',
+            'image/pjpeg',
+            'image/x-jps',
+            'image/x-pict',
+            'image/x-pcx',
+            'image/pict',
+            'image/x-xpixmap',
+            'image/png',
+            'image/x-quicktime',
+            'image/tiff',
+            'image/x-tiff',
+            'application/octet-stream'
+        );
+        //        $_SESSION['types'] = $c;
+        foreach ($array_types as $type):
+            if ($c == $type):
+                return $count = true;
+            endif;
+        endforeach;
+        return $count;
+    }
+
 }

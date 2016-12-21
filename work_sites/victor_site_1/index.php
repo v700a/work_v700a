@@ -59,6 +59,7 @@ catch (\Exception $exception_1) {
 
 require VIEW_DIR . 'layout.phtml';
 
+echo '<hr>';
 echo '<pre>';
 echo $action;echo '<br><br>';
 

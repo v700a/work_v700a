@@ -9,13 +9,35 @@
         font-size: large;
         text-decoration: underline;
     }
+    .content {
+        width: 98%;
+        padding: 1%;
+    }
+    .button-add {
+        display: inline-block;
+        color: black;
+        font-size: large;
+        text-decoration: none;
+        padding: 7px 25px;
+        outline: none;
+
+        border-width: 2px;
+        border-style: solid;
+        border-color: black;
+        border-radius: 6px;
+        background: #00bbff;
+        transition: 0.3s;
+    }
+    button.button-add:hover { background: lightgreen; }
+    button.button-add:active { background: white; }
     </style>
 </head>
 <body>
-
+<div class="content">
 <form method="post">
-    <button  formmethod="get" name="route" value="book/add"><b>Додати нову книгу до каталогу.</b></button>
+    <button  class="button-add" formmethod="get" name="route" value="book/add"><b>Додати нову книгу до каталогу.</b></button>
 </form>
+    <br>
 <table border="3" width="100%">
     <tr>
         <th bgcolor="#87cefa" >Номер книги</th>
@@ -38,7 +60,7 @@
             <td><a href="index.php?route=book/delete&id=<?=$value['id']?>"">Видалити</a></td>
         </tr>
     <?php endforeach;?>
-</table></table>
+</table>
     <tr>
         <?php   $nbsp = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
                 if (!isset($_GET['page'])):
@@ -102,6 +124,6 @@
                 </b></a></td>
 
     </tr>
-
+</div>
 </body>
 </html>
