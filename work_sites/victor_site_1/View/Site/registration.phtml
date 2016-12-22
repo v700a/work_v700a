@@ -3,22 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .input {
+            width: 180px;
+            height: 25px;
+            text-decoration: none;
+            font-size: large;
+            color: blue;
+            border-width: 2px;
+            border-style: solid;
+            border-color: blue;
+            border-radius: 6px;
+            background: lightcyan;
+
+        }
+        input:focus {
+            border: 2px solid;
+            color: red;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .button {
+        display: inline-block;
+        color: black;
+        font-size: medium ;
+        font-family: Arial, Verdana;
+        font-weight: 500 ;
+        text-decoration: none;
+        padding: 7px 25px;
+        outline: none;
+
+        border-width: 2px;
+        border-style: solid;
+        border-color: blue;
+        border-radius: 6px;
+        background: lightblue;
+        transition: 0.2s;
+        }
+        button:hover { background: deepskyblue; }
+        button:active { background: lightgoldenrodyellow; }
+
+        .style-small {
+            font-family: "Arial Black";
+            color: darkcyan;
+            font-size: small;
+            font-weight: bold;
+        }
+
+        .style-middle {
+            font-family: "Arial Black";
+            color: darkcyan;
+            font-size: larger;
+            font-weight: bold;
+        }
+        .message {
+            background: #f2dede;
+            font-family: "Arial Black";
+            color: indianred ;
+            font-size: larger;
+            font-weight: bold;
+            padding: 5px;
+            width: 30%;
+            border-style: solid;
+            border-color: crimson ;
+            border-width: 1px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
+    <?php
+    if (isset($msg_err)):
+        echo '<div class="message">', $msg_err, '</div>';
+    endif;
+    if (isset($_SESSION['email'])):
+        $email = $_SESSION['email'];
+    else:
+        $email = null;
+    endif;
+    ?>
 
-
-<h2>Реєстрація нового користувача</h2>
+<h2 class="style-middle"><i>Реєстрація нового користувача</i></h2>
 <form method="post">
     <br>
-    Введіть своє майбутнє ім'я (логін):<br>
-    <input type="text" name="login" value="<?= $login_for_form ?>"><br><br>
-    Введіть свою електронну пошту: <br>
-    <input type="email" name="email" value=""><br><br>
-    Введіть пароль:<br>
-    <input type="password" name="password"><br><br>
-    Повторіть пароль:<br>
-    <input type="password" name="password_repeat"><br><br>
-    <button>Зареєструватись</button>
+    <label class="style-small">Введіть своє майбутнє ім'я (логін):</label><br>
+    <input class="input" type="text" autofocus name="login" value="<?= $login_for_form ?>"><br><br>
+    <label class="style-small">Введіть свою електронну пошту: </label><br>
+    <input class="input" type="email" name="email" value="<?= $email_for_form ?>"><br><br>
+    <label class="style-small">Введіть пароль:</label><br>
+    <input class="input" type="password" name="password"><br><br>
+    <label class="style-small">Повторіть пароль:</label><br>
+    <input class="input" type="password" name="password_repeat"><br><br>
+    <button class="button">Зареєструватись</button>
 
 </form>
 

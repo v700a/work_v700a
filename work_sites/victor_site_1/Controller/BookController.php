@@ -31,7 +31,7 @@ class BookController extends Controller
         return $this->render('add.phtml', $array);
     }
 
-    function editAction ($id)
+    function editAction ($id, $page = 0)
     {
         $book = new BookModel();
         $count = $book->find_count_all();
@@ -44,7 +44,7 @@ class BookController extends Controller
         return $this->render('edit.phtml', $array);
     }
 
-    function saveAction ($id)
+    function saveAction ($id, $page = 0)
     {
         $book = new BookModel();
         $book->save_by_id($id);
@@ -59,7 +59,7 @@ class BookController extends Controller
     }
 
 
-    function deleteAction ($id)
+    function deleteAction ($id, $page_current = 0)
     {
         $book = new BookModel();
         $book->remove_by_id($id);
@@ -68,7 +68,8 @@ class BookController extends Controller
         $count_pages = round($count/self::$limit);
         $array = array(
             'array_book' => $array_book,
-            'count_pages' => $count_pages
+            'count_pages' => $count_pages,
+            'page_current' => $page_current
         );
         return $this->render('index.phtml', $array);
     }

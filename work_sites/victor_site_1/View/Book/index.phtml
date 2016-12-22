@@ -107,9 +107,9 @@
         right: 0;
         bottom: 0;
         left: 0;
-        /*z-index: 10;*/
+        z-index: 10;
         display: none;
-        /*background-color: rgba(0, 0, 0, 0.65);*/
+        background-color: rgba(0, 0, 0, 0.65);
         position: fixed;
         cursor: default;
     }
@@ -190,7 +190,11 @@
     <?php
   $nbsp = '&nbsp&nbsp';
                 if (!isset($_GET['page'])):
-                    $page = 1;
+                    if (isset($page_current)):
+                        $page = $page_current;
+                    else:
+                        $page = 1;
+                    endif;
                 else:
                     $page = $_GET['page'];
                 endif;
@@ -208,7 +212,8 @@
                 <a href="#x-1" class="overlay" id="win-1"></a>
                 <div class="popup">
                     Видалити книгу № <?= $_GET['id'] ?> ?
-                    <a class="button-delete" href="index.php?route=book/delete&id=<?=$_GET['id']?>">Видалити</a>
+                    <a class="button-delete" href="index.php?route=book/delete&id=<?=$_GET['id']?>&page=<?= $page ?>&deleted=1">
+                                              Підтвердити видалення</a>
                     <a class="close"title="Закрити" href="#close"></a>
                 </div>
 
@@ -217,13 +222,12 @@
     <?php endforeach;?>
 </table>
     <tr>
-<!--        --><?php //  $nbsp = '&nbsp&nbsp';
-//                if (!isset($_GET['page'])):
-//                    $page = 1;
-//                else:
-//                    $page = $_GET['page'];
-//                endif;
-//        ?>
+        <?php   $nbsp = '&nbsp&nbsp';
+                if (isset($_GET['deleted'])):
+                    header("location: index.php?route=book/index&page=$page");
+                    die;
+                endif;
+        ?>
         <br>
         <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=1"><b>
                     <?= $page == 1 ? '<b class="bold">1</b>' : 1 ?></b></a></td>

@@ -69,8 +69,12 @@ class SiteController extends Controller
         $_POST['password_repeat'] = $request->isPostOf('password_repeat');
         $_SESSION['login'] = $request->isSsessionOf('login');
         $login_for_form = '';
+        $email_for_form = '';
         if ($_SESSION['login'] !== ''):
             $login_for_form = $_SESSION['login'];
+        endif;
+        if ($_SESSION['email'] !== ''):
+            $email_for_form = $_SESSION['email'];
         endif;
         if (($_SESSION['login'] !== null) && ($_SESSION['password'] !== null) && ($_SESSION['email'] !== null)):
             $login = $_SESSION['login'];
@@ -84,11 +88,11 @@ class SiteController extends Controller
                 foreach ($sql_db as $value):
                     foreach ($value as $value_in):
                         if ($email_md5 === $value_in):
-                            echo "<h3>E-mail: {$email_} уже використовується.</h3>";
+                            $msg_err = "E-mail: {$email_} уже використовується.";
                             $is_email = 1;
                             break;
                         elseif ($login === $value_in):
-                            echo ' <h3>Користувач з таким іменем уже зареєстрований. Виберіть інше ім\'я.</h3>';
+                            $msg_err = 'Користувач з таким іменем уже зареєстрований. Виберіть інше ім\'я.';
                             $is_name = 1;
                             break;
                         endif;
@@ -108,10 +112,11 @@ class SiteController extends Controller
             $login_null = 1;
         endif;
 
-        if ($_POST['email'] !== ''):
+        if ($_POST['email'] !== '' && $_POST['email'] !== null):
             $_SESSION['email'] = $_POST['email'];
         else:
             $_SESSION['email'] = null;
+            $email_null = 1;
         endif;
 
         if (($_POST['password'] == '') && ($_POST['password_repeat'] == '')):
@@ -129,15 +134,20 @@ class SiteController extends Controller
         endif;
 
         if ($_GET['msg'] == 'null'):
-            echo "<h3>Пароль не введено!</h3>";
+            $msg_err = "Пароль не введено!";
         elseif ($_GET['msg'] == 'lgnull'):
-            echo '<h3>Поле "Ім\'я (логін)" не заповнене.</h3>';
+            $msg_err = "Поле \"Ім'я (логін)\" не заповнене.";
+        elseif ($_GET['msg'] == 'emailnull'):
+            $msg_err = "Не введено E-mail";
         elseif ($_GET['msg'] == 'passno'):
-            echo '<h3>Паролі не співпадають</h3>';
+            $msg_err = "Паролі не співпадають";
         endif;
         if ($_SERVER['REQUEST_METHOD'] == 'POST'):
             if ($login_null == 1):
                 header('location: index.php?route=site/register&msg=lgnull');
+                die;
+            elseif ($email_null == 1):
+                header('location: index.php?route=site/register&msg=emailnull');
                 die;
             elseif ($pas_null == 1):
                 header('location: index.php?route=site/register&msg=null');
@@ -147,8 +157,10 @@ class SiteController extends Controller
             die;
         endif;
         $array = array(
-            'login_for_form'=>$login_for_form
-        );
+            'login_for_form'=>$login_for_form,
+            'msg_err' => $msg_err,
+            'email_for_form' => $email_for_form
+            );
         return $this->render('registration.phtml', $array);
 
     }

@@ -23,6 +23,7 @@ try {
     $request = new \Library\Request();
     $route = $request->isGetOf('route', 'site/index');
     $id = $request->isGetOf('id');
+    $page = $request->isGetOf('page');
     $route = explode('/', $route);
     $controller = 'Controller\\' . ucfirst($route[0]) . 'Controller';
     $action = $route[1] . 'Action';
@@ -36,12 +37,12 @@ try {
     elseif ($request->isPostOf('cancel') !== null):
         $action = 'indexAction';
         $content = $controller->$action();
-    elseif ($request->isGetOf('page') !== null):
+    elseif ($request->isGetOf('page') !== null && $request->isGetOf('id') == null):
         \Controller\BookController::$page = $request->isGetOf('page');
         $action = 'indexAction';
         $content = $controller->$action();
     elseif ($id !== null):
-        $content = $controller->$action($id);
+        $content = $controller->$action($id, $page);
     else:
         $content = $controller->$action();
     endif;
