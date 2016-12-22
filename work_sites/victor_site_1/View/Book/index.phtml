@@ -7,11 +7,16 @@
     .bold {
         color: crimson;
         font-size: large;
-        text-decoration: underline;
+        /*text-decoration: underline;*/
+    }
+    .bold2 {
+        color: blue;
+        font-size: x-large ;
+        /*text-decoration: underline;*/
     }
     .content {
-        width: 98%;
-        padding: 1%;
+        width: 99%;
+        padding: 0.5%;
     }
     .button-add {
         display: inline-block;
@@ -25,17 +30,151 @@
         border-style: solid;
         border-color: black;
         border-radius: 6px;
-        background: #00bbff;
+        background: lightcyan ;
         transition: 0.3s;
     }
     button.button-add:hover { background: lightgreen; }
     button.button-add:active { background: white; }
+    .button-page {
+        display: inline-block;
+        color: black;
+        font-size: large;
+        font-family: Arial, Verdana;
+        font-weight: 500 ;
+        text-decoration: none;
+        padding: 7px 25px;
+        outline: none;
+
+        border-width: 2px;
+        border-style: solid;
+        border-color: blue;
+        border-radius: 6px;
+        background: palegreen;
+        transition: 0.2s;
+    }
+    a.button-page:hover { background: cornflowerblue; color: limegreen}
+    a.button-page:active { background: snow; }
+    .button-edit {
+        display: inline-block;
+        color: black;
+        font-size: small ;
+        font-family: Arial, Verdana;
+        font-weight: 300 ;
+        text-decoration: none;
+        padding: 2px 15px;
+        outline: none;
+
+        border-width: 2px;
+        border-style: solid;
+        border-color: blue;
+        border-radius: 6px;
+        background: paleturquoise ;
+        transition: 0.2s;
+    }
+    a.button-edit:hover { background: cornflowerblue; color: limegreen}
+    a.button-edit:active { background: snow; }
+    .button-delete {
+        display: inline-block;
+        color: black;
+        font-size: small ;
+        font-family: Arial, Verdana;
+        font-weight: 300 ;
+        text-decoration: none;
+        padding: 2px 15px;
+        outline: none;
+
+        border-width: 2px;
+        border-style: solid;
+        border-color: blue;
+        border-radius: 6px;
+        background: darksalmon ;
+        transition: 0.2s;
+    }
+    a.button-delete:hover { background: red; }
+    a.button-delete:active { background: snow; }
+
+    .a-title {
+        text-decoration: none;
+        font-family: Arial, Verdana;
+        font-size: medium;
+        color: black;
+        font-weight: bold;
+    }
+        /*POPUP*/
+
+    .overlay {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        /*z-index: 10;*/
+        display: none;
+        /*background-color: rgba(0, 0, 0, 0.65);*/
+        position: fixed;
+        cursor: default;
+    }
+    .overlay:target {
+        display: block;
+    }
+    /* стили модального окна */
+    .popup {
+        top: -100%;
+        right: 0;
+        left: 50%;
+        font-size: 14px;
+        z-index: 20;
+        margin: 0;
+        width: 85%;
+        min-width: 320px;
+        max-width: 600px;
+        /* фиксированное позиционирование, окно стабильно при прокрутке */
+        position: fixed;
+        padding: 15px;
+        border: 1px solid #383838;
+        background: aquamarine ;
+        border-radius: 4px;
+        font: 14px/18px 'Tahoma', Arial, sans-serif;
+    }
+
+    .overlay:target+.popup {
+        transform: translate(-30%, 0);
+        top: 10%;
+    }
+
+    .close {
+        top: -10px;
+        right: -10px;
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        padding: 0;
+        border: 2px solid #ccc;
+        border-radius: 15px;
+        background-color: rgba(61, 61, 61, 0.8);
+        box-shadow: 0px 0px 10px #000;
+        text-align: center;
+        text-decoration: none;
+        font: 13px/20px 'Tahoma', Arial, sans-serif;
+        font-weight: bold;
+        transition: all ease .8s;
+    }
+    .close:before {
+        color: rgba(255, 255, 255, 0.9);
+        content: "X";
+        text-shadow: 0 -1px rgba(0, 0, 0, 0.9);
+        font-size: 12px;
+    }
+    .close:hover {
+        background-color: rgba(252, 20, 0, 0.8);
+        transform: rotate(360deg);
+    }
+
     </style>
 </head>
 <body>
 <div class="content">
 <form method="post">
-    <button  class="button-add" formmethod="get" name="route" value="book/add"><b>Додати нову книгу до каталогу.</b></button>
+    <button  class="button-add" formmethod="get" name="route" value="book/add"><b>Додати нову книгу до каталогу</b></button>
 </form>
     <br>
 <table border="3" width="100%">
@@ -49,81 +188,102 @@
     </tr>
 
     <?php
-    foreach ($array_book as $key => $value):
-        ?>
-        <tr>
-            <td><?= $value['id'] ?></td>
-            <td><a href="#" title="<?= $value['description'] ?>"><?= $value['title'] ?></a></td>
-            <td><?= $value['price'] ?></td>
-            <td><?= $value['is_active'] ?></td>
-            <td><a href="index.php?route=book/edit&id=<?=$value['id']?>">Редагувати</a></td>
-            <td><a href="index.php?route=book/delete&id=<?=$value['id']?>"">Видалити</a></td>
-        </tr>
-    <?php endforeach;?>
-</table>
-    <tr>
-        <?php   $nbsp = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+  $nbsp = '&nbsp&nbsp';
                 if (!isset($_GET['page'])):
                     $page = 1;
                 else:
                     $page = $_GET['page'];
                 endif;
+    foreach ($array_book as $key => $value):
         ?>
-        <td><?= $nbsp ?><a href="index.php?route=book/index&page=1"><b>
+        <tr>
+            <td><?= $value['id'] ?></td>
+            <td><a class="a-title" href="#" title="<?= $value['description'] ?>"><?= $value['title'] ?></a></td>
+            <td><?= $value['price'] ?></td>
+            <td><?= $value['is_active'] ?></td>
+            <td><a class="button-edit" href="index.php?route=book/edit&id=<?=$value['id']?>">Редагувати</a></td>
+<!--            <td><a class="button-delete" href="index.php?route=book/delete&id=--><?//=$value['id']?><!--"">Видалити</a></td>-->
+            <td>
+                <a class="button-delete" href="index.php?route=book/index&page=<?= $page ?>&id=<?=$value['id']?>#win-1" >Видалити</a>
+                <a href="#x-1" class="overlay" id="win-1"></a>
+                <div class="popup">
+                    Видалити книгу № <?= $_GET['id'] ?> ?
+                    <a class="button-delete" href="index.php?route=book/delete&id=<?=$_GET['id']?>">Видалити</a>
+                    <a class="close"title="Закрити" href="#close"></a>
+                </div>
+
+            </td>
+        </tr>
+    <?php endforeach;?>
+</table>
+    <tr>
+<!--        --><?php //  $nbsp = '&nbsp&nbsp';
+//                if (!isset($_GET['page'])):
+//                    $page = 1;
+//                else:
+//                    $page = $_GET['page'];
+//                endif;
+//        ?>
+        <br>
+        <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=1"><b>
                     <?= $page == 1 ? '<b class="bold">1</b>' : 1 ?></b></a></td>
-        <td><?= $nbsp ?><a href="index.php?route=book/index&page=2"><b>
+        <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=2"><b>
                     <?= $page == 2 ? '<b class="bold">2</b>' : 2 ?></b></a></td>
-        <td><?= $nbsp ?><a href="index.php?route=book/index&page=3"><b>
+        <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=3"><b>
                     <?= $page == 3 ? '<b class="bold">3</b>' : 3 ?></b></a></td>
         <?php if ($page == 1 || $page == 2): ?>
-            <td><?= $nbsp ?><b>...</b></td>
+            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
         <?php elseif ($page == 3): ?>
-        <td><?= $nbsp ?><a href="index.php?route=book/index&page=4"><b>4</b></a></td>
-                <td><?= $nbsp ?><b>...</b></td>
+        <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=4"><b>4</b></a></td>
+                <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
         <?php elseif ($page == 4): ?>
-        <td><?= $nbsp ?><a href="index.php?route=book/index&page=4"><b>
+        <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=4"><b>
                     <?= $page == 4 ? '<b class="bold">4</b>' : 4 ?></b></a></td>
-        <td><?= $nbsp ?><a href="index.php?route=book/index&page=5"><b>5</b></a></td>
-                <td><?= $nbsp ?><b>...</b></td>
+        <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=5"><b>5</b></a></td>
+                <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
         <?php elseif ($page == 5): ?>
-            <td><?= $nbsp ?><a href="index.php?route=book/index&page=4"><b>4</b></a></td>
-            <td><?= $nbsp ?><a href="index.php?route=book/index&page=5"><b>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=4"><b>4</b></a></td>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=5"><b>
                         <?= $page == 5 ? '<b class="bold">5</b>' : 5 ?></b></a></td>
-            <td><?= $nbsp ?><a href="index.php?route=book/index&page=6"><b>6</b></a></td>
-            <td><?= $nbsp ?><b>...</b></td>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=6"><b>6</b></a></td>
+            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
         <?php elseif ($page > 5 && $page < ($count_pages - 4)): ?>
-            <td><?= $nbsp ?><b>...</b></td>
-            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
-            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page ?>"><b class="bold">
+            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page ?>"><b class="bold">
                         <?= $page ?></b></a></td>
-            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page + 1 ?>"><b><?= $page + 1 ?></b></a></td>
-            <td><?= $nbsp ?><b>...</b></td>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page + 1 ?>"><b><?= $page + 1 ?></b></a></td>
+            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
         <?php elseif ($page == ($count_pages - 4)): ?>
-            <td><?= $nbsp ?><b>...</b></td>
-            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
-            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page ?>"><b class="bold"><?= $page ?></b></a></td>
-            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page + 1 ?>"><b><?= $page + 1 ?></b></a></td>
+            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page ?>"><b class="bold"><?= $page ?></b></a></td>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page + 1 ?>"><b><?= $page + 1 ?></b></a></td>
         <?php elseif ($page == ($count_pages - 3)): ?>
-            <td><?= $nbsp ?><b>...</b></td>
-            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
-            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page ?>"><b class="bold"><?= $page ?></b></a></td>
+            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page ?>"><b class="bold"><?= $page ?></b></a></td>
         <?php elseif ($page == ($count_pages - 2)): ?>
-            <td><?= $nbsp ?><b>...</b></td>
-            <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
+            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
         <?php else: ?>
-            <td><?= $nbsp ?><b>...</b></td>
+            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
         <?php endif; ?>
-        <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= ($count_pages - 2) ?>">
+        <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= ($count_pages - 2) ?>">
                 <b><?= $page == ($count_pages - 2) ? "<b class=\"bold\">{$page}</b>" : ($count_pages - 2) ?>
                 </b></a></td>
-        <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= ($count_pages - 1) ?>">
+        <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= ($count_pages - 1) ?>">
                 <b><?= $page == ($count_pages - 1) ? "<b class=\"bold\">{$page}</b>" : ($count_pages - 1) ?>
                 </b></a></td>
-        <td><?= $nbsp ?><a href="index.php?route=book/index&page=<?= ($count_pages) ?>">
+        <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= ($count_pages) ?>">
                 <b><?= $page == $count_pages ? "<b class=\"bold\">{$page}</b>" : $count_pages ?>
                 </b></a></td>
 
     </tr>
 </div>
+
+<!--<a href="#win1" class="button button-green">Открыть окно 1</a>-->
+<!-- Модальное окно №1 -->
+<!--"index.php?route=book/delete&id=--><?//=$value['id']?><!--"-->
 </body>
 </html>

@@ -2,67 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
 
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MVC - Victor</title>
     <style>
-        .box {
-            width: auto;
-
+         body{
+            margin: 0;
         }
         .menu{
             background: black;
-            width: 98%;
+            width: 100%;
             float: left;
+            position: fixed;
             padding: 1%;
-            border-radius: 5px;
+            /*border-radius: 5px;*/
         }
         .content{
-            background: #f7ecb5;
+            background: lightyellow;
             border-radius: 5px;
             width: 99%;
             height: 50%;
             padding: 0 0 1% 1%;
-            margin: 1% 0 0 0;
+            margin: 3% 0 0 0;
             float: left;
         }
-        .a {
+        .a-menu {
             text-decoration: none;
             color: darkgray;
             font-family: Arial, Verdana ;
             font-size: larger ;
         }
-        a:hover{
-            color: white;
-        }
-        a:active {
-            background: lightskyblue;
-        }
+        a.a-menu:hover{color: white;}
+        a.a-menu:active {background: lightskyblue;}
 
     </style>
 </head>
 <body>
-<div class="box">
+<!--<header class="box">-->
         <div class="menu">
 
-                <a class="a" href="index.php">Головна</a>$nbsp$nbsp
-                <a class="a" href="/index.php?route=book/index">Книги</a>$nbsp$nbsp
-                <a class="a" href="/index.php?route=comment/index">Коментарі</a>$nbsp$nbsp
-                <a class="a" href="/index.php?route=gallery/index">Галерея</a>$nbsp$nbsp
+                <a class="a-menu" href="index.php">Головна</a>$nbsp$nbsp
+                <a class="a-menu" href="/index.php?route=book/index">Книги</a>$nbsp$nbsp
+                <a class="a-menu" href="/index.php?route=comment/index">Коментарі</a>$nbsp$nbsp
+                <a class="a-menu" href="/index.php?route=gallery/index">Галерея</a>$nbsp$nbsp
                 <?php if (!isset($_COOKIE['username_in'])): ?>
-                <a class="a" href="/index.php?route=site/login">Авторизація</a>$nbsp$nbsp
-                <a class="a" href="/index.php?route=site/register">Реєстрація</a>$nbsp$nbsp
+                <a class="a-menu" href="/index.php?route=site/login">Авторизація</a>$nbsp$nbsp
+<!--                <a class="a" href="/index.php?route=site/register">Реєстрація</a>$nbsp$nbsp-->
                 <?php else: ?>
-                <a class="a" href="/index.php?route=site/login&logmsg=out">Вихід</a>$nbsp$nbsp
+                <a class="a-menu" href="/index.php?route=site/login&logmsg=out">Вихід</a>$nbsp$nbsp
                 <?php endif; ?>
 
         </div>
+<!--</header>-->
 <br>
 <div class="content">
 <?= $content ?>
 </div>
-</div>
+
 <!-- JavaScript-ядро Bootstrap
 ================================================== -->
 <!-- Розміщуйте підключення JavaScript в кінці документа щоб сторінки завантажувались швидше -->

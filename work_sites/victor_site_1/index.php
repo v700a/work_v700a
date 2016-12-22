@@ -1,15 +1,12 @@
 <?php
 
-//$pdo = new PDO('mysql: host=localhost; dbname=mvc_group_1009', 'root', '');
 $pdo = \Library\ConnectionPDO::getInstance()->getPDO();
 session_start();
-//var_dump($pdo);
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', __DIR__ . DS );
 define('VIEW_DIR', ROOT . 'View' . DS);
 
 $content = '';
-
 
 function __autoload($class_name)
 {
@@ -66,15 +63,4 @@ echo $action;echo '<br><br>';
 print_r($_GET);
 echo '<br><br>';
 print_r($_POST);
-//var_dump($controller);
-//echo '<br><br>';
-//echo $action;
-//echo '</pre>';
-
-
-//$page_content = $functions->is_get('page');
-//if ($page_content !== null):
-//require ('/include_files/' . $page_content . '.php');
-//endif;
-//require ('primary_layout.php');
 

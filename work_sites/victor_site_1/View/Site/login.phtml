@@ -43,6 +43,25 @@
         }
         button:hover { background: deepskyblue; }
         button:active { background: lightgoldenrodyellow; }
+        .button-r {
+            display: inline-block;
+            color: black;
+            font-size: large;
+            font-family: Arial, Verdana;
+            font-weight: 500 ;
+            text-decoration: none;
+            padding: 7px 25px;
+            outline: none;
+
+            border-width: 2px;
+            border-style: solid;
+            border-color: blue;
+            border-radius: 6px;
+            background: palegreen;
+            transition: 0.2s;
+        }
+        a.button-r:hover { background: greenyellow; color: limegreen}
+        a.button-r:active { background: snow; }
         .input {
             width: 180px;
             height: 25px;
@@ -82,9 +101,12 @@
         ?>
         <div class="d2">
         <input class="input" type="text" name="login" id="login" placeholder="&nbsp Логін"><br><br>
-        <input class="input" type="email" name="email" id="login" placeholder="&nbsp E-mail"><br><br>
+        <input class="input" type="email" name="email" id="email" placeholder="&nbsp E-mail"><br><br>
         <input class="input" type="password" name="password" id="password" placeholder="&nbsp Пароль"><br><br>
         <button class="button">Авторизуватись</button>
+            <br><br>
+        <a class="button-r" href = "/index.php?route=site/register">Реєстрація<a/>
+
         </div>
     <?php endif;?>
 </form>
