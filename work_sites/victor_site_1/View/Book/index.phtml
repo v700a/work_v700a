@@ -203,7 +203,7 @@
         <tr style="cursor: pointer; background-color: #ECECEC ;"
             onmouseover="this.style.backgroundColor='aquamarine' ;"
             onmouseout="this.style.backgroundColor='#ECECEC'"
-            onclick="location.href='index.php?route=book/read&description=<?= $value['id'] ?>'">
+            onclick="location.href='index.php?route=book/read&description=<?= $value['id'] ?>&page=<?= $page ?>'">
             <td><?= $value['id'] ?></td>
             <td><?= $value['title'] ?></td>
             <td><?= $value['price'] ?></td>
