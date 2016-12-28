@@ -34,6 +34,9 @@ try {
         endif;
         $action = 'saveAction';
         $content = $controller->$action($request->isPost());
+    elseif ($request->isGetOf('description') !== null):
+        $read = $request->isGetOf('description');
+        $content = $controller->$action($read);
     elseif ($request->isPostOf('cancel') !== null):
         $action = 'indexAction';
         $content = $controller->$action();

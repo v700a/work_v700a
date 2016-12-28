@@ -73,5 +73,18 @@ class BookController extends Controller
         );
         return $this->render('index.phtml', $array);
     }
+    function readAction ($id)
+    {
+        $book = new BookModel();
+        $count = $book->find_count_all();
+        $array_book = $book->find_by_id($id);
+        $count_pages = round($count/self::$limit);
+        $array = array(
+            'array_book' => $array_book,
+            'count_pages' => $count_pages
+        );
 
+        return $this->render('read.phtml', $array);
+
+    }
 }

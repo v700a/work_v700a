@@ -200,9 +200,12 @@
                 endif;
     foreach ($array_book as $key => $value):
         ?>
-        <tr>
+        <tr style="cursor: pointer; background-color: #ECECEC ;"
+            onmouseover="this.style.backgroundColor='aquamarine' ;"
+            onmouseout="this.style.backgroundColor='#ECECEC'"
+            onclick="location.href='index.php?route=book/read&description=<?= $value['id'] ?>'">
             <td><?= $value['id'] ?></td>
-            <td><a class="a-title" href="#" title="<?= $value['description'] ?>"><?= $value['title'] ?></a></td>
+            <td><?= $value['title'] ?></td>
             <td><?= $value['price'] ?></td>
             <td><?= $value['is_active'] ?></td>
             <td><a class="button-edit" href="index.php?route=book/edit&id=<?=$value['id']?>">Редагувати</a></td>
@@ -216,11 +219,10 @@
                                               Підтвердити видалення</a>
                     <a class="close"title="Закрити" href="#close"></a>
                 </div>
-
-            </td>
-        </tr>
-    <?php endforeach;?>
+            </td></tr>
+        <?php endforeach;?>
 </table>
+
     <tr>
         <?php   $nbsp = '&nbsp&nbsp';
                 if (isset($_GET['deleted'])):
