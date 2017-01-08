@@ -67,9 +67,19 @@ class SiteController extends Controller
         $_POST['email'] = $request->isPostOf('email');
         $_POST['password'] = $request->isPostOf('password');
         $_POST['password_repeat'] = $request->isPostOf('password_repeat');
+        $_POST['code'] = $request->isPostOf('code');
+//        $_POST['passview'] = $request->isPostOf('passview');
         $_SESSION['login'] = $request->isSsessionOf('login');
+        $_SESSION['email'] = $request->isSsessionOf('email');
         $login_for_form = '';
         $email_for_form = '';
+        $pass_for_form = $_POST['password'];
+        $pass_r_for_form = $_POST['password_repeat'];
+        $email_null = 0;
+        $pas_null = 0;
+        $login_null = 0;
+        $cap_null = 0;
+        $cap_err = 0;
         if ($_SESSION['login'] !== ''):
             $login_for_form = $_SESSION['login'];
         endif;
@@ -105,32 +115,48 @@ class SiteController extends Controller
                 endif;
             endif;
         endif;
-        if ($_POST['login'] !== '' && $_POST['login'] !== null):
-            $_SESSION['login'] = $_POST['login'];
-        else:
-            $_SESSION['login'] = null;
-            $login_null = 1;
-        endif;
+        if ($_POST['code'] !== '' && $_POST['code'] !== null):
+            $cap = $_COOKIE["captcha"];
+            echo $cap;
+            $code = $_POST['code'];
+            $code = trim($code); // На всякий случай убираем пробелы
+            $code = md5($code);
 
-        if ($_POST['email'] !== '' && $_POST['email'] !== null):
-            $_SESSION['email'] = $_POST['email'];
-        else:
-            $_SESSION['email'] = null;
-            $email_null = 1;
-        endif;
+            if ($cap === $code):
+                if ($_POST['login'] !== '' && $_POST['login'] !== null):
+                    $_SESSION['login'] = $_POST['login'];
+                else:
+                    $_SESSION['login'] = null;
+                    $login_null = 1;
+                endif;
 
-        if (($_POST['password'] == '') && ($_POST['password_repeat'] == '')):
-            $_POST['password'] = null;
-            $_POST['password_repeat'] = null;
-            $_SESSION['password'] = null;
-            $pas_null = 1;
-        endif;
+                if ($_POST['email'] !== '' && $_POST['email'] !== null):
+                    $_SESSION['email'] = $_POST['email'];
+                else:
+                    $_SESSION['email'] = null;
+                    $email_null = 1;
+                endif;
 
-        if ($_POST['password'] !== $_POST['password_repeat']):
-            header('location: index.php?route=site/register&msg=passno');
-            die;
+
+
+                if (($_POST['password'] == '') && ($_POST['password_repeat'] == '')):
+                    $_POST['password'] = null;
+                    $_POST['password_repeat'] = null;
+                    $_SESSION['password'] = null;
+                    $pas_null = 1;
+                endif;
+
+                if ($_POST['password'] !== $_POST['password_repeat']):
+                    header('location: index.php?route=site/register&msg=passno');
+                    die;
+                else:
+                    $_SESSION['password'] = $_POST['password'];
+                endif;
+            else:
+                $cap_err = 1;
+            endif;
         else:
-            $_SESSION['password'] = $_POST['password'];
+            $cap_null = 1;
         endif;
 
         if ($_GET['msg'] == 'null'):
@@ -141,6 +167,12 @@ class SiteController extends Controller
             $msg_err = "Не введено E-mail";
         elseif ($_GET['msg'] == 'passno'):
             $msg_err = "Паролі не співпадають";
+        elseif ($_GET['msg'] == 'capnull'):
+            $msg_err = "Код не введено";
+        elseif ($_GET['msg'] == 'caperr'):
+            $msg_err = "Введений код невірний ";
+        else:
+            $msg_err = null;
         endif;
         if ($_SERVER['REQUEST_METHOD'] == 'POST'):
             if ($login_null == 1):
@@ -152,14 +184,24 @@ class SiteController extends Controller
             elseif ($pas_null == 1):
                 header('location: index.php?route=site/register&msg=null');
                 die;
+            elseif ($cap_null == 1):
+                header('location: index.php?route=site/register&msg=capnull');
+                die;
+            elseif ($cap_err == 1):
+                header('location: index.php?route=site/register&msg=caperr');
+                die;
             endif;
             header('location: index.php?route=site/register');
             die;
         endif;
+
         $array = array(
             'login_for_form'=>$login_for_form,
             'msg_err' => $msg_err,
-            'email_for_form' => $email_for_form
+            'email_for_form' => $email_for_form,
+            'pass_for_form' => $pass_for_form,
+            'pass_r_for_form' => $pass_r_for_form
+
             );
         return $this->render('registration.phtml', $array);
 

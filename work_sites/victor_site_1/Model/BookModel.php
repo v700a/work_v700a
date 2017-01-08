@@ -21,7 +21,36 @@ class BookModel
         $w = $re->fetch(\PDO::FETCH_ASSOC);
         return $w['count'];
     }
-    function read_limit($count, $limit=1, $page = 0)
+    function find_count_all_sort_by($sort, $sortValue)
+    {
+        global $pdo;
+
+        $re = $pdo->query("SELECT FROM book");
+
+        //var_dump(self::$pdo);
+        if ($sort == 'sortById' && $sortValue == 'down'):
+            $re = $pdo->query("SELECT * FROM book ORDER BY id DESC");
+        elseif ($sort == 'sortByTitle' && $sortValue == 'down'):
+            $re = $pdo->query("SELECT * FROM book ORDER BY title DESC");
+        elseif ($sort == 'sortByPrice' && $sortValue == 'down'):
+            $re = $pdo->query("SELECT * FROM book ORDER BY price DESC");
+        elseif ($sort == 'sortByActive' && $sortValue == 'down'):
+            $re = $pdo->query("SELECT * COUNT(*) as count FROM book ORDER BY is_active DESC");
+        endif;
+
+        if ($sort == 'sortById' && $sortValue == 'up'):
+            $re = $pdo->query("SELECT * FROM book ORDER BY id");
+        elseif ($sort == 'sortByTitle' && $sortValue == 'up'):
+            $re = $pdo->query("SELECT * FROM book ORDER BY title");
+        elseif ($sort == 'sortByPrice' && $sortValue == 'up'):
+            $re = $pdo->query("SELECT * FROM book ORDER BY price");
+        elseif ($sort == 'sortByActive' && $sortValue == 'up'):
+            $re = $pdo->query("SELECT * FROM book ORDER BY is_active");
+        endif;
+        $w = $re->fetch(\PDO::FETCH_ASSOC);
+        return $w;
+    }
+    function read_limit($count, $limit=1, $page = 0, $sort = 'sortById', $sortValue = 'none')
     {
         global $pdo;
         if ($page !== 0):
@@ -30,7 +59,39 @@ class BookModel
             $offset = $page;
         endif;
         $c = round($count/$limit);
-        $result_query_find = $pdo -> query("SELECT * FROM book LIMIT $offset, $limit");
+//        $re = $pdo->query("SELECT FROM book");
+        $sortField = 'id';
+        $sortType = '';
+        //var_dump(self::$pdo);
+        if ($sort == 'sortById' && $sortValue == 'down'):
+            $sortField = 'id';
+            $sortType = 'DESC';
+        elseif ($sort == 'sortByTitle' && $sortValue == 'down'):
+            $sortField = 'title';
+            $sortType = 'DESC';
+        elseif ($sort == 'sortByPrice' && $sortValue == 'down'):
+            $sortField = 'price';
+            $sortType = 'DESC';
+//        elseif ($sort == 'sortByActive' && $sortValue == 'down'):
+//            $sortField = 'is_action';
+//            $sortType = 'DESC';
+        endif;
+
+        if ($sort == 'sortById' && $sortValue == 'up'):
+            $sortField = 'id';
+            $sortType = '';
+        elseif ($sort == 'sortByTitle' && $sortValue == 'up'):
+            $sortField = 'title';
+            $sortType = '';
+        elseif ($sort == 'sortByPrice' && $sortValue == 'up'):
+            $sortField = 'price';
+            $sortType = '';
+//        elseif ($sort == 'sortByActive' && $sortValue == 'up'):
+//            $sortField = 'is_action';
+//            $sortType = '';
+        endif;
+
+        $result_query_find = $pdo -> query("SELECT * FROM book ORDER BY $sortField $sortType LIMIT $offset, $limit");
         return $result_query_find->fetchAll(\PDO::FETCH_ASSOC);
     }
 

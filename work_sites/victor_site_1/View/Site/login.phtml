@@ -91,9 +91,10 @@
 <body>
 <div class="d">
 <form method="post">
-    <?php if (isset($_COOKIE['username_in'])): ?>
-        Ви авторизовані як <?=$_COOKIE['username_in']?>
-        <br>
+    <?php if (isset($_COOKIE['username_in'])):
+        header('location: index.php?route=site/index');
+        die;
+        ?>
     <?php else:
         if ($logerr !== null):
             echo '<div class="meesage"><b>', $logerr, '</b></div>' ;

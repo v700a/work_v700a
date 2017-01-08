@@ -11,89 +11,11 @@
             color: darkcyan;
         }
 
-
-
-        /* Базовые стили слоя затемнения и модального окна  */
-        .overlay {
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 10;
-            display: none;
-            /*background-color: rgba(0, 0, 0, 0.65);*/
-            position: fixed;
-            cursor: default;
-        }
-        .overlay:target {
-            display: block;
-        }
-        /* стили модального окна */
-        .popup {
-            top: -100%;
-            right: 0;
-            left: 50%;
-            font-size: 14px;
-            z-index: 20;
-            margin: 0;
-            width: 85%;
-            min-width: 320px;
-            max-width: 600px;
-            /* фиксированное позиционирование, окно стабильно при прокрутке */
-            position: fixed;
-            padding: 15px;
-            border: 1px solid #383838;
-            background: #fefefe;
-            border-radius: 4px;
-            font: 14px/18px 'Tahoma', Arial, sans-serif;
-        }
-
-        .overlay:target+.popup {
-            transform: translate(-50%, 0);
-            top: 20%;
-        }
-
-        .close {
-            top: -10px;
-            right: -10px;
-            width: 20px;
-            height: 20px;
-            position: absolute;
-            padding: 0;
-            border: 2px solid #ccc;
-            border-radius: 15px;
-            background-color: rgba(61, 61, 61, 0.8);
-            box-shadow: 0px 0px 10px #000;
-            text-align: center;
-            text-decoration: none;
-            font: 13px/20px 'Tahoma', Arial, sans-serif;
-            font-weight: bold;
-            transition: all ease .8s;
-        }
-        .close:before {
-            color: rgba(255, 255, 255, 0.9);
-            content: "X";
-            text-shadow: 0 -1px rgba(0, 0, 0, 0.9);
-            font-size: 12px;
-        }
-        .close:hover {
-            background-color: rgba(252, 20, 0, 0.8);
-            transform: rotate(360deg);
-        }
-
     </style>
 </head>
 <body>
 
 
 <p class="p"><i>Тестовий сайт</i></p>
-<!-- Ссылки на вызов модальных окон-->
-<a href="#win1" class="button button-green">Открыть окно 1</a>
-<!-- Модальное окно №1 -->
-<a href="#x" class="overlay" id="win1"></a>
-<div class="popup">
-    Здесь вы можете разместить любое содержание, текст с картинками или видео!
-    <a class="close"title="Закрыть" href="#close"></a>
-</div>
 </body>
 </html>

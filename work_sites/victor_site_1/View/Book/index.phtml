@@ -111,7 +111,7 @@
         display: none;
         background-color: rgba(0, 0, 0, 0.65);
         position: fixed;
-        cursor: default;
+        cursor: default ;
     }
     .overlay:target {
         display: block;
@@ -168,7 +168,11 @@
         background-color: rgba(252, 20, 0, 0.8);
         transform: rotate(360deg);
     }
+    .th-style {
+        cursor: pointer;
+        background-color: paleturquoise;
 
+    }
     </style>
 </head>
 <body>
@@ -179,12 +183,54 @@
     <br>
 <table border="3" width="100%">
     <tr>
-        <th bgcolor="#87cefa" >Номер книги</th>
-        <th bgcolor="#87cefa">Назва книги</th>
-        <th bgcolor="#87cefa">Ціна</th>
-        <th bgcolor="#87cefa">Наявність</th>
+        <?php
+            if (!isset($_GET['sortById'])):
+                $_GET['sortById'] = 'none';
+            endif;
+            if (!isset($_GET['sortByTitle'])):
+                $_GET['sortByTitle'] = 'none';
+            endif;
+            if (!isset($_GET['sortByPrice'])):
+                $_GET['sortByPrice'] = 'none';
+            endif;
+            if (!isset($_GET['sortByActive'])):
+                $_GET['sortByActive'] = 'none';
+            endif;
+            if ($_GET['sortById'] == 'none'): ?>
+        <th class="th-style" onclick="location.href='index.php?route=book/sort&sortById=up'">Номер книги</th>
+        <?php elseif ($_GET['sortById'] == 'up'): ?>
+        <th class="th-style" onclick="location.href='index.php?route=book/sort&sortById=down'">Номер книги &#9650</th>
+        <?php elseif ($_GET['sortById'] == 'down'): ?>
+        <th class="th-style" onclick="location.href='index.php?route=book/sort&sortById=up'">Номер книги &#9660</th>
+        <?php endif; ?>
+        <?php if ($_GET['sortByTitle'] == 'none'): ?>
+        <th class="th-style" onclick="location.href='index.php?route=book/sort&sortByTitle=up'">Назва книги</th>
+        <?php elseif ($_GET['sortByTitle'] == 'up'): ?>
+        <th class="th-style" onclick="location.href='index.php?route=book/sort&sortByTitle=down'">Назва книги &#9650</th>
+        <?php elseif ($_GET['sortByTitle'] == 'down'): ?>
+        <th class="th-style" onclick="location.href='index.php?route=book/sort&sortByTitle=up'">Назва книги &#9660</th>
+        <?php endif; ?>
+
+        <?php if ($_GET['sortByPrice'] == 'none'): ?>
+        <th class="th-style" onclick="location.href='index.php?route=book/sort&sortByPrice=up'">Ціна</th>
+        <?php elseif ($_GET['sortByPrice'] == 'up'): ?>
+        <th class="th-style" onclick="location.href='index.php?route=book/sort&sortByPrice=down'">Ціна &#9650</th>
+        <?php elseif ($_GET['sortByPrice'] == 'down'): ?>
+        <th class="th-style" onclick="location.href='index.php?route=book/sort&sortByPrice=up'">Ціна &#9660</th>
+        <?php endif; ?>
+
+        <?php if ($_GET['sortByActive'] == 'none'): ?>
+        <th class="th-style" onclick="location.href='index.php?route=book/sort&sortByActive=up'">Наявність</th>
+        <?php elseif ($_GET['sortByActive'] == 'up'): ?>
+        <th class="th-style" onclick="location.href='index.php?route=book/sort&sortByActive=down'">Наявність &#9650</th>
+        <?php elseif ($_GET['sortByActive'] == 'down'): ?>
+        <th class="th-style" onclick="location.href='index.php?route=book/sort&sortByActive=up'">Наявність &#9660</th>
+        <?php endif; ?>
+        <?php if (isset($_COOKIE['username_in'])): ?>
+
         <th bgcolor="#87cefa" align="сenter" colspan="2">Дії</th>
 
+        <?php endif; ?>
     </tr>
 
     <?php
@@ -208,6 +254,8 @@
             <td><?= $value['title'] ?></td>
             <td><?= $value['price'] ?></td>
             <td><?= $value['is_active'] ?></td>
+        <?php if (isset($_COOKIE['username_in'])): ?>
+
             <td><a class="button-edit" href="index.php?route=book/edit&id=<?=$value['id']?>">Редагувати</a></td>
 <!--            <td><a class="button-delete" href="index.php?route=book/delete&id=--><?//=$value['id']?><!--"">Видалити</a></td>-->
             <td>
@@ -217,9 +265,12 @@
                     Видалити книгу № <?= $_GET['id'] ?> ?
                     <a class="button-delete" href="index.php?route=book/delete&id=<?=$_GET['id']?>&page=<?= $page ?>&deleted=1">
                                               Підтвердити видалення</a>
-                    <a class="close"title="Закрити" href="#close"></a>
+                    <a class="close"title="Закрити" href="index.php?route=book/index&page=<?= $page ?>"></a>
                 </div>
-            </td></tr>
+
+            </td>
+        <?php endif; ?>
+        </tr>
         <?php endforeach;?>
 </table>
 

@@ -39,6 +39,12 @@
 <body>
 <!--<header class="box">-->
         <div class="menu">
+            <?php if (isset($_COOKIE['username_in'])): ?>
+            <label class="a-menu">Вітаємо <?= $_COOKIE['username_in'] ?></label>$nbsp$nbsp
+            <?php else: ?>
+            <label class="a-menu"> ! </label>$nbsp$nbsp
+            <?php endif; ?>
+
 
                 <a class="a-menu" href="index.php">Головна</a>$nbsp$nbsp
                 <a class="a-menu" href="/index.php?route=book/index">Книги</a>$nbsp$nbsp
@@ -61,8 +67,8 @@
 <!-- JavaScript-ядро Bootstrap
 ================================================== -->
 <!-- Розміщуйте підключення JavaScript в кінці документа щоб сторінки завантажувались швидше -->
-<script src="/js/jquery-3.1.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
+<!--<script src="/js/jquery-3.1.1.min.js"></script>-->
+<!--<script src="/js/bootstrap.min.js"></script>-->
 
 </body>
 </html>
