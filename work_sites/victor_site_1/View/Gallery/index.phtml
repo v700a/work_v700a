@@ -3,6 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .input {
+            width: 180px;
+            height: 25px;
+            text-decoration: none;
+            font-size: large;
+            color: blue;
+            border-width: 2px;
+            border-style: solid;
+            border-color: blue;
+            border-radius: 6px;
+            background: lightcyan;
+
+        }
+        input:focus {
+            border: 2px solid;
+            color: red;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .button {
+            display: inline-block;
+            color: black;
+            font-size: medium ;
+            font-family: Arial, Verdana;
+            font-weight: 500 ;
+            text-decoration: none;
+            padding: 7px 25px;
+            outline: none;
+
+            border-width: 2px;
+            border-style: solid;
+            border-color: blue;
+            border-radius: 6px;
+            background: lightblue;
+            transition: 0.2s;
+        }
+        .button:hover { background: deepskyblue; }
+        .button:active { background: lightgoldenrodyellow; }
+
+        .buttonup {
+        }
+        .buttonUpLabel {
+            width: 10.7%;
+            height: 20px;
+            overflow: inherit;
+            display: inline-block;
+            color: black;
+            font-size: medium ;
+            font-family: Arial, Verdana;
+            font-weight: 500 ;
+            text-decoration: none;
+            padding: 7px 25px;
+            /*outline: none;*/
+            border-width: 2px;
+            border-style: solid;
+            border-color: blue;
+            border-radius: 6px;
+            background: #f2dede ;
+            transition: 0.2s;
+        }
+        .buttonUpLabel:hover { background: lawngreen; }
+        .buttonUpLabel:active { background: lightgoldenrodyellow; }
+        .checkbox {
+            width: 40px;
+            height: 25px;
+        }
+
+        .style-small {
+            font-family: "Arial Black";
+            color: darkcyan;
+            font-size: small;
+            font-weight: bold;
+        }
+
+        .style-middle {
+            font-family: "Arial Black";
+            color: darkcyan;
+            font-size: larger;
+            font-weight: bold;
+        }
+        .message {
+            background: #f2dede;
+            font-family: "Arial Black";
+            color: indianred ;
+            font-size: larger;
+            font-weight: bold;
+            padding: 5px;
+            width: 30%;
+            border-style: solid;
+            border-color: crimson ;
+            border-width: 1px;
+            border-radius: 5px;
+        }
+   </style>
+
 </head>
 <body>
 <div style="margin-top: 10px">
@@ -15,9 +112,11 @@
 
 <form enctype="multipart/form-data" method="post" id = "gallery">
     <br>
-    <input name="file[]" type="file" multiple >
+    <label for="up" class="buttonUpLabel">Вибрати файли
+    <input name="file[]" type="file"  multiple style="opacity: 0; z-index: -1" id="up">
+    </label>
     <br>
-    <button> "Додати до галереї" </button>
+    <button class="button">Додати до галереї </button>
     <hr>
 
     <?php
@@ -36,9 +135,9 @@
             <a href= "<?= $current_file; ?>" target='_blank'><img src = '<?= $current_file; ?>' width="150" height="120"></a>
             <?php
             if (isset($_SESSION['all'])):
-                echo "<input type=\"checkbox\" form=\"gallery\" name=\"$checkbox\" checked >";
+                echo "<input class='checkbox' type=\"checkbox\" form=\"gallery\" name=\"$checkbox\" checked >";
             else:
-                echo "<input type=\"checkbox\" form=\"gallery\" name=\"$checkbox\">";
+                echo "<input class='checkbox' type=\"checkbox\" form=\"gallery\" name=\"$checkbox\">";
             endif;
             $count++;
         endif;
@@ -49,9 +148,9 @@
     ?>
     <div >
         <hr>
-        <button formmethod="post" name="delete" value="delete">Видалити вибрані файли</button>
-        <button formmethod="post" name ="all" value="all">Вибрати усі файли</button>
-        <button formmethod="post" name="reset" value="reset">Скинути вибір</button>
+        <button class="button" formmethod="post" name="delete" value="delete">Видалити вибрані файли</button>
+        <button class="button" formmethod="post" name ="all" value="all">Вибрати усі файли</button>
+        <button class="button" formmethod="post" name="reset" value="reset">Скинути вибір</button>
     </div>
 </form>
 </body>
