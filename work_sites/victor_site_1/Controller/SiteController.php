@@ -15,22 +15,22 @@ class SiteController extends Controller
         return $this->render('index.phtml');
     }
 
-    function loginAction ()
+    function loginAction (Request $request)
     {
         $functions = new Functions();
         $user_model = new UserModel();
         $logerr = null;
-        if (isset($_GET['logmsg'])):
-            if ($_GET['logmsg'] == 'log_err'):
+        if ($request->isGetOf('logmsg')):
+            if ($request->isGetOf('logmsg') == 'log_err'):
                 $logerr = "Помилка авторизації! Невірний Логін/Пароль!";
             endif;
         endif;
         $login = 0;
         if(!isset($_COOKIE['username_in'])):
             if (($functions->isLoginFormValid ('login', 'password', 'email')) !== null) :
-                $login = $_POST['login'];
-                $password = md5($_POST['password'] . 'phpsalt');
-                $email = md5($_POST['email'] . 'phpsalt');
+                $login = $request->isPostOf('login');
+                $password = md5($request->isPostOf('password') . 'phpsalt');
+                $email = md5($request->isPostOf('email') . 'phpsalt');
                 $db_users = $user_model->find($login, $password, $email);
                 var_dump($db_users);
                 $result = 0;
@@ -44,8 +44,8 @@ class SiteController extends Controller
                 endif;
             endif;
         endif;
-        if (isset($_GET['logmsg'])):
-            if ($_GET['logmsg'] == 'out'):
+        if ($request->isGetOf('logmsg')):
+            if ($request->isGetOf('logmsg') == 'out'):
                 setcookie('username_in',$login, time(0));
                 unset($_COOKIE{'username_in'});
             endif;
@@ -57,9 +57,9 @@ class SiteController extends Controller
 
     }
 
-    function registerAction ()
+    function registerAction (Request $request)
     {
-        $request = new Request();
+//        $request = new Request();
         $user_model = new UserModel();
 
         $_GET['msg'] = $request->isGetOf('msg');
@@ -73,8 +73,8 @@ class SiteController extends Controller
         $_SESSION['email'] = $request->isSsessionOf('email');
         $login_for_form = '';
         $email_for_form = '';
-        $pass_for_form = $_POST['password'];
-        $pass_r_for_form = $_POST['password_repeat'];
+        $pass_for_form = $request->isPostOf('password');
+        $pass_r_for_form = $request->isPostOf('password_repeat');
         $email_null = 0;
         $pas_null = 0;
         $login_null = 0;
@@ -115,23 +115,23 @@ class SiteController extends Controller
                 endif;
             endif;
         endif;
-        if ($_POST['code'] !== '' && $_POST['code'] !== null):
+        if ($request->isPostOf('code') !== null):
             $cap = $_COOKIE["captcha"];
             echo $cap;
-            $code = $_POST['code'];
+            $code = $request->isPostOf('code');
             $code = trim($code); // На всякий случай убираем пробелы
             $code = md5($code);
 
             if ($cap === $code):
-                if ($_POST['login'] !== '' && $_POST['login'] !== null):
-                    $_SESSION['login'] = $_POST['login'];
+                if ($request->isPostOf('login')!== null):
+                    $_SESSION['login'] = $request->isPostOf('login');
                 else:
                     $_SESSION['login'] = null;
                     $login_null = 1;
                 endif;
 
-                if ($_POST['email'] !== '' && $_POST['email'] !== null):
-                    $_SESSION['email'] = $_POST['email'];
+                if ($request->isPostOf('email')!== null):
+                    $_SESSION['email'] = $request->isPostOf('email');
                 else:
                     $_SESSION['email'] = null;
                     $email_null = 1;
@@ -139,18 +139,18 @@ class SiteController extends Controller
 
 
 
-                if (($_POST['password'] == '') && ($_POST['password_repeat'] == '')):
+                if (($request->isPostOf('password') == null) && ($request->isPostOf('password_repeat') == null)):
                     $_POST['password'] = null;
                     $_POST['password_repeat'] = null;
                     $_SESSION['password'] = null;
                     $pas_null = 1;
                 endif;
 
-                if ($_POST['password'] !== $_POST['password_repeat']):
+                if ($request->isPostOf('password') !== $request->isPostOf('password_repeat')):
                     header('location: index.php?route=site/register&msg=passno');
                     die;
                 else:
-                    $_SESSION['password'] = $_POST['password'];
+                    $_SESSION['password'] = $request->isPostOf('password');
                 endif;
             else:
                 $cap_err = 1;
@@ -159,17 +159,17 @@ class SiteController extends Controller
             $cap_null = 1;
         endif;
 
-        if ($_GET['msg'] == 'null'):
+        if ($request->isGetOf('msg') == 'null'):
             $msg_err = "Пароль не введено!";
-        elseif ($_GET['msg'] == 'lgnull'):
+        elseif ($request->isGetOf('msg') == 'lgnull'):
             $msg_err = "Поле \"Ім'я (логін)\" не заповнене.";
-        elseif ($_GET['msg'] == 'emailnull'):
+        elseif ($request->isGetOf('msg') == 'emailnull'):
             $msg_err = "Не введено E-mail";
-        elseif ($_GET['msg'] == 'passno'):
+        elseif ($request->isGetOf('msg') == 'passno'):
             $msg_err = "Паролі не співпадають";
-        elseif ($_GET['msg'] == 'capnull'):
+        elseif ($request->isGetOf('msg') == 'capnull'):
             $msg_err = "Код не введено";
-        elseif ($_GET['msg'] == 'caperr'):
+        elseif ($request->isGetOf('msg') == 'caperr'):
             $msg_err = "Введений код невірний ";
         else:
             $msg_err = null;

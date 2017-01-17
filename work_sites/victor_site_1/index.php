@@ -47,7 +47,7 @@ try {
     elseif ($id !== null):
         $content = $controller->$action($id, $page);
     else:
-        $content = $controller->$action();
+        $content = $controller->$action($request);
     endif;
 }
 catch (\Exception $exception_1) {
@@ -67,4 +67,6 @@ echo $action;echo '<br><br>';
 print_r($_GET);
 echo '<br><br>';
 print_r($_POST);
+echo '<br><br>';
+//print_r($_SESSION);
 

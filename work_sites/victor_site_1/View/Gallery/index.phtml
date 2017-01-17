@@ -103,11 +103,16 @@
 </head>
 <body>
 <div style="margin-top: 10px">
-    <h2>Галерея</h2>
-    <p>
+    <h2 class="style-middle">Галерея</h2>
+    <p class="style-small">
         !Увага! Файли розміром більше 2 Мб та файли відмінні від зображень завантажені не будуть.
     </p>
-    <b><?= $over ?></b>
+    <?php
+        if ($over !== '' && $over !== null):
+            echo "<div class=\"message\"> $over </div>";
+        endif;
+    ?>
+
 </div>
 
 <form enctype="multipart/form-data" method="post" id = "gallery">

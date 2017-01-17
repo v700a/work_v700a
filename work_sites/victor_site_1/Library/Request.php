@@ -9,6 +9,7 @@ class Request
     private $get = array();
     private $post = array();
     private $session = array();
+    private $files = array();
 
     function __construct()
     {
@@ -24,39 +25,21 @@ class Request
         return $this->server['REQUEST_METHOD'];
     }
 
+
     function isGet ()
     {
         return isset($this->get) ? $this->get : null;
     }
 
+    function isGetOf ($c, $d = null)
+    {
+        return isset($this->get[$c]) ? $this->get[$c] : $d;
+    }
+
+
     function isPost ()
     {
         return isset($this->post) ? $this->post : null;
-    }
-
-    function isFiles ()
-    {
-        return isset($this->files) ? $this->files : null;
-    }
-
-    function isServer ()
-    {
-        return isset($this->server) ? $this->server : null;
-    }
-
-    function isSsession ()
-    {
-        return isset($this->session) ? $this->session : null;
-    }
-
-    function isFilesOf ($g, $f = null)
-    {
-        return isset($this->files[$g]) ? $this->files[$g] : $f;
-    }
-
-    function isServerOf ($i, $j = null)
-    {
-        return isset($this->server[$i]) ? $this->server[$i] : $j;
     }
 
     function isPostOf ($a, $b = null)
@@ -64,9 +47,32 @@ class Request
         return isset($this->post[$a]) ? $this->post[$a] : $b;
     }
 
-    function isGetOf ($c, $d = null)
+
+    function isFiles ()
     {
-        return isset($this->get[$c]) ? $this->get[$c] : $d;
+        return isset($this->files) ? $this->files : null;
+    }
+
+    function isFilesOf ($g, $f = null)
+    {
+        return isset($this->files[$g]) ? $this->files[$g] : $f;
+    }
+
+
+    function isServer ()
+    {
+        return isset($this->server) ? $this->server : null;
+    }
+
+    function isServerOf ($i, $j = null)
+    {
+        return isset($this->server[$i]) ? $this->server[$i] : $j;
+    }
+
+
+    function isSsession ()
+    {
+        return isset($this->session) ? $this->session : null;
     }
 
     function isSsessionOf ($e, $f=null)
