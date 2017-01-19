@@ -28,7 +28,12 @@ class Request
 
     function isGet ()
     {
-        return isset($this->get) ? $this->get : null;
+        if ((int)$this->get == 0):
+            return null;
+        else:
+            return $this->get;
+        endif;
+
     }
 
     function isGetOf ($c, $d = null)
@@ -39,7 +44,11 @@ class Request
 
     function isPost ()
     {
-        return isset($this->post) ? $this->post : null;
+        if ((int)$this->post == 0):
+            return null;
+        else:
+            return $this->post;
+        endif;
     }
 
     function isPostOf ($a, $b = null)

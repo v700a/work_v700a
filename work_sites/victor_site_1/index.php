@@ -36,16 +36,16 @@ try {
         $content = $controller->$action($request->isPost());
     elseif ($request->isGetOf('description') !== null):
         $read = $request->isGetOf('description');
-        $content = $controller->$action($read);
+        $content = $controller->$action($read, $request);
     elseif ($request->isPostOf('cancel') !== null):
         $action = 'indexAction';
-        $content = $controller->$action();
+        $content = $controller->$action($request);
     elseif ($request->isGetOf('page') !== null && $request->isGetOf('id') == null):
         \Controller\BookController::$page = $request->isGetOf('page');
         $action = 'indexAction';
-        $content = $controller->$action();
+        $content = $controller->$action($request);
     elseif ($id !== null):
-        $content = $controller->$action($id, $page);
+        $content = $controller->$action($id, $page, $request);
     else:
         $content = $controller->$action($request);
     endif;

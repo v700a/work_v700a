@@ -12,7 +12,7 @@ class BookController extends Controller
     public static $page = 0;
 
     //function indexAction ($limit = 20, $page = 0)
-    function indexAction ()
+    function indexAction (Request $request)
     {
         $book = new BookModel();
         $count = $book->find_count_all();
@@ -25,14 +25,14 @@ class BookController extends Controller
         return $this->render('index.phtml', $array);
     }
 
-    function addAction ()
+    function addAction (Request $request)
     {
         //$book = new BookModel();
         $array = array();
         return $this->render('add.phtml', $array);
     }
 
-    function editAction ($id, $page = 0)
+    function editAction ($id, Request $request, $page = 0)
     {
         $book = new BookModel();
         $count = $book->find_count_all();
@@ -45,7 +45,7 @@ class BookController extends Controller
         return $this->render('edit.phtml', $array);
     }
 
-    function saveAction ($id, $page = 0)
+    function saveAction ($id, Request $request, $page = 0)
     {
         $book = new BookModel();
         $book->save_by_id($id);
@@ -60,7 +60,7 @@ class BookController extends Controller
     }
 
 
-    function deleteAction ($id, $page_current = 0)
+    function deleteAction ($id, Request $request, $page_current = 0)
     {
         $book = new BookModel();
         $book->remove_by_id($id);
@@ -74,7 +74,7 @@ class BookController extends Controller
         );
         return $this->render('index.phtml', $array);
     }
-    function readAction ($id)
+    function readAction ($id, Request $request)
     {
         $book = new BookModel();
         $count = $book->find_count_all();
@@ -88,10 +88,10 @@ class BookController extends Controller
         return $this->render('read.phtml', $array);
 
     }
-    function sortAction ()
+    function sortAction (Request $request)
     {
         $book = new BookModel();
-        $request = new Request();
+//        $request = new Request();
         $count = $book->find_count_all();
         $array_book = $book->read_limit($count, self::$limit, self::$page);
         if ($request->isGetOf('sortById') == 'down'):

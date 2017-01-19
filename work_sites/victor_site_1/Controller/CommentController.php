@@ -5,22 +5,27 @@ namespace Controller;
 use \Library\Controller;
 use \Model\CommentFormModel;
 use \Library\Functions;
+use \Library\Request;
 
 class CommentController extends Controller
 {
 
-    function indexAction ()
+    function indexAction (Request $request)
     {
         $comments_form = new CommentFormModel();
         $function = new Functions();
         $arr_post = '';
-        if (!$_POST){
-            $_POST = null;
-        }
+//        if (!$_POST){
+//            $_POST = null;
+//        }
 
-
-        if ($_POST !== null):
-            $arr_post = $_POST;
+//        var_dump($request->isPost());
+//        var_dump($request->isGet());
+//        var_dump(isset($_POST));
+////        var_dump($GLOBALS);
+//        die;
+        if ($request->isPost() !== null):
+            $arr_post = $request->isPost();
             $res = $function->isCommentFormValid($arr_post);
             if ($res !== null):
                 header("location: index.php?route=comment/index&msg=$res");
@@ -34,14 +39,14 @@ class CommentController extends Controller
         endif;
 
 
-        if (isset($_GET['delete'])):
-            $comments_form->delete($_GET);
+        if ($request->isGetOf('delete')):
+            $comments_form->delete($request->isGet());
             header("location: index.php?route=comment/index&msg=delete");
             die;
         endif;
 
-        if (isset($_GET['r_plus']) || isset($_GET['r_minus'])):
-            $comments_form->rating_change($_GET);
+        if ($request->isGetOf('r_plus') || $request->isGetOf('r_minus')):
+            $comments_form->rating_change($request->isGet());
             header("location: index.php?route=comment/index");
             die;
         endif;

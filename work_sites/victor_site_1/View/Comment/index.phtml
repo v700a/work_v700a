@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        .meesage {
+        .meesage-err {
             width: 97%;
             height: 50px;
             background-color: #e7c3c3;
+            padding: 10px;
+            margin-top: 1%;
+        }
+        .meesage {
+            width: 97%;
+            height: 50px;
+            background-color: lightgreen;
             padding: 10px;
             margin-top: 1%;
         }
@@ -35,27 +42,130 @@
         input[type="checkbox"]:checked + span {
             background: url(/switch_on.png);
         }
+        .button-add {
+            display: inline-block;
+            color: black;
+            font-size: large;
+            text-decoration: none;
+            padding: 5px 20px;
+            outline: none;
+            cursor: pointer;
+            border-width: 2px;
+            border-style: solid;
+            border-color: black;
+            border-radius: 6px;
+            background: aquamarine;
+            transition: 0.3s;
+        }
+        .button-add:hover { background: lightgreen; }
+        .button-add:active { background: white; }
+
+        .button-page-plus {
+            display: inline-block;
+            color: black;
+            font-size: large;
+            font-family: Arial, Verdana;
+            font-weight: 500 ;
+            text-decoration: none;
+            padding: 0.03% 0.53%;
+            outline: none;
+
+            border-width: 2px;
+            border-style: solid;
+            border-color: blue;
+            border-radius: 6px;
+            background: aqua;
+            transition: 0.2s;
+        }
+        .button-page-plus:hover { background: cornflowerblue; color: limegreen}
+        .button-page-plus:active { background: snow; }
+
+        .button-page-minus {
+            display: inline-block;
+            color: black;
+            font-size: large;
+            font-family: Arial, Verdana;
+            font-weight: 500 ;
+            text-decoration: none;
+            padding: 0.05% 0.7%;
+            outline: none;
+
+            border-width: 2px;
+            border-style: solid;
+            border-color: blue;
+            border-radius: 6px;
+            background: aqua;
+            transition: 0.2s;
+        }
+        .button-page-minus:hover { background: cornflowerblue; color: limegreen}
+        .button-page-minus:active { background: snow; }
+
+        .button-edit {
+            display: inline-block;
+            color: black;
+            font-size: small ;
+            font-family: Arial, Verdana;
+            font-weight: 300 ;
+            text-decoration: none;
+            padding: 2px 15px;
+            outline: none;
+
+            border-width: 2px;
+            border-style: solid;
+            border-color: blue;
+            border-radius: 6px;
+            background: paleturquoise ;
+            transition: 0.2s;
+        }
+        .button-edit:hover { background: cornflowerblue; color: limegreen}
+        .button-edit:active { background: snow; }
+        .button-delete {
+            display: inline-block;
+            color: black;
+            font-size: small ;
+            font-family: Arial, Verdana;
+            font-weight: 300 ;
+            text-decoration: none;
+            padding: 2px 15px;
+            outline: none;
+
+            border-width: 2px;
+            border-style: solid;
+            border-color: blue;
+            border-radius: 6px;
+            background: darksalmon ;
+            transition: 0.2s;
+        }
+        .button-delete:hover { background: red; }
+        .button-delete:active { background: snow; }
+
+
 
     </style>
 </head>
 
 <body>
-<div class="meesage">
+
     <?php
     if (isset($_GET['msg'])):
         if ($_GET['msg'] == 'delete'):
+            echo '<div class="meesage">';
             echo '<b>Коментар видалено</b>';
+            echo '</div>';
         elseif($_GET['msg'] == 'add'):
+            echo '<div class="meesage">';
             echo "<b>Коментар від \" <i>{$_GET['user']}</i>\" додано</b>";
+            echo '</div>';
         else:
+            echo '<div class="meesage-err">';
             echo $_GET['msg'];
+            echo '</div>';
         endif;
     endif;
 
     ?>
-</div>
 
-
+</b>
 <form method="post">
     <div class="layer">
         <?php
@@ -70,16 +180,16 @@
             echo '<br>';
             echo 'Додає коментар:', '<br><br>';
             echo '<b><i>', $arr["comment_text"], '</i></b>', '<br><br>';
-            echo "<a href=\"index.php?route=comment/index&delete=$i \">
+            echo "<a class='button-delete' href=\"index.php?route=comment/index&delete=$i \">
             <b>Видалити&nbsp&nbsp&nbsp</b></a>";
             echo '&nbsp&nbsp Рейтинг комантаря: &nbsp';
             echo '<b>', $arr["rating"], '</b>';
             echo ' &nbsp&nbsp Зміна рейтингу: &nbsp&nbsp&nbsp';
-            echo "<a href=\"index.php?route=comment/index&r_plus=$i \">
-            <b><big><big>+</big></big></b></a>";
+            echo "<a class='button-page-plus' href=\"index.php?route=comment/index&r_plus=$i \">
+            <b>+</a>";
             echo '&nbsp&nbsp&nbsp';
-            echo "<a href=\"index.php?route=comment/index&r_minus=$i \">
-            <b><big><big>-</big></big></b></a>";
+            echo "<a class='button-page-minus' href=\"index.php?route=comment/index&r_minus=$i \">
+            <b>-</b></a>";
             echo '<br>', '<div style="width: 100%; height: 2px; background: darkgreen;">&nbsp</div>', '<br>';
         endforeach;
         ?>
@@ -97,7 +207,7 @@
     <br><br>
     &nbsp&nbsp<textarea name="comment_text"  cols="130" rows="7" placeholder="Текст коментаря" autofocus></textarea>
     <br><br>
-    &nbsp&nbsp<input type="submit" value="Додати коментар">
+    &nbsp&nbsp<input class="button-add" type="submit" value="Додати коментар">
     <br><br>
 </form>
 
