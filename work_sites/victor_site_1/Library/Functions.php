@@ -44,9 +44,10 @@ class Functions extends Controller
             $notice_comment_text = '"Текст коментаря"';
         endif;
         if ($notice_username == '' && $notice_email == '' && $notice_comment_text == ''):
-            return;
+            return null;
         else:
             $notice = "Не заповнено поле - {$notice_username}  {$notice_email}  {$notice_comment_text}";
+            Session::setMessage($notice);
             return $notice;
         endif;
     }

@@ -3,14 +3,14 @@
 namespace Controller;
 
 use \Library\Controller;
-use \Library\Functions;
+//use \Library\Functions;
 use \Library\Request;
 
 class GalleryController extends Controller
 {
     function indexAction (Request $request)
     {
-        $function = new Functions();
+//        $function = new Functions();
 //        $request = new Request();
         $checked = 0;
         $over = '';
@@ -56,7 +56,8 @@ class GalleryController extends Controller
                             $_SESSION['all'] = 1;
                         endif;
                         if (array_search('delete',$request->isPost())):
-                            $function->delete_files($request->isPost());
+                            delete_files($request->isPost());
+//                            $function->delete_files($request->isPost());
                             header("location:/index.php?route=gallery/index");
                             die;
                         endif;

@@ -147,18 +147,21 @@
 <body>
 
     <?php
-    if (isset($_GET['msg'])):
-        if ($_GET['msg'] == 'delete'):
+    $message = \Library\Session::getMessage();
+    if ($message !== null):
+        if ($message == 'delete'):
+            $user_delete = \Library\Session::getMessage('user_delete');
             echo '<div class="meesage">';
-            echo '<b>Коментар видалено</b>';
+            echo "<b>Коментар від \"<i>{$user_delete}</i>\" видалено</b>";
             echo '</div>';
-        elseif($_GET['msg'] == 'add'):
+        elseif($message == 'add'):
+            $user_add_comment = \Library\Session::getMessage('user');
             echo '<div class="meesage">';
-            echo "<b>Коментар від \" <i>{$_GET['user']}</i>\" додано</b>";
+            echo "<b>Коментар від \" <i>{$user_add_comment}</i>\" додано</b>";
             echo '</div>';
         else:
             echo '<div class="meesage-err">';
-            echo $_GET['msg'];
+            echo "<b>{$message}</b>";
             echo '</div>';
         endif;
     endif;
@@ -177,10 +180,11 @@
             endif;
             echo '&nbsp&nbspКоментар додано:&nbsp', $arr["time_stamp"];
             $i = $arr["id"];
+            $u = $arr["username"];
             echo '<br>';
             echo 'Додає коментар:', '<br><br>';
             echo '<b><i>', $arr["comment_text"], '</i></b>', '<br><br>';
-            echo "<a class='button-delete' href=\"index.php?route=comment/index&delete=$i \">
+            echo "<a class='button-delete' href=\"index.php?route=comment/index&delete=$i&user_delete=$u \">
             <b>Видалити&nbsp&nbsp&nbsp</b></a>";
             echo '&nbsp&nbsp Рейтинг комантаря: &nbsp';
             echo '<b>', $arr["rating"], '</b>';

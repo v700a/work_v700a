@@ -3,7 +3,7 @@
 namespace Controller;
 
 use \Library\Controller;
-use \Library\Functions;
+//use \Library\Functions;
 use \Model\UserModel;
 use \Library\Request;
 
@@ -17,7 +17,7 @@ class SiteController extends Controller
 
     function loginAction (Request $request)
     {
-        $functions = new Functions();
+//        $functions = new Functions();
         $user_model = new UserModel();
         $logerr = null;
         if ($request->isGetOf('logmsg')):
@@ -27,7 +27,8 @@ class SiteController extends Controller
         endif;
         $login = 0;
         if(!isset($_COOKIE['username_in'])):
-            if (($functions->isLoginFormValid ('login', 'password', 'email')) !== null) :
+            if ((parent::isLoginFormValid ('login', 'password', 'email')) !== null) :
+//            if (($functions->isLoginFormValid ('login', 'password', 'email')) !== null) :
                 $login = $request->isPostOf('login');
                 $password = md5($request->isPostOf('password') . 'phpsalt');
                 $email = md5($request->isPostOf('email') . 'phpsalt');

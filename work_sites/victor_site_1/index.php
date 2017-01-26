@@ -1,7 +1,6 @@
 <?php
 
 $pdo = \Library\ConnectionPDO::getInstance()->getPDO();
-session_start();
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', __DIR__ . DS );
 define('VIEW_DIR', ROOT . 'View' . DS);
@@ -20,6 +19,7 @@ function __autoload($class_name)
 }
 
 try {
+    \Library\Session::sessionStart();
     $request = new \Library\Request();
     $route = $request->isGetOf('route', 'site/index');
     $id = $request->isGetOf('id');

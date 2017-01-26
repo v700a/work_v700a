@@ -4,8 +4,8 @@ namespace Controller;
 
 use \Library\Controller;
 use \Model\CommentFormModel;
-use \Library\Functions;
 use \Library\Request;
+use \Library\Session;
 
 class CommentController extends Controller
 {
@@ -13,27 +13,17 @@ class CommentController extends Controller
     function indexAction (Request $request)
     {
         $comments_form = new CommentFormModel();
-        $function = new Functions();
-        $arr_post = '';
-//        if (!$_POST){
-//            $_POST = null;
-//        }
-
-//        var_dump($request->isPost());
-//        var_dump($request->isGet());
-//        var_dump(isset($_POST));
-////        var_dump($GLOBALS);
-//        die;
         if ($request->isPost() !== null):
             $arr_post = $request->isPost();
-            $res = $function->isCommentFormValid($arr_post);
+            $res = parent::isCommentFormValid($arr_post);
             if ($res !== null):
-                header("location: index.php?route=comment/index&msg=$res");
+                header("location: index.php?route=comment/index");
                 die;
             else:
                 $comments_form->add($arr_post);
-                $user = $arr_post['username'];
-                header("location: index.php?route=comment/index&msg=add&user={$user}");
+                Session::setMessage('add');
+                Session::set('user', $arr_post['username']);
+                header("location: index.php?route=comment/index");
                 die;
             endif;
         endif;
@@ -41,7 +31,9 @@ class CommentController extends Controller
 
         if ($request->isGetOf('delete')):
             $comments_form->delete($request->isGet());
-            header("location: index.php?route=comment/index&msg=delete");
+            Session::setMessage('delete');
+            Session::set('user_delete', $request->isGetOf('user_delete'));
+            header("location: index.php?route=comment/index");
             die;
         endif;
 
