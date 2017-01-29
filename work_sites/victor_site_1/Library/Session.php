@@ -46,25 +46,31 @@ abstract class Session
         endif;
     }
 
-    static function setMessage ($message)
+    static function setContent ($key, $content)
     {
-//        var_dump($message);
-        self::set(self::MESSAGE_KEY, $message);
+
+            self::set($key, $content);
+
     }
 
-    static function getMessage ($key = null)
+    static function getContent ($key = null)
     {
-        if (!$key):
+        $content = self::get($key);
+//        self::remove($key);
+        return $content;
+    }
+
+    static function setMessage ($message)
+    {
+
+            self::set(self::MESSAGE_KEY, $message);
+
+    }
+    static function getMessage ()
+    {
             $message = self::get(self::MESSAGE_KEY);
             self::remove(self::MESSAGE_KEY);
-    //        echo 'ffffffff'.$message;
             return $message;
-        else:
-            $message = self::get($key);
-            self::remove($key);
-            //        echo 'ffffffff'.$message;
-            return $message;
-        endif;
     }
 
 }

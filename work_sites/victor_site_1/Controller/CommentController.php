@@ -22,7 +22,7 @@ class CommentController extends Controller
             else:
                 $comments_form->add($arr_post);
                 Session::setMessage('add');
-                Session::set('user', $arr_post['username']);
+                Session::setContent('user', $arr_post['username']);
                 header("location: index.php?route=comment/index");
                 die;
             endif;
@@ -32,7 +32,7 @@ class CommentController extends Controller
         if ($request->isGetOf('delete')):
             $comments_form->delete($request->isGet());
             Session::setMessage('delete');
-            Session::set('user_delete', $request->isGetOf('user_delete'));
+            Session::setContent('user_delete', $request->isGetOf('user_delete'));
             header("location: index.php?route=comment/index");
             die;
         endif;

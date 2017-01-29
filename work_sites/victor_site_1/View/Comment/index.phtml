@@ -27,14 +27,14 @@
             margin-top: 1%;
         }
         label {
-            width: 20px;
-            height: 20px;
+            /*width: 5px;*/
+            /*height: 20px;*/
             position: relative;
         }
         input[type="checkbox"] + span {
             position: absolute;
             left: 0; top: 0;
-            width: 100%;
+            width: 80%;
             height: 100%;
             background: url(/switch_off.png);
             cursor: pointer;
@@ -145,17 +145,20 @@
 </head>
 
 <body>
+<?php
+\Library\Session::setContent('REQUEST_URI', $_SERVER['REQUEST_URI']);
+?>
 
     <?php
     $message = \Library\Session::getMessage();
     if ($message !== null):
         if ($message == 'delete'):
-            $user_delete = \Library\Session::getMessage('user_delete');
+            $user_delete = \Library\Session::getContent('user_delete');
             echo '<div class="meesage">';
             echo "<b>Коментар від \"<i>{$user_delete}</i>\" видалено</b>";
             echo '</div>';
         elseif($message == 'add'):
-            $user_add_comment = \Library\Session::getMessage('user');
+            $user_add_comment = \Library\Session::getContent('user');
             echo '<div class="meesage">';
             echo "<b>Коментар від \" <i>{$user_add_comment}</i>\" додано</b>";
             echo '</div>';
@@ -168,7 +171,7 @@
 
     ?>
 
-</b>
+
 <form method="post">
     <div class="layer">
         <?php

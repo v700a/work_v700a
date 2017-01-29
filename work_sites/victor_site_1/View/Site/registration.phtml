@@ -76,15 +76,30 @@
 <body>
 
     <?php
+
     require 'captcha.php';
 
-    if (isset($msg_err)):
-        echo '<div class="message">', $msg_err, '</div>';
-    endif;
-    if (isset($_SESSION['email'])):
-        $email = $_SESSION['email'];
+    \Library\Session::setContent('REQUEST_URI', $_SERVER['REQUEST_URI']);
+
+    if (isset($_SESSION['first'])):
+        $increase = \Library\Session::getContent('first');
+        $increase = ++$increase;
+        \Library\Session::setContent('first', $increase);
     else:
-        $email = null;
+        \Library\Session::setContent('first', 1);
+    endif;
+
+    if (\Library\Session::getContent('first') > 1):
+        $msg_err = \Library\Session::getMessage();
+        if ($msg_err !== null):
+            echo '<div class="message">', $msg_err, '</div>';
+        endif;
+    elseif (isset($_SESSION['registered']) && \Library\Session::getContent('first') == 1):
+        $msg_err = \Library\Session::getContent('registered');
+//        \Library\Session::remove('registered');
+        if ($msg_err !== null):
+            echo '<div class="message">', $msg_err, '</div>';
+        endif;
     endif;
 
     ?>

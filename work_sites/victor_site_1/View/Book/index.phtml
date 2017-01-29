@@ -176,6 +176,10 @@
     </style>
 </head>
 <body>
+<?php
+\Library\Session::setContent('REQUEST_URI', $_SERVER['REQUEST_URI']);
+?>
+
 <div class="content">
 <form method="post">
     <button  class="button-add" formmethod="get" name="route" value="book/add"><b>Додати нову книгу до каталогу</b></button>

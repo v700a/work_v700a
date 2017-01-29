@@ -53,8 +53,10 @@
                 <?php if (!isset($_COOKIE['username_in'])): ?>
                 <a class="a-menu" href="/index.php?route=site/login">Авторизація</a>$nbsp$nbsp
 <!--                <a class="a" href="/index.php?route=site/register">Реєстрація</a>$nbsp$nbsp-->
-                <?php else: ?>
-                <a class="a-menu" href="/index.php?route=site/login&logmsg=out">Вихід</a>$nbsp$nbsp
+                <?php else:
+                \Library\Session::setContent('logmsg', 'out');
+                ?>
+                <a class="a-menu" href="/index.php?route=site/login">Вихід</a>$nbsp$nbsp
                 <?php endif; ?>
 
         </div>

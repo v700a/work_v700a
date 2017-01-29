@@ -79,16 +79,6 @@ class Request
     }
 
 
-    function isSsession ()
-    {
-        return isset($this->session) ? $this->session : null;
-    }
-
-    function isSsessionOf ($e, $f=null)
-    {
-        return isset($this->session[$e]) ? $this->session[$e] : $f;
-    }
-
 
 
 }

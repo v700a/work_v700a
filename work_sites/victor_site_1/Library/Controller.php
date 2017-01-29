@@ -2,6 +2,8 @@
 
 namespace Library;
 
+use Library\Session;
+use Library\Request;
 
 abstract class Controller
 {
@@ -68,6 +70,92 @@ abstract class Controller
         else:
             return null;
         endif;
+    }
+
+    function isRegFormValid (array $sql_db)
+    {
+        $request = new Request();
+        $notice = null;
+        if ($request->isPostOf('login') == null && Session::getContent('login') == null):
+            Session::setMessage("Не заповнено поле - Логін");
+            return null;
+        elseif ($request->isPostOf('login') !== null):
+            Session::setContent('login', $request->isPostOf('login'));
+        elseif (Session::getContent('login') !== null):
+            if ($sql_db !== null):
+                foreach ($sql_db as $value):
+                    foreach ($value as $item):
+                        if (Session::getContent('login') === $item):
+                            Session::setMessage('Користувач з таким іменем уже зареєстрований. Виберіть інше ім\'я.');
+                            return null;
+                        endif;
+                    endforeach;
+                endforeach;
+            endif;
+        endif;
+
+        if ($request->isPostOf('email') == null  && Session::getContent('email') == null):
+            Session::setMessage("Не заповнено поле - E-mail");
+            return null;
+        elseif ($request->isPostOf('email') !== null):
+            Session::setContent('email', $request->isPostOf('email'));
+        elseif (Session::getContent('email') !== null):
+            if ($sql_db !== null):
+            $email_ =  Session::getContent('email');
+            $email_md5 = md5(Session::getContent('email') . 'phpsalt');
+                foreach ($sql_db as $value):
+                    foreach ($value as $item):
+                        if ($email_md5 === $item):
+                           Session::setMessage("E-mail: {$email_} уже використовується.");
+                           return;
+                        endif;
+                    endforeach;
+                endforeach;
+            endif;
+        endif;
+
+        if ($request->isPostOf('password') == null  && Session::getContent('password') == null):
+            $notice = "Не заповнено поле - Пароль";
+            Session::setMessage($notice);
+            return null;
+        elseif ($request->isPostOf('password') !== null):
+            Session::setContent('password', $request->isPostOf('password'));
+        endif;
+
+        if ($request->isPostOf('password_repeat') == null && Session::getContent('password_repeat') == null):
+            $notice = "Не заповнено поле - Підтвердження паролю";
+            Session::setMessage($notice);
+            return null;
+        elseif ($request->isPostOf('password_repeat') !== null):
+            Session::setContent('password_repeat', $request->isPostOf('password_repeat'));
+        endif;
+
+        if (Session::getContent('password') !== Session::getContent('password_repeat')):
+            $notice = 'Паролі не співпадають';
+            Session::setMessage($notice);
+            return null;
+        endif;
+
+        if ($request->isPostOf('code') == null && Session::getContent('code') == null):
+            $notice = "Не введено код із зображення";
+            Session::setMessage($notice);
+            return null;
+        elseif ($request->isPostOf('code') !== null):
+            Session::setContent('code', $request->isPostOf('code'));
+            $cap = $_COOKIE["captcha"];
+//            echo $cap;
+            $code = Session::getContent('code');
+            $code = trim($code); // На всякий случай убираем пробелы
+            $code = md5($code);
+            if ($cap === $code):
+            else:
+                $notice = "Невірний код із зображення";
+                Session::setMessage($notice);
+                return null;
+            endif;
+        endif;
+        Session::setContent('formOk', 1);
+
     }
 
     function isCommentFormValid (array $array)

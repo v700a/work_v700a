@@ -63,10 +63,18 @@ require VIEW_DIR . 'layout.phtml';
 echo '<hr>';
 echo '<pre>';
 echo $action;echo '<br><br>';
-
+echo 'SESSION', '<br>';
+print_r($_SESSION);
+echo '<br><br>';
+echo 'GET', '<br>';
 print_r($_GET);
 echo '<br><br>';
+echo 'POST', '<br>';
 print_r($_POST);
+echo '<br><br>';
+echo 'SERVER', '<br>';
+echo $_SERVER['REQUEST_URI'];
+//print_r($_SERVER);
 echo '<br><br>';
 //print_r($_SESSION);
 
