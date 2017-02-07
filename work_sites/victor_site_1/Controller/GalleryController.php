@@ -5,6 +5,7 @@ namespace Controller;
 use \Library\Controller;
 //use \Library\Functions;
 use \Library\Request;
+use Library\Session;
 
 class GalleryController extends Controller
 {
@@ -22,19 +23,22 @@ class GalleryController extends Controller
                     if ($request->isServerOf('CONTENT_LENGTH')):
                         $all_size = $request->isServerOf('CONTENT_LENGTH');
                         if ($all_size >= 8100000):
-                            $_SESSION['over_size'] = 1;
+                            Session::setContent('over_size', 1);
+//                            $_SESSION['over_size'] = 1;
                             header("location:/index.php?route=gallery/index");
                             die;
                         endif;
                     endif;
 
-                    if ($request->isSsessionOf('over_size') || $request->isSsessionOf('over_quantity')):
-                        if ($request->isSsessionOf('over_quantity')):
+                    if (Session::getContent('over_size') || Session::getContent('over_quantity')):
+                        if (Session::getContent('over_quantity')):
                             $over = 'Кількість одночасно завантажуваних файлів не може перевищувати - 19 !';
-                            unset($_SESSION['over_quantity']);
-                        elseif ($request->isSsessionOf('over_size')):
+                            Session::remove('over_quantity');
+//                            unset($_SESSION['over_quantity']);
+                        elseif (Session::getContent('over_size')):
                             $over = 'Об\'єм одночасно завантажуваних файлів не може перевищувати - 8,1 Мб !';
-                            unset($_SESSION['over_size']);
+                            Session::remove('over_size');
+//                            unset($_SESSION['over_size']);
                         endif;
                     else:
                         if ($request->isFilesOf('file')!== null):
@@ -44,19 +48,21 @@ class GalleryController extends Controller
                             $over_add_files = '';
                             $all_size = 0;
                             if ($count_arr_tmp > 19):
-                                $_SESSION['over_quantity'] = 1;
+                                Session::setContent('over_quantity', 1);
+//                                $_SESSION['over_quantity'] = 1;
                                 header("location:/index.php?route=gallery/index");
                                 die;
                             endif;
-                            $function->copy_file ($request->isFilesOf('file'));
+                            parent::copy_file ($request->isFilesOf('file'));
                         endif;
                     endif;
                     if ($request->isPost() !== null):
                         if (array_search('all',$request->isPost())):
-                            $_SESSION['all'] = 1;
+                            Session::setContent('all', 1);
+//                            $_SESSION['all'] = 1;
                         endif;
                         if (array_search('delete',$request->isPost())):
-                            delete_files($request->isPost());
+                            parent::delete_files($request->isPost());
 //                            $function->delete_files($request->isPost());
                             header("location:/index.php?route=gallery/index");
                             die;

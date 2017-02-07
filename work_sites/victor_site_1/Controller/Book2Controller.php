@@ -1,20 +1,27 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Victor
+ * Date: 06.02.2017
+ * Time: 12:41
+ */
 
 namespace Controller;
 
 use \Library\Controller;
-use \Model\Book;
+use \Model\Book2Repositiry;
 use \Library\Request;
 
-class BookController extends Controller
+
+class Book2Controller extends Controller
 {
-    public static $limit = 20;
+    public static $limit = 14;
     public static $page = 0;
 
     //function indexAction ($limit = 20, $page = 0)
     function indexAction (Request $request)
     {
-        $book = new Book();
+        $book = new Book2Repositiry();
         $count = $book->find_count_all();
         $array_book = $book->read_limit($count, self::$limit, self::$page);
         $count_pages = round($count/self::$limit);
@@ -34,7 +41,7 @@ class BookController extends Controller
 
     function editAction ($id, Request $request, $page = 0)
     {
-        $book = new Book();
+        $book = new Book2Repositiry();
         $count = $book->find_count_all();
         $array_book = $book->find_by_id($id);
         $count_pages = round($count/self::$limit);
@@ -47,7 +54,7 @@ class BookController extends Controller
 
     function saveAction ($id, Request $request, $page = 0)
     {
-        $book = new Book();
+        $book = new Book2Repositiry();
         $book->save_by_id($id);
         $count = $book->find_count_all();
         $array_book = $book->read_limit($count, self::$limit, self::$page);
@@ -62,7 +69,7 @@ class BookController extends Controller
 
     function deleteAction ($id, Request $request, $page_current = 0)
     {
-        $book = new Book();
+        $book = new Book2Repositiry();
         $book->remove_by_id($id);
         $count = $book->find_count_all();
         $array_book = $book->read_limit($count, self::$limit, self::$page);
@@ -76,7 +83,7 @@ class BookController extends Controller
     }
     function readAction ($id, Request $request)
     {
-        $book = new Book();
+        $book = new Book2Repositiry();
         $count = $book->find_count_all();
         $array_book = $book->find_by_id($id);
         $count_pages = round($count/self::$limit);
@@ -90,7 +97,7 @@ class BookController extends Controller
     }
     function sortAction (Request $request)
     {
-        $book = new Book();
+        $book = new Book2Repositiry();
 //        $request = new Request();
         $count = $book->find_count_all();
         $array_book = $book->read_limit($count, self::$limit, self::$page);

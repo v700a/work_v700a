@@ -204,7 +204,7 @@ abstract class Controller
                 $file_extention = '.' . end($file_name_arr);
                 $file_name_new = uniqid() . $file_extention;
                 $copy_to = $target_path . '\\' . $file_name_new;
-                if (parent::file_types($value_type) == true):
+                if (self::file_types($value_type) == true):
                     if ($value_size < 2000000):
                         copy($file_tmp_path, $copy_to);
                     endif;

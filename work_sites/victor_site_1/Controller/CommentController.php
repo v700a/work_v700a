@@ -3,7 +3,7 @@
 namespace Controller;
 
 use \Library\Controller;
-use \Model\CommentFormModel;
+use \Model\CommentForm;
 use \Library\Request;
 use \Library\Session;
 
@@ -12,7 +12,7 @@ class CommentController extends Controller
 
     function indexAction (Request $request)
     {
-        $comments_form = new CommentFormModel();
+        $comments_form = new CommentForm();
         if ($request->isPost() !== null):
             $arr_post = $request->isPost();
             $res = parent::isCommentFormValid($arr_post);

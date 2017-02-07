@@ -5,7 +5,7 @@ namespace Controller;
 use \Library\Controller;
 //use \Library\Functions;
 use Library\Session;
-use \Model\UserModel;
+use \Model\User;
 use \Library\Request;
 
 class SiteController extends Controller
@@ -18,7 +18,7 @@ class SiteController extends Controller
 
     function loginAction (Request $request)
     {
-        $user_model = new UserModel();
+        $user_model = new User();
         $logerr = null;
         if (Session::getContent('logmsg') == 'log_err'):
             $logerr = "Помилка авторизації! Невірний Логін/Пароль!";
@@ -60,7 +60,7 @@ class SiteController extends Controller
 
     function registerAction (Request $request)
     {
-        $user_model = new UserModel();
+        $user_model = new User();
         $clearSesReg = 0;
         if (Session::getContent('REQUEST_URI') == null):
             Session::setContent('REQUEST_URI', $_SERVER['REQUEST_URI']);

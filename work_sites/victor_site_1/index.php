@@ -1,6 +1,6 @@
 <?php
 
-$pdo = \Library\ConnectionPDO::getInstance()->getPDO();
+//$pdo = \Library\ConnectionPDO::getInstance()->getPDO();
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', __DIR__ . DS );
 define('VIEW_DIR', ROOT . 'View' . DS);
@@ -42,6 +42,7 @@ try {
         $content = $controller->$action($request);
     elseif ($request->isGetOf('page') !== null && $request->isGetOf('id') == null):
         \Controller\BookController::$page = $request->isGetOf('page');
+        \Controller\Book2Controller::$page = $request->isGetOf('page');
         $action = 'indexAction';
         $content = $controller->$action($request);
     elseif ($id !== null):
