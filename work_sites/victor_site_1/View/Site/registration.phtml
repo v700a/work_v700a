@@ -108,27 +108,63 @@
 <form method="post">
     <br>
     <label class="style-small">Введіть своє майбутнє ім'я (логін):</label><br>
-    <input class="input" type="text" autofocus name="login" value="<?= $login_for_form ?>"><br><br>
+    <input class="input" id="login_id" type="text" autofocus name="login" value="<?= $login_for_form ?>"><br><br>
     <label class="style-small">Введіть свою електронну пошту: </label><br>
-    <input class="input" type="email" name="email" value="<?= $email_for_form ?>"><br><br>
-    <?php if (isset($_GET['passview'])): ?>
+    <input class="input" id="email_id" type="email" name="email" value="<?= $email_for_form ?>"><br><br>
         <label class="style-small">Введіть пароль:</label><br>
-        <input class="input" type="text" name="password" value="<?= $pass_for_form ?>"><br><br>
+        <input class="input" id="pass_text_id" type="password" name="password" value="<?= $pass_for_form ?>"><br><br>
         <label class="style-small">Повторіть пароль:</label><br>
-        <input class="input" type="text" name="password_repeat" value="<?= $pass_r_for_form ?>"><br><br>
-        <input type="checkbox" name="passview" checked onclick="location.href='index.php?route=site/register'">&nbsp
-                                                                                                                           Показати пароль<br><br>
-    <?php else: ?>
-        <label class="style-small">Введіть пароль:</label><br>
-        <input class="input" type="password" name="password" value="<?= $pass_for_form ?>"><br><br>
-        <label class="style-small">Повторіть пароль:</label><br>
-        <input class="input" type="password" name="password_repeat" value="<?= $pass_r_for_form ?>"><br><br>
-        <input type="checkbox" name="passview" onclick="location.href='index.php?route=site/register&passview='">&nbsp
-                                                                                                                   Показати пароль<br><br>
-    <?php endif; ?>
-    <img src='captcha.png'>
+        <input class="input" id="pass_text_r_id" type="text" name="password_repeat" value="<?= $pass_r_for_form ?>"><br><br>
+        <input type="checkbox" name="passview" onclick="passview_()">&nbsp
+        Показати пароль<br><br>
+    <img id="captcha" src='captcha.png'>
     <a href="/index.php?route=site/register">
             Оновити зображення</a><br><br>
+    <script>
+        function passview_()
+        {
+            var pass_stor = document.getElementsByTagName('input')[2].value;
+            sessionStorage.setItem('pass_stor', pass_stor);
+            if (!sessionStorage.getItem('passview') || sessionStorage.getItem('passview') == 0){
+                document.getElementById('pass_text_id').outerHTML =
+                    "<input class='input' id='pass_text_id' type='text' name='password' value=''>";
+            document.getElementsByTagName('input')[2].value = sessionStorage.getItem('pass_stor');
+
+                sessionStorage.setItem('passview', 1);
+            }
+            else {
+                document.getElementById('pass_text_id').outerHTML =
+                    "<input class='input' id='pass_text_id' type='password' name='password' value=''>";
+                document.getElementsByTagName('input')[2].value = sessionStorage.getItem('pass_stor');
+
+                sessionStorage.setItem('passview', 0);
+
+            }
+//            alert(document.getElementById('pass_text_id').outerHTML);
+//            document.getElementById('pass_text_id').outerHTML =
+//                "<input class='input' id='pass_text_id' type='password' name='password' value=''>";
+//            alert(document.getElementById('pass_text_id').outerHTML);
+//            alert(document.getElementsByTagName('input')[0].type('text'));
+//            var log_stor = document.getElementsByTagName('input')[0].;
+//            if (!sessionStorage.getItem('login_storage')){
+//                sessionStorage.setItem('login_storage', log_stor);
+//            }
+//
+//            alert(log_stor);
+//            var a = sessionStorage.getItem('login_storage');
+//
+//            alert (a);
+////            $.get('index.php?route=site/register', {message:a}, function(data) {
+////                alert('Сервер ответил: ' + data);
+////            });
+//
+////            document.getElementsByTagName('input')[0].value = a;
+//            //            document.getElementById('captcha').outerHTML = "<img id='captcha' src='cap.png'>";
+//            $('login_id').val(a);
+//            location.href='index.php?route=site/register&passview=1';
+        }
+    </script>
+
     <label class="style-small">Введіть код із зображення</label><br>
     <input class="input" type="text" name="code" ><br><br>
 

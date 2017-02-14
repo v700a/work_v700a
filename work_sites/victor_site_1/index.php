@@ -18,6 +18,11 @@ function __autoload($class_name)
     require $file;
 }
 
+
+
+
+
+
 try {
     \Library\Session::sessionStart();
     $request = new \Library\Request();
@@ -29,11 +34,8 @@ try {
     $action = $route[1] . 'Action';
     $controller = new $controller ();
     if ($request->isPostOf('save') !== null):
-        if ($request->isPostOf('title') == ''):
-            throw new Exception('Не заповнено поле "Назва книги"');
-        endif;
         $action = 'saveAction';
-        $content = $controller->$action($request->isPost());
+        $content = $controller->$action($request->isPost(), $page);
     elseif ($request->isGetOf('description') !== null):
         $read = $request->isGetOf('description');
         $content = $controller->$action($read, $request);
@@ -46,20 +48,18 @@ try {
         $action = 'indexAction';
         $content = $controller->$action($request);
     elseif ($id !== null):
-        $content = $controller->$action($id, $page, $request);
+        $content = $controller->$action($id, $request, $page);
     else:
         $content = $controller->$action($request);
     endif;
 }
 catch (\Exception $exception_1) {
-    echo $exception_1->getMessage();
-    $action = 'addAction';
-    $content = $controller->$action();
-
 }
 
 
 require VIEW_DIR . 'layout.phtml';
+
+
 
 echo '<hr>';
 echo '<pre>';
@@ -77,5 +77,6 @@ echo 'SERVER', '<br>';
 echo $_SERVER['REQUEST_URI'];
 //print_r($_SERVER);
 echo '<br><br>';
+
 //print_r($_SESSION);
 

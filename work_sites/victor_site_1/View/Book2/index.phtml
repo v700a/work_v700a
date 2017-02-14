@@ -212,6 +212,7 @@
                 else:
                     $page = $_GET['page'];
                 endif;
+                $id_row = 1;
     foreach ($array_book as $value):
         ?>
         <label class="div-product" for="div-product" style="cursor: pointer; background-color: #ECECEC ;"
@@ -228,18 +229,30 @@
             ?>
 
              <a class="button-edit" href="index.php?route=book2/edit&id=<?=$value->getId()?>">Редагувати</a>
-             <a class="button-delete" href="index.php?route=book2/index&page=<?= $page ?>&id=<?=$value->getId()?>#win-1" >Видалити</a>
-             <a href="#x-1" class="overlay" id="win-1"></a>
-                <div class="popup">
-                    Видалити книгу № <?= $_GET['id'] ?> ?
-                    <a class="button-delete" href="index.php?route=book2/delete&id=<?=$_GET['id']?>&page=<?= $page ?>&deleted=1">
-                    Підтвердити видалення</a>
-                    <a class="close"title="Закрити" href="index.php?route=book2/index&page=<?= $page ?>"></a>
-                </div>
+             <a class="button-delete" id="<?= $id_row ?>" onclick="confirmedDelete(<?=$value->getId()?>, <?= $id_row ?>)"
+                href="index.php?route=book2/index&page=<?= $page ?>&id=<?=$value->getId()?>" >Видалити</a>
             <?php endif; ?>
         </div>
         </label>
-        <?php endforeach;?>
+
+        <?php $id_row = $id_row + 1; endforeach;?>
+    <script>
+        function confirmedDelete(c, d)
+        {
+            var href_doc = document.getElementById(d);
+            var confirmed_ = 'Підтвердити видалення книги № ' + c;
+            if (confirm(confirmed_)) {
+                href_doc.href = "index.php?route=book2/delete&id="+c+"&page=<?= $page ?>&deleted=1";
+                confirm(href_doc.href);
+            }
+            else {
+                alert('Видалення книги скасовано');
+                href_doc.href="index.php?route=book2/index&page=<?= $page ?>";
+            }
+        }
+
+    </script>
+
 </div>
     <hr>
         <?php   $nbsp = '&nbsp&nbsp';

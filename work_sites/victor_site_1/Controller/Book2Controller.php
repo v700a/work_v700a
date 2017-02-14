@@ -19,7 +19,7 @@ class Book2Controller extends Controller
     public static $page = 0;
 
     //function indexAction ($limit = 20, $page = 0)
-    function indexAction (Request $request)
+    function indexAction ($request)
     {
         $book = new Book2Repositiry();
         $count = $book->find_count_all();
@@ -32,14 +32,14 @@ class Book2Controller extends Controller
         return $this->render('index.phtml', $array);
     }
 
-    function addAction (Request $request)
+    function addAction ($request, $page)
     {
         //$book = new BookModel();
         $array = array();
         return $this->render('add.phtml', $array);
     }
 
-    function editAction ($id, Request $request, $page = 0)
+    function editAction ($id, $request, $page = 0)
     {
         $book = new Book2Repositiry();
         $count = $book->find_count_all();
@@ -52,10 +52,10 @@ class Book2Controller extends Controller
         return $this->render('edit.phtml', $array);
     }
 
-    function saveAction ($id, Request $request, $page = 0)
+    function saveAction ($request, $page = 0)
     {
         $book = new Book2Repositiry();
-        $book->save_by_id($id);
+        $book->save_by_id($request);
         $count = $book->find_count_all();
         $array_book = $book->read_limit($count, self::$limit, self::$page);
         $count_pages = round($count/self::$limit);
@@ -67,7 +67,7 @@ class Book2Controller extends Controller
     }
 
 
-    function deleteAction ($id, Request $request, $page_current = 0)
+    function deleteAction ($id, $page_current = 0)
     {
         $book = new Book2Repositiry();
         $book->remove_by_id($id);
@@ -81,7 +81,7 @@ class Book2Controller extends Controller
         );
         return $this->render('index.phtml', $array);
     }
-    function readAction ($id, Request $request)
+    function readAction ($id, $request)
     {
         $book = new Book2Repositiry();
         $count = $book->find_count_all();
@@ -95,7 +95,7 @@ class Book2Controller extends Controller
         return $this->render('read.phtml', $array);
 
     }
-    function sortAction (Request $request)
+    function sortAction ($request)
     {
         $book = new Book2Repositiry();
 //        $request = new Request();

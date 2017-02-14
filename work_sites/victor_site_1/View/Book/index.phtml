@@ -182,7 +182,9 @@
 
 <div class="content">
 <form method="post">
+    <?php if (isset($_COOKIE['username_in'])): ?>
     <button  class="button-add" formmethod="get" name="route" value="book/add"><b>Додати нову книгу до каталогу</b></button>
+    <?php endif; ?>
 </form>
     <br>
 <table border="3" width="100%">
@@ -248,6 +250,7 @@
                 else:
                     $page = $_GET['page'];
                 endif;
+                $id_row = 1;
     foreach ($array_book as $key => $value):
         ?>
         <tr style="cursor: pointer; background-color: #ECECEC ;"
@@ -261,22 +264,30 @@
         <?php if (isset($_COOKIE['username_in'])): ?>
 
             <td><a class="button-edit" href="index.php?route=book/edit&id=<?=$value['id']?>">Редагувати</a></td>
-<!--            <td><a class="button-delete" href="index.php?route=book/delete&id=--><?//=$value['id']?><!--"">Видалити</a></td>-->
             <td>
-                <a class="button-delete" href="index.php?route=book/index&page=<?= $page ?>&id=<?=$value['id']?>#win-1" >Видалити</a>
-                <a href="#x-1" class="overlay" id="win-1"></a>
-                <div class="popup">
-                    Видалити книгу № <?= $_GET['id'] ?> ?
-                    <a class="button-delete" href="index.php?route=book/delete&id=<?=$_GET['id']?>&page=<?= $page ?>&deleted=1">
-                                              Підтвердити видалення</a>
-                    <a class="close"title="Закрити" href="index.php?route=book/index&page=<?= $page ?>"></a>
-                </div>
-
+                <a class="button-delete" id="<?= $id_row ?>" onclick="confirmedDelete(<?=$value['id']?>, <?= $id_row ?>)"
+                   href="index.php?route=book/index&page=<?= $page ?>&id=<?=$value['id']?>" >Видалити</a>
             </td>
         <?php endif; ?>
         </tr>
-        <?php endforeach;?>
+        <?php $id_row = $id_row + 1; endforeach;?>
 </table>
+    <script>
+
+        function confirmedDelete(c, d)
+        {
+            var confirmed_ = 'Підтвердити видалення книги № ' + c;
+            if (confirm(confirmed_)) {
+                href_doc.href = "index.php?route=book/delete&id="+c+"&page=<?= $page ?>&deleted=1";
+                confirm(href_doc.href);
+            }
+            else {
+                alert('Видалення книги скасовано');
+                href_doc.href="index.php?route=book/index&page=<?= $page ?>";
+            }
+        }
+
+    </script>
 
     <tr>
         <?php   $nbsp = '&nbsp&nbsp';
@@ -286,69 +297,74 @@
                 endif;
         ?>
         <br>
-        <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=1"><b>
-                    <?= $page == 1 ? '<b class="bold">1</b>' : 1 ?></b></a></td>
-        <?php if ($count_pages > 1 && $count_pages < 3): ?>
-            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=2"><b>
-                        <?= $page == 2 ? '<b class="bold">2</b>' : 2 ?></b></a></td>
+        <?php if ($count_pages == 1): ?>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=1"><b>
+                        <?= $page == 1 ? '<b class="bold">1</b>' : 1 ?></b></a></td>
         <?php else: ?>
-            <?php if ($count_pages > 2 && $count_pages < 4): ?>
+            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=1"><b>
+                        <?= $page == 1 ? '<b class="bold">1</b>' : 1 ?></b></a></td>
+            <?php if ($count_pages > 1 && $count_pages < 3): ?>
                 <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=2"><b>
-                        <?= $page == 2 ? '<b class="bold">2</b>' : 2 ?></b></a></td>
-                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=3"><b>
-                        <?= $page == 3 ? '<b class="bold">3</b>' : 3 ?></b></a></td>
+                            <?= $page == 2 ? '<b class="bold">2</b>' : 2 ?></b></a></td>
             <?php else: ?>
-                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=2"><b>
-                        <?= $page == 2 ? '<b class="bold">2</b>' : 2 ?></b></a></td>
-                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=3"><b>
-                        <?= $page == 3 ? '<b class="bold">3</b>' : 3 ?></b></a></td>
-                <?php if ($page == 1 || $page == 2): ?>
-                            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
-                <?php elseif ($page == 3): ?>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=4"><b>4</b></a></td>
-                            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
-                <?php elseif ($page == 4): ?>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=4"><b>
-                                <?= $page == 4 ? '<b class="bold">4</b>' : 4 ?></b></a></td>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=5"><b>5</b></a></td>
-                            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
-                <?php elseif ($page == 5): ?>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=4"><b>4</b></a></td>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=5"><b>
-                                <?= $page == 5 ? '<b class="bold">5</b>' : 5 ?></b></a></td>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=6"><b>6</b></a></td>
-                            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
-                <?php elseif ($page > 5 && $page < ($count_pages - 4)): ?>
-                            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page ?>"><b class="bold">
-                                <?= $page ?></b></a></td>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page + 1 ?>"><b><?= $page + 1 ?></b></a></td>
-                            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
-                <?php elseif ($page == ($count_pages - 4)): ?>
-                            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page ?>"><b class="bold"><?= $page ?></b></a></td>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page + 1 ?>"><b><?= $page + 1 ?></b></a></td>
-                <?php elseif ($page == ($count_pages - 3)): ?>
-                            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page ?>"><b class="bold"><?= $page ?></b></a></td>
-                <?php elseif ($page == ($count_pages - 2)): ?>
-                            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
-                            <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
+                <?php if ($count_pages > 2 && $count_pages < 4): ?>
+                    <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=2"><b>
+                            <?= $page == 2 ? '<b class="bold">2</b>' : 2 ?></b></a></td>
+                    <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=3"><b>
+                            <?= $page == 3 ? '<b class="bold">3</b>' : 3 ?></b></a></td>
                 <?php else: ?>
-                            <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+                    <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=2"><b>
+                            <?= $page == 2 ? '<b class="bold">2</b>' : 2 ?></b></a></td>
+                    <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=3"><b>
+                            <?= $page == 3 ? '<b class="bold">3</b>' : 3 ?></b></a></td>
+                    <?php if ($page == 1 || $page == 2): ?>
+                                <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+                    <?php elseif ($page == 3): ?>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=4"><b>4</b></a></td>
+                                <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+                    <?php elseif ($page == 4): ?>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=4"><b>
+                                    <?= $page == 4 ? '<b class="bold">4</b>' : 4 ?></b></a></td>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=5"><b>5</b></a></td>
+                                <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+                    <?php elseif ($page == 5): ?>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=4"><b>4</b></a></td>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=5"><b>
+                                    <?= $page == 5 ? '<b class="bold">5</b>' : 5 ?></b></a></td>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=6"><b>6</b></a></td>
+                                <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+                    <?php elseif ($page > 5 && $page < ($count_pages - 4)): ?>
+                                <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page ?>"><b class="bold">
+                                    <?= $page ?></b></a></td>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page + 1 ?>"><b><?= $page + 1 ?></b></a></td>
+                                <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+                    <?php elseif ($page == ($count_pages - 4)): ?>
+                                <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page ?>"><b class="bold"><?= $page ?></b></a></td>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page + 1 ?>"><b><?= $page + 1 ?></b></a></td>
+                    <?php elseif ($page == ($count_pages - 3)): ?>
+                                <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page ?>"><b class="bold"><?= $page ?></b></a></td>
+                    <?php elseif ($page == ($count_pages - 2)): ?>
+                                <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+                                <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= $page - 1 ?> "><b><?= $page - 1 ?></b></a></td>
+                    <?php else: ?>
+                                <td><?= $nbsp ?><b class="bold2">&nbsp.&nbsp.&nbsp.&nbsp</b></td>
+                    <?php endif; ?>
+                        <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= ($count_pages - 2) ?>">
+                                <b><?= $page == ($count_pages - 2) ? "<b class=\"bold\">{$page}</b>" : ($count_pages - 2) ?>
+                                </b></a></td>
+                        <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= ($count_pages - 1) ?>">
+                                <b><?= $page == ($count_pages - 1) ? "<b class=\"bold\">{$page}</b>" : ($count_pages - 1) ?>
+                                </b></a></td>
+                        <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= ($count_pages) ?>">
+                                <b><?= $page == $count_pages ? "<b class=\"bold\">{$page}</b>" : $count_pages ?>
+                                </b></a></td>
                 <?php endif; ?>
-                    <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= ($count_pages - 2) ?>">
-                            <b><?= $page == ($count_pages - 2) ? "<b class=\"bold\">{$page}</b>" : ($count_pages - 2) ?>
-                            </b></a></td>
-                    <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= ($count_pages - 1) ?>">
-                            <b><?= $page == ($count_pages - 1) ? "<b class=\"bold\">{$page}</b>" : ($count_pages - 1) ?>
-                            </b></a></td>
-                    <td><?= $nbsp ?><a class="button-page" href="index.php?route=book/index&page=<?= ($count_pages) ?>">
-                            <b><?= $page == $count_pages ? "<b class=\"bold\">{$page}</b>" : $count_pages ?>
-                            </b></a></td>
             <?php endif; ?>
         <?php endif; ?>
     </tr>
