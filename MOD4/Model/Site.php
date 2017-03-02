@@ -86,10 +86,10 @@ class Site
         return $result_query_find->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    function find_by_id($id)
+    function find_by_id($id, $table)
     {
         $pdo = ConnectionPDO::getInstance()->getPDO();
-        $sql_query_string_find = $pdo->prepare("SELECT * FROM book WHERE id = :id");
+        $sql_query_string_find = $pdo->prepare("SELECT * FROM $table WHERE id = :id");
         $sql_query_string_find->execute(compact('id'));
         return $sql_query_string_find->fetch(\PDO::FETCH_ASSOC);
     }

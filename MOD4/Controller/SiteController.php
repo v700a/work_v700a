@@ -17,25 +17,13 @@ class SiteController extends Controller
     function indexAction ()
     {
         $array = array();
-        $array_db = array('business', 'policy', 'sports', 'science','vacation');
+        $array_db = array('business', 'policy', 'sport', 'science','vacation');
         foreach ($array_db as $value):
             $site = new Site();
             $count = $site->find_count_all($value);
             $array_site = $site->read_limit($value, $count, self::$limit, self::$page);
-//            $array_site_all[] = $array_site;
             $array[$value] = $array_site;
-//        $count_pages = round($count/self::$limit);
-//        $array = array(
-//            'array_book' => $array_book,
-//            'count_pages' => $count_pages
-//        );
         endforeach;
-//        var_dump($array);
-//        $array = array(
-//            'array_site_all' => $array_site_all
-//        );
-
-//        return $this->render('index.phtml', $array);
         return $this->render('index.phtml', $array);
     }
 
@@ -152,6 +140,21 @@ class SiteController extends Controller
 
             );
         return $this->render('registration.phtml', $array);
+
+    }
+
+    function readAction ($id, $request)
+    {
+        $book = new Site();
+        $count = $book->find_count_all();
+        $array_book = $book->find_by_id($id);
+        $count_pages = round($count/self::$limit);
+        $array = array(
+            'array_book' => $array_book,
+            'count_pages' => $count_pages
+        );
+
+        return $this->render('read.phtml', $array);
 
     }
 

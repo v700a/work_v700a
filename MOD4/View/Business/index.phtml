@@ -34,31 +34,24 @@
 <body>
 <?php
 \Library\Session::setContent('REQUEST_URI', $_SERVER['REQUEST_URI']);
-
-//var_dump($business);
-?>
-<div style="margin: 1% 0 2% 0">Новини бізнесу</div>
-<?php
-foreach ($business as $value):
-    echo $value['title'].'<br><br>';
-endforeach;
-?>
-<tr>
-<?php
 if (!isset($_GET['page'])):
     $_GET['page'] = 1;
-//endif;
-//if (!isset($_GET['page'])):
-//    if (isset($page_current)):
-//        $page = $page_current;
-//    else:
-        $page = 1;
-//    endif;
+    $page = 1;
 else:
     $page = $_GET['page'];
 endif;
 
     $nbsp = '&nbsp&nbsp';?>
+
+<div style="margin: 1% 0 2% 0"><b>Новини бізнесу</b></div>
+<?php
+foreach ($business as $value):
+?>
+    <a href="index.php?route=business/read&description=<?= $value['id'] ?>&page=<?= $page ?>"><?= $value['title'] ?><br><br></a>
+<?php
+endforeach;
+?>
+<tr>
 
     <td><?= $nbsp ?><a class="button-page" href="index.php?route=business/index&page=1"><b>
     <?= $page == 1 ? '<b class="bold">1</b>' : 1 ?></b></a></td>

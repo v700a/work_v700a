@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<br>
+<br>
+<br>
+<b>Політичні новини:</b> "<?= $array_s['title']?>"
+<br>
+<br>
+<br>
+<div style="width: 70%; height: 300px ">
+<img src="<?= $array_s['pics'] ?>" align="left" alt="NO FILE"></a>
+<?= $array_s['content'] ?>
+</div>
+<br>
+<br>
+<br>
+<div style="width: 100%">
+<button onclick="location.href='index.php?route=policy/index&page=<?=$_GET['page'] ?>'">Повернутись до категорії</button>
+</div>
+<br>
+<br>
+<br>
+
+
+</body>
+</html>

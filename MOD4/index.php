@@ -44,6 +44,7 @@ try {
         $content = $controller->$action($request);
     elseif ($request->isGetOf('page') !== null && $request->isGetOf('id') == null):
         \Controller\BusinessController::$page = $request->isGetOf('page');
+        \Controller\PolicyController::$page = $request->isGetOf('page');
         $action = 'indexAction';
         $content = $controller->$action($request);
     elseif ($id !== null):
@@ -62,9 +63,9 @@ require VIEW_DIR . 'layout.phtml';
 
 echo '<hr>';
 echo '<pre>';
-echo $action;echo '<br><br>';
-echo 'SESSION', '<br>';
-print_r($_SESSION);
+//echo $action;echo '<br><br>';
+//echo 'SESSION', '<br>';
+//print_r($_SESSION);
 echo '<br><br>';
 echo 'GET', '<br>';
 print_r($_GET);
