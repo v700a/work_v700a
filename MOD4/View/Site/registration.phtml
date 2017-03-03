@@ -101,6 +101,7 @@
 
     \Library\Session::setContent('REQUEST_URI', $_SERVER['REQUEST_URI']);
 
+
     if (isset($_SESSION['first'])):
         $increase = \Library\Session::getContent('first');
         $increase = ++$increase;
@@ -108,18 +109,17 @@
     else:
         \Library\Session::setContent('first', 1);
     endif;
-
     if (\Library\Session::getContent('first') > 1):
         $msg_err = \Library\Session::getMessage();
-        if ($msg_err !== null):
+//        if ($msg_err !== null):
             echo '<div class="message">', $msg_err, '</div>';
-        endif;
+        echo \Library\Session::getContent('first');
+//        endif;
+        \Library\Session::setMessage(null);
     elseif (isset($_SESSION['registered']) && \Library\Session::getContent('first') == 1):
         $msg_err = \Library\Session::getContent('registered');
-//        \Library\Session::remove('registered');
-        if ($msg_err !== null):
-            echo '<div class="message">', $msg_err, '</div>';
-        endif;
+        \Library\Session::remove('registered');
+        echo '<div class="message">', $msg_err, '</div>';
     endif;
 //    $login_for_form
 //    $email_for_form
@@ -131,45 +131,47 @@
 <form method="post">
     <br>
     <label class="style-small">Введіть своє майбутнє ім'я (логін):</label><br>
-    <input class="input" id="login_id" type="text" onchange="change_login()" autofocus name="login"
-           value=""><br><br>
+    <input class="input" id="login_id" type="text" onchange="change_login()" autofocus name="login"><br><br>
+
     <script>
         function change_login()
         {
-            var login_stor = document.getElementsByTagName('input')[0].value;
+            var login_stor = document.getElementsByTagName('input')[1].value;
+//            alert(document.getElementsByTagName('input')[1].value);
             sessionStorage.setItem('login_stor', login_stor);
         }
+        document.getElementsByTagName('input')[1].value = sessionStorage.getItem('login_stor');
     </script>
     <label class="style-small">Введіть свою електронну пошту: </label><br>
-    <input class="input" id="email_id" type="email" onchange="change_email()" name="email" value=""><br><br>
+    <input class="input" id="email_id" type="email" onchange="change_email()" name="email">
+    <br><br>
     <script>
         function change_email()
         {
-            var email_stor = document.getElementsByTagName('input')[1].value;
+            var email_stor = document.getElementsByTagName('input')[2].value;
             sessionStorage.setItem('email_stor', email_stor);
         }
+        document.getElementsByTagName('input')[2].value = sessionStorage.getItem('email_stor');
     </script>
     <label class="style-small">Введіть пароль:</label><br>
-    <input class="input" id="pass_text_id" type="password" onchange="change_pass()" name="password" value=""><br><br>
+    <input class="input" id="pass_text_id" type="password" onchange="change_pass()" name="password"><br><br>
     <script>
         function change_pass()
         {
-            var pass_stor = document.getElementsByTagName('input')[2].value;
+            var pass_stor = document.getElementsByTagName('input')[3].value;
             sessionStorage.setItem('pass_stor', pass_stor);
         }
+        document.getElementsByTagName('input')[3].value = sessionStorage.getItem('pass_stor');
     </script>
     <label class="style-small">Повторіть пароль:</label><br>
-    <input class="input" id="pass_text_re_id" type="password" onchange="change_pass_re()" name="password_repeat" value=""><br><br>
+    <input class="input" id="pass_text_re_id" type="password" onchange="change_pass_re()" name="password_repeat"><br><br>
     <script>
         function change_pass_re()
         {
-            var pass_re_stor = document.getElementsByTagName('input')[3].value;
+            var pass_re_stor = document.getElementsByTagName('input')[4].value;
             sessionStorage.setItem('pass_re_stor', pass_re_stor);
         }
-        document.getElementsByTagName('input')[0].value = sessionStorage.getItem('login_stor');
-        document.getElementsByTagName('input')[1].value = sessionStorage.getItem('email_stor');
-        document.getElementsByTagName('input')[2].value = sessionStorage.getItem('pass_stor');
-        document.getElementsByTagName('input')[3].value = sessionStorage.getItem('pass_re_stor');
+        document.getElementsByTagName('input')[4].value = sessionStorage.getItem('pass_re_stor');
         sessionStorage.setItem('passview', 0);
     </script>
     <input type="checkbox" name="passview" onclick="passview_()">&nbsp
@@ -184,23 +186,23 @@
         {
             if (!sessionStorage.getItem('passview') || sessionStorage.getItem('passview') == 0){
                 document.getElementById('pass_text_id').outerHTML =
-                    "<input class='input' id='pass_text_id' type='text' name='password' value=''>";
+                    "<input class='input' id='pass_text_id' type='text' onchange='change_pass()' name='password'>";
                 document.getElementById('pass_text_re_id').outerHTML =
-                    "<input class='input' id='pass_text_re_id' type='text' name='password_repeat' value=''>";
+                    "<input class='input' id='pass_text_re_id' type='text' onchange='change_pass_re()' name='password_repeat' >";
 
                 sessionStorage.setItem('passview', 1);
             }
             else {
                 document.getElementById('pass_text_id').outerHTML =
-                    "<input class='input' id='pass_text_id' type='password' name='password' value=''>";
+                    "<input class='input' id='pass_text_id' type='password' onchange='change_pass()' name='password' >";
                 document.getElementById('pass_text_re_id').outerHTML =
-                    "<input class='input' id='pass_text_re_id' type='password' name='password_repeat' value=''>";
+                    "<input class='input' id='pass_text_re_id' type='password' onchange='change_pass_re()' name='password_repeat' >";
 
                 sessionStorage.setItem('passview', 0);
 
             }
-            document.getElementsByTagName('input')[2].value = sessionStorage.getItem('pass_stor');
-            document.getElementsByTagName('input')[3].value = sessionStorage.getItem('pass_re_stor');
+            document.getElementsByTagName('input')[3].value = sessionStorage.getItem('pass_stor');
+            document.getElementsByTagName('input')[4].value = sessionStorage.getItem('pass_re_stor');
         }
     </script>
 
@@ -211,10 +213,15 @@
     <script>
         function send_form()
         {
-            sessionStorage.setItem('login_stor', '');
-            sessionStorage.setItem('email_stor', '');
-            sessionStorage.setItem('pass_stor', '');
-            sessionStorage.setItem('pass_re_stor', '');
+//            if (sessionStorage.setItem('login_stor') {
+//                // do something
+//            } else {
+//                sessionStorage.setItem('login_stor', '');
+//                sessionStorage.setItem('email_stor', '');
+//                sessionStorage.setItem('pass_stor', '');
+//                sessionStorage.setItem('pass_re_stor', '');
+                // do something else
+//            }
 //            document.getElementsByTagName('input')[0].value = sessionStorage.getItem('login_stor');
 //            document.getElementsByTagName('input')[1].value = sessionStorage.getItem('email_stor');
 //            document.getElementsByTagName('input')[2].value = sessionStorage.getItem('pass_stor');

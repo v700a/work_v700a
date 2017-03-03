@@ -36,30 +36,29 @@
     <b>Коментарі</b>
     <div class="layer">
         <?php
-//        $i = 0;
-//        foreach ($find_comments as $arr):
-//            echo 'Дописувач:&nbsp', '<b>', $arr["username"], '</b>';
-//            if ($arr['checkbox_state'] == 'on'):
-//                echo "&nbsp&nbsp E-mail:", "<b>{$arr['email']}</b>", '&nbsp';
-//            endif;
-//            echo '&nbsp&nbspКоментар додано:&nbsp', $arr["time_stamp"];
-//            $i = $arr["id"];
-//            $u = $arr["username"];
-//            echo '<br>';
-//            echo 'Додає коментар:', '<br><br>';
-//            echo '<b><i>', $arr["comment_text"], '</i></b>', '<br><br>';
-//            echo "<a class='button-delete' href=\"index.php?route=comment/index&delete=$i&user_delete=$u \">
-//            <b>Видалити&nbsp&nbsp&nbsp</b></a>";
-//            echo '&nbsp&nbsp Рейтинг комантаря: &nbsp';
-//            echo '<b>', $arr["rating"], '</b>';
-//            echo ' &nbsp&nbsp Зміна рейтингу: &nbsp&nbsp&nbsp';
-//            echo "<a class='button-page-plus' href=\"index.php?route=comment/index&r_plus=$i \">
-//            <b>+</a>";
-//            echo '&nbsp&nbsp&nbsp';
-//            echo "<a class='button-page-minus' href=\"index.php?route=comment/index&r_minus=$i \">
-//            <b>-</b></a>";
-//            echo '<br>', '<div style="width: 100%; height: 2px; background: darkgreen;">&nbsp</div>', '<br>';
-//        endforeach;
+        $i = 0;
+        if ($array_feed !== null):
+            foreach ($array_feed as $arr):
+                echo 'Дописувач:&nbsp', '<b>', $arr["name_user"], '</b>';
+                echo '&nbsp&nbspКоментар додано:&nbsp', $arr["time_stamp"];
+    //            $i = $arr["id"];
+                $u = $arr["name_user"];
+                echo '<br>';
+                echo 'Додає коментар:', '<br><br>';
+                echo '<b><i>', $arr["user_comment"], '</i></b>', '<br><br>';
+    //            echo "<a class='button-delete' href=\"index.php?route=comment/index&delete=$i&user_delete=$u \">
+    //            <b>Видалити&nbsp&nbsp&nbsp</b></a>";
+                echo '&nbsp&nbsp Рейтинг комантаря: &nbsp';
+                echo '<b>', $arr["rating_user"], '</b>';
+                echo ' &nbsp&nbsp Зміна рейтингу: &nbsp&nbsp&nbsp';
+    //            echo "<a class='button-page-plus' href=\"index.php?route=comment/index&r_plus=$i \">
+    //            <b>+</a>";
+    //            echo '&nbsp&nbsp&nbsp';
+    //            echo "<a class='button-page-minus' href=\"index.php?route=comment/index&r_minus=$i \">
+    //            <b>-</b></a>";
+                echo '<br>', '<div style="width: 100%; height: 2px; background: darkgreen;">&nbsp</div>', '<br>';
+            endforeach;
+        endif;
         ?>
     </div>
     <?php if (isset($_COOKIE['username_in'])): ?>
@@ -89,7 +88,15 @@
 <br>
 <br>
 <br>
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST'):
+    $desc = $_GET['description'];
+    $page = $_GET['page'];
+    header("location: index.php?route=business/read&description=$desc&page=$page");
+    die;
+endif;
 
+?>
 
 
 </body>

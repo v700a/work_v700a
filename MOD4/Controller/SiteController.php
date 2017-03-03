@@ -48,8 +48,8 @@ class SiteController extends Controller
                 $login_and_id_user = $login . '-' . $db_users['id'];
                 if ($db_users) :
                     setcookie('username_in', $login_and_id_user, time() + 120*60);
-//                    header('location: index.php?route=site/login');
-//                    die;
+                    header('location: index.php?route=site/login');
+                    die;
                 else:
                     Session::setContent('logmsg','log_err');
                     header('location: index.php?route=site/login');
@@ -121,12 +121,9 @@ class SiteController extends Controller
             $login = Session::getContent('login');
             $pass_md5 = md5(Session::getContent('password') . 'phpsalt');
             $email_md5 = md5(Session::getContent('email') . 'phpsalt');
-            $email_ = Session::getContent('email');
-//                if ($is_email == 0 && $is_name == 0):
-                    $user_model->insert($login, $pass_md5, $email_md5);
+//            $email_ = Session::getContent('email');
+//            $user_model->insert($login, $pass_md5, $email_md5);
             Session::setContent('registered', "Ви зареєстровані як - {$login}. Перейдіть на сторінку - \"Авторизація\"");
-//                endif;
-//            endif;
         endif;
         if ($_SERVER['REQUEST_METHOD'] == 'POST'):
             header('location: index.php?route=site/register');

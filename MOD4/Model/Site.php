@@ -81,6 +81,19 @@ class Site
         return $sql_query_string_find;
     }
 
+    function find_feed_by_id($id_news, $category)
+    {
+        $pdo = ConnectionPDO::getInstance()->getPDO();
+        $sql_query_string_find = $pdo->query("SELECT * FROM feedback WHERE category_news = '$category' AND id_news = '$id_news'
+        ORDER BY `feedback`.`time_stamp` DESC");
+        if ($sql_query_string_find !== false):
+           return $sql_query_string_find->fetchAll(\PDO::FETCH_ASSOC);
+        else:
+            return null;
+        endif;
+    }
+
+
     function save_feed_by_id(array $update_feed)
     {
         $pdo = ConnectionPDO::getInstance()->getPDO();
@@ -100,15 +113,21 @@ class Site
 //        else:
 //            if (isset($update_feed['title'])):
 //                if ($update_feed['title'] !== '' && $update_feed['title'] !== null):
-        var_dump($update_feed);
+//        echo 555555555555555;
+//        var_dump($update_feed);
+//        var_dump($pdo);
                     $insert_feed_id_news = $update_feed['id_news'];
                     $insert_feed_category_news = $update_feed['category_news'];
                     $insert_feed_id_user = $update_feed['id_user'];
                     $insert_feed_user_comment = $update_feed['feed'];
-                    $sql_query_string_insert = $pdo->prepare("INSERT INTO feedback (id_news, category_news, id_user, user_comment) 
-                        VALUES ( $insert_feed_id_news, $insert_feed_category_news, $insert_feed_id_user, $insert_feed_user_comment)");
+                    $insert_feed_user_rating_user = 0; //$update_feed['feed'];
+                    $insert_feed_name_user = $update_feed['name_user'];
+
+                    $sql_query_string_insert = $pdo->prepare("INSERT INTO feedback (id_news, category_news, id_user, user_comment,
+                        rating_user, name_user) VALUES ( :insert_feed_id_news, :insert_feed_category_news, :insert_feed_id_user, 
+                        :insert_feed_user_comment, :insert_feed_user_rating_user, :insert_feed_name_user)");
                     $sql_query_string_insert->execute(compact('insert_feed_id_news', 'insert_feed_category_news',
-                        'insert_feed_id_user', 'insert_feed_user_comment'));
+                        'insert_feed_id_user', 'insert_feed_user_comment', 'insert_feed_user_rating_user', 'insert_feed_name_user'));
 //                endif;
 //            endif;
 //        endif;

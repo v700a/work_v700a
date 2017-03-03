@@ -82,7 +82,7 @@ abstract class Controller
             return null;
         elseif ($request->isPostOf('login') !== null):
             Session::setContent('login', $request->isPostOf('login'));
-        elseif (Session::getContent('login') !== null):
+//        elseif (Session::getContent('login') !== null):
             if ($sql_db !== null):
                 foreach ($sql_db as $value):
                     foreach ($value as $item):
@@ -100,7 +100,7 @@ abstract class Controller
             return null;
         elseif ($request->isPostOf('email') !== null):
             Session::setContent('email', $request->isPostOf('email'));
-        elseif (Session::getContent('email') !== null):
+//        elseif (Session::getContent('email') !== null):
             if ($sql_db !== null):
             $email_ =  Session::getContent('email');
             $email_md5 = md5(Session::getContent('email') . 'phpsalt');
@@ -108,7 +108,7 @@ abstract class Controller
                     foreach ($value as $item):
                         if ($email_md5 === $item):
                            Session::setMessage("E-mail: {$email_} уже використовується.");
-                           return;
+                           return null;
                         endif;
                     endforeach;
                 endforeach;
