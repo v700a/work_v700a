@@ -7,6 +7,13 @@ use \Library\ConnectionPDO;
 class Site
 {
 
+    function find_all($table)
+    {
+        $pdo = ConnectionPDO::getInstance()->getPDO();
+        $re = $pdo->query("SELECT * FROM $table");
+        $w = $re->fetch(\PDO::FETCH_ASSOC);
+        return $w;
+    }
     function find_count_all($table)
     {
         $pdo = ConnectionPDO::getInstance()->getPDO();
@@ -42,7 +49,7 @@ class Site
         $w = $re->fetch(\PDO::FETCH_ASSOC);
         return $w;
     }
-    function read_limit($db, $count, $limit=1, $page = 0, $sort = 'sortById', $sortValue = 'none')
+    function read_limit($db, $count, $limit=1, $page = 0, $sort = '', $sortValue = '')
     {
         $pdo = ConnectionPDO::getInstance()->getPDO();
         if ($page !== 0):
@@ -51,36 +58,8 @@ class Site
             $offset = $page;
         endif;
         $c = round($count/$limit);
-        $sortField = 'id';
-        $sortType = '';
-        //var_dump(self::$pdo);
-        if ($sort == 'sortById' && $sortValue == 'down'):
-            $sortField = 'id';
-            $sortType = 'DESC';
-        elseif ($sort == 'sortByTitle' && $sortValue == 'down'):
-            $sortField = 'title';
-            $sortType = 'DESC';
-        elseif ($sort == 'sortByPrice' && $sortValue == 'down'):
-            $sortField = 'price';
-            $sortType = 'DESC';
-//        elseif ($sort == 'sortByActive' && $sortValue == 'down'):
-//            $sortField = 'is_action';
-//            $sortType = 'DESC';
-        endif;
-
-        if ($sort == 'sortById' && $sortValue == 'up'):
-            $sortField = 'id';
-            $sortType = '';
-        elseif ($sort == 'sortByTitle' && $sortValue == 'up'):
-            $sortField = 'title';
-            $sortType = '';
-        elseif ($sort == 'sortByPrice' && $sortValue == 'up'):
-            $sortField = 'price';
-            $sortType = '';
-//        elseif ($sort == 'sortByActive' && $sortValue == 'up'):
-//            $sortField = 'is_action';
-//            $sortType = '';
-        endif;
+        $sortField = 'time_stamp';
+        $sortType = 'DESC';
 
         $result_query_find = $pdo -> query("SELECT * FROM $db ORDER BY $sortField $sortType LIMIT $offset, $limit");
         return $result_query_find->fetchAll(\PDO::FETCH_ASSOC);
@@ -102,35 +81,37 @@ class Site
         return $sql_query_string_find;
     }
 
-    function save_by_id(array $update_book)
+    function save_feed_by_id(array $update_feed)
     {
         $pdo = ConnectionPDO::getInstance()->getPDO();
-        $update_book_id = $update_book['id'];
-        $sql_query_string_find = $pdo->prepare("SELECT id FROM book WHERE id = :update_book_id");
-        $sql_query_string_find->execute(compact('update_book_id'));
-        $result_fetch_assoc = $sql_query_string_find->fetch(\PDO::FETCH_ASSOC);
-        if ($result_fetch_assoc !== false):
-            $update_book_title = $update_book['title'];
-            $update_book_description = $update_book['description'];
-            $update_book_price = $update_book['price'];
-            $update_book_is_active = $update_book['is_active'];
-            $sql_query_string_update = $pdo->prepare("UPDATE book SET title = :update_book_title, description = :update_book_description,
-                                  price = :update_book_price, is_active = :update_book_is_active 
-                                  WHERE id = :update_book_id");
-            $sql_query_string_update->execute(compact('update_book_title','update_book_description','update_book_price','update_book_is_active','update_book_id'));
-        else:
-            if (isset($update_book['title'])):
-                if ($update_book['title'] !== '' && $update_book['title'] !== null):
-                    $insert_book_title = $update_book['title'];
-                    $insert_book_description = $update_book['description'];
-                    $insert_book_price = $update_book['price'];
-                    $insert_book_is_active = $update_book['is_active'];
-                    $sql_query_string_insert = $pdo->prepare("INSERT INTO book (title, description, price, is_active) VALUES ( :insert_book_title, :insert_book_description,
-                                  :insert_book_price, :insert_book_is_active)");
-                    $sql_query_string_insert->execute(compact('insert_book_title', 'insert_book_description', 'insert_book_price', 'insert_book_is_active'));
-                endif;
-            endif;
-        endif;
+//        $update_feed_id = $update_feed['id'];
+//        $sql_query_string_find = $pdo->prepare("SELECT id FROM book WHERE id = :update_book_id");
+//        $sql_query_string_find->execute(compact('update_book_id'));
+//        $result_fetch_assoc = $sql_query_string_find->fetch(\PDO::FETCH_ASSOC);
+//        if ($result_fetch_assoc !== false):
+//            $update_feed_title = $update_feed['title'];
+//            $update_feed_description = $update_feed['description'];
+//            $update_feed_price = $update_feed['price'];
+//            $update_feed_is_active = $update_feed['is_active'];
+//            $sql_query_string_update = $pdo->prepare("UPDATE book SET title = :update_book_title, description = :update_book_description,
+//                                  price = :update_book_price, is_active = :update_book_is_active 
+//                                  WHERE id = :update_book_id");
+//            $sql_query_string_update->execute(compact('update_book_title','update_book_description','update_book_price','update_book_is_active','update_book_id'));
+//        else:
+//            if (isset($update_feed['title'])):
+//                if ($update_feed['title'] !== '' && $update_feed['title'] !== null):
+        var_dump($update_feed);
+                    $insert_feed_id_news = $update_feed['id_news'];
+                    $insert_feed_category_news = $update_feed['category_news'];
+                    $insert_feed_id_user = $update_feed['id_user'];
+                    $insert_feed_user_comment = $update_feed['feed'];
+                    $sql_query_string_insert = $pdo->prepare("INSERT INTO feedback (id_news, category_news, id_user, user_comment) 
+                        VALUES ( $insert_feed_id_news, $insert_feed_category_news, $insert_feed_id_user, $insert_feed_user_comment)");
+                    $sql_query_string_insert->execute(compact('insert_feed_id_news', 'insert_feed_category_news',
+                        'insert_feed_id_user', 'insert_feed_user_comment'));
+//                endif;
+//            endif;
+//        endif;
     }
 
 

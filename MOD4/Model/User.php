@@ -9,6 +9,7 @@ class User
 
     function find_all()
     {
+
         $pdo = ConnectionPDO::getInstance()->getPDO();
         $result_find_all = null;
         $result_find_all = $pdo->query("SELECT * FROM user");

@@ -70,6 +70,26 @@
             border-width: 1px;
             border-radius: 5px;
         }
+        .button-page {
+            /*display: inline-block;*/
+            /*color: black;*/
+            /*font-size: small ;*/
+            /*font-family: Arial, Verdana;*/
+            /*font-weight: 300 ;*/
+            /*text-decoration: none;*/
+            padding: 5px 0 15px 5px;
+            /*outline: none;*/
+
+            /*border-width: 2px;*/
+            /*border-style: solid;*/
+            /*border-color: blue;*/
+            /*border-radius: 6px;*/
+            /*background: lightsteelblue ;*/
+            /*transition: 0.2s;*/
+        }
+        /*a.button-page:hover { background: cornflowerblue; color: gold }*/
+        /*a.button-page:active { background: snow; }*/
+
     </style>
 
 </head>
@@ -153,10 +173,11 @@
         sessionStorage.setItem('passview', 0);
     </script>
     <input type="checkbox" name="passview" onclick="passview_()">&nbsp
-        Показати пароль<br><br>
-    <img id="captcha" src='captcha.png'>
-    <a href="/index.php?route=site/register">
-            Оновити зображення</a><br><br>
+        Показати пароль<br>
+    <img style="width: 10%; padding: 7px 0 0 0;" id="captcha" src='captcha.png'>
+    <label for="recap" >
+    <a  href="/index.php?route=site/register" id="recap"><img style=" width: 4.7%" src="\recaptcha.png" alt=""></a><br><br>
+    </label>
 
     <script>
         function passview_()

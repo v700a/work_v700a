@@ -36,6 +36,7 @@ class SiteController extends Controller
             Session::remove('logmsg');
         endif;
         $login = 0;
+        $login_and_id_user = 0;
         if(!isset($_COOKIE['username_in'])):
             if ((parent::isLoginFormValid ('login', 'password', 'email')) !== null) :
                 $login = $request->isPostOf('login');
@@ -44,10 +45,11 @@ class SiteController extends Controller
                 $db_users = $user_model->find($login, $password, $email);
 //                var_dump($db_users);
                 $result = 0;
+                $login_and_id_user = $login . '-' . $db_users['id'];
                 if ($db_users) :
-                    setcookie('username_in', $login, time() + 60*60);
-                    header('location: index.php?route=site/login');
-                    die;
+                    setcookie('username_in', $login_and_id_user, time() + 120*60);
+//                    header('location: index.php?route=site/login');
+//                    die;
                 else:
                     Session::setContent('logmsg','log_err');
                     header('location: index.php?route=site/login');
@@ -57,7 +59,7 @@ class SiteController extends Controller
         endif;
 //        if ($request->isGetOf('logmsg')):
             if (Session::getContent('logmsg') == 'out'):
-                setcookie('username_in',$login, time(0));
+                setcookie('username_in',$login_and_id_user, time(0));
                 Session::remove('logmsg');
                 unset($_COOKIE{'username_in'});
             endif;
@@ -79,7 +81,6 @@ class SiteController extends Controller
             Session::setContent('REQUEST_URI', $_SERVER['REQUEST_URI']);
             $clearSesReg = 1;
         endif;
-
         if (Session::getContent('formOk') == 1 || $clearSesReg == 1):
             Session::remove('login');
             Session::remove('email');

@@ -1,20 +1,18 @@
 <?php
-
-//$pdo = \Library\ConnectionPDO::getInstance()->getPDO();
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', __DIR__ . DS );
 define('VIEW_DIR', ROOT . 'View' . DS);
-
+//$pdo = \Library\ConnectionPDO::getInstance()->getPDO();
 $content = '';
-
+//$link = mysqli_connect("db19.freehost.com.ua","vpjuns_module4","60pFbcA9R","vpjuns_module4");
 function __autoload($class_name)
 {
-
-    $file = "$class_name.php";
-    if (!file_exists($file)):
-        echo("Файл {$file} не знайдено");
-    endif;
-
+    $f=explode('\\', $class_name);
+    $c=implode('/', $f);
+    $file = $c.".php";
+//    if (!file_exists($file)):
+//        echo("Файл {$file} не знайдено");
+//    endif;
     require $file;
 }
 
@@ -24,7 +22,7 @@ function __autoload($class_name)
 
 
 try {
-    \Library\Session::sessionStart();
+    Library\Session::sessionStart();
     $request = new \Library\Request();
     $route = $request->isGetOf('route', 'site/index');
     $id = $request->isGetOf('id');
@@ -63,20 +61,20 @@ require VIEW_DIR . 'layout.phtml';
 
 echo '<hr>';
 echo '<pre>';
-//echo $action;echo '<br><br>';
-//echo 'SESSION', '<br>';
-//print_r($_SESSION);
-echo '<br><br>';
+////echo $action;echo '<br><br>';
+////echo 'SESSION', '<br>';
+////print_r($_SESSION);
+//echo '<br><br>';
 echo 'GET', '<br>';
 print_r($_GET);
 echo '<br><br>';
 echo 'POST', '<br>';
 print_r($_POST);
-echo '<br><br>';
-echo 'SERVER', '<br>';
-echo $_SERVER['REQUEST_URI'];
-//print_r($_SERVER);
-echo '<br><br>';
-
-//print_r($_SESSION);
-
+//echo '<br><br>';
+//echo 'SERVER', '<br>';
+//echo $_SERVER['REQUEST_URI'];
+////print_r($_SERVER);
+//echo '<br><br>';
+//
+////print_r($_SESSION);
+//
