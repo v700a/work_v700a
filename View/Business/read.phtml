@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .layer {
+            width: 97%;
+            height: 250px;
+            background-color: #c1e2b3;
+            /*padding: 5px;*/
+            overflow-y: scroll;
+            margin-top: 1%;
+        }
+        .button {
+            display: inline-block;
+            color: black;
+            font-size: small ;
+            font-family: Arial, Verdana;
+            font-weight: 300 ;
+            text-decoration: none;
+            padding: 3px 15px;
+            outline: none;
+
+            border-width: 2px;
+            border-style: solid;
+            border-color: blue;
+            border-radius: 6px;
+            background: lightblue;
+            transition: 0.2s;
+        }
+        .button:hover { background: deepskyblue; }
+        .button:active { background: lightgoldenrodyellow; }
+
+
+    </style>
+</head>
+<body>
+<br>
+<b>Новини бізнесу:</b> "<?= $array_s['title']?>"
+<br>
+<br>
+<div style="width: 100%; height:auto">
+    <div style="width: 100%; height: 200px; ">
+    <img src="<?= $array_s['pics'] ?>" align="left" alt="NO FILE">
+    <?php
+    $id_user = 0;
+    echo $array_s['content'];
+    if (isset($_COOKIE['username_in'])):
+    $d = explode('-', $_COOKIE['username_in']);
+    $id_user = $d['1'];
+    endif;
+    ?>
+
+    </div>
+    <b>Коментарі - <?= $count_comment['count'] ?></b>
+    <div class="layer">
+        <?php
+        $i = 0;
+        if ($array_feed !== null):
+            foreach ($array_feed as $arr):
+                echo 'Дописувач:&nbsp', '<b>', $arr["name_user"], '</b>';
+                echo '&nbsp&nbspКоментар додано:&nbsp', $arr["time_stamp"];
+    //            $i = $arr["id"];
+                $u = $arr["name_user"];
+                echo '<br>';
+                echo 'Додає коментар:', '<br><br>';
+                echo '<b><i>', $arr["user_comment"], '</i></b>', '<br><br>';
+    //            echo "<a class='button-delete' href=\"index.php?route=comment/index&delete=$i&user_delete=$u \">
+    //            <b>Видалити&nbsp&nbsp&nbsp</b></a>";
+                echo '&nbsp&nbsp Рейтинг комантаря: &nbsp';
+                echo '<b>', $arr["rating_user"], '</b>';
+                echo ' &nbsp&nbsp Зміна рейтингу: &nbsp&nbsp&nbsp';
+    //            echo "<a class='button-page-plus' href=\"index.php?route=comment/index&r_plus=$i \">
+    //            <b>+</a>";
+    //            echo '&nbsp&nbsp&nbsp';
+    //            echo "<a class='button-page-minus' href=\"index.php?route=comment/index&r_minus=$i \">
+    //            <b>-</b></a>";
+                echo '<br>', '<div style="width: 100%; height: 2px; background: darkgreen;">&nbsp</div>', '<br>';
+            endforeach;
+        endif;
+        ?>
+    </div>
+    <?php
+    \Library\Session::setContent('category', 'business');
+    \Library\Session::setContent('desc', $_GET['description']);
+    \Library\Session::setContent('page', $_GET['page']);
+
+    if (isset($_COOKIE['username_in'])):
+    ?>
+    <form method="post">
+        <div style="padding: 1% 0 0 0">
+        <b>Додати коментар</b>
+        <textarea name="feed" id="feed" cols="115" rows="7"></textarea><br><br>
+            <input type="hidden" name="id_news" value="<?= $array_s['id'] ?>">
+            <input type="hidden" name="category_news" value="business">
+            <input type="hidden" name="id_user" value="<?= $id_user ?>">
+        </div>
+        <button class="button" type="submit">Відправити</button>
+        <a class="button" href="/index.php?route=business/index&page=<?=$_GET['page'] ?>">Повернутись до категорії</a>
+    </form>
+    <?php else: ?>
+        <br><b>Для додавання коментарів, будь ласка, зареєструйтесь
+            <a class="button" href="/index.php?route=site/register">зареєструйтесь</a>
+            або
+            <a class="button"
+            href="/index.php?route=site/login&cat=business&desc=<?= $_GET['description'] ?>&pg=<?= $_GET['page'] ?>">
+            авторизуйтесь</a>.</b> <br><br>
+        <a class="button" href="/index.php?route=business/index&page=<?=$_GET['page'] ?>">Повернутись до категорії</a>
+    <?php endif; ?>
+</div>
+<br>
+<br>
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST'):
+    $desc = $_GET['description'];
+    $page = $_GET['page'];
+    header("location: index.php?route=business/read&description=$desc&page=$page");
+    die;
+endif;
+
+?>
+
+
+</body>
+</html>
