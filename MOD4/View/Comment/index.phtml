@@ -176,6 +176,7 @@
     <div class="layer">
         <?php
         $i = 0;
+        \Library\Session::setContent('desc', 'comments');
         foreach ($find_comments as $arr):
             echo 'Дописувач:&nbsp', '<b>', $arr["username"], '</b>';
             if ($arr['checkbox_state'] == 'on'):
@@ -187,8 +188,10 @@
             echo '<br>';
             echo 'Додає коментар:', '<br><br>';
             echo '<b><i>', $arr["comment_text"], '</i></b>', '<br><br>';
-            echo "<a class='button-delete' href=\"index.php?route=comment/index&delete=$i&user_delete=$u \">
-            <b>Видалити&nbsp&nbsp&nbsp</b></a>";
+            if (isset($_COOKIE['username_in'])):
+                echo "<a class='button-delete' href=\"index.php?route=comment/index&delete=$i&user_delete=$u \">
+                <b>Видалити&nbsp&nbsp&nbsp</b></a>";
+            endif;
             echo '&nbsp&nbsp Рейтинг комантаря: &nbsp';
             echo '<b>', $arr["rating"], '</b>';
             echo ' &nbsp&nbsp Зміна рейтингу: &nbsp&nbsp&nbsp';

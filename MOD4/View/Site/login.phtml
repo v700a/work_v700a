@@ -18,7 +18,7 @@
             padding: 10px 10px 10px 40%;
         }
         .d2{
-            width: 26%;
+            width: 36%;
             height: auto;
             padding: 15px 15px 15px 15px;
             background: #c9e2b3;
@@ -95,11 +95,25 @@
 
 <div class="d">
 <form method="post">
-    <?php if (isset($_COOKIE['username_in'])):
-        header('location: index.php?route=site/index');
-        die;
-        ?>
-    <?php else:
+    <script>
+    </script>
+    <?php
+    if (isset($_COOKIE['username_in'])):
+        if (isset($_SESSION['desc'])):
+            if ($_SESSION['desc'] == 'comments'):
+                \Library\Session::remove('desc');
+                header('location: index.php?route=comment/index');
+                die;
+            endif;
+            $desc = $_SESSION['desc'];
+            \Library\Session::remove('desc');
+            header("location: index.php?route={$_SESSION['category']}/read&description={$desc}&page={$_SESSION['page']}");
+            die;
+        else:
+            header('location: index.php?route=site/index');
+            die;
+        endif;
+    else:
         if ($logerr !== null):
             echo '<div class="meesage"><b>', $logerr, '</b></div>' ;
         endif;
@@ -108,8 +122,7 @@
         <input class="input" type="text" name="login" id="login" placeholder="&nbsp Логін"><br><br>
         <input class="input" type="email" name="email" id="email" placeholder="&nbsp E-mail"><br><br>
         <input class="input" type="password" name="password" id="password" placeholder="&nbsp Пароль"><br><br>
-        <button class="button">Авторизуватись</button>
-            <br><br>
+        <button class="button">Авторизуватись</button><br><br>
         <a class="button-r" href = "/index.php?route=site/register">Реєстрація<a/>
 
         </div>

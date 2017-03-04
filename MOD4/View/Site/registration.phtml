@@ -70,32 +70,13 @@
             border-width: 1px;
             border-radius: 5px;
         }
-        .button-page {
-            /*display: inline-block;*/
-            /*color: black;*/
-            /*font-size: small ;*/
-            /*font-family: Arial, Verdana;*/
-            /*font-weight: 300 ;*/
-            /*text-decoration: none;*/
-            padding: 5px 0 15px 5px;
-            /*outline: none;*/
-
-            /*border-width: 2px;*/
-            /*border-style: solid;*/
-            /*border-color: blue;*/
-            /*border-radius: 6px;*/
-            /*background: lightsteelblue ;*/
-            /*transition: 0.2s;*/
-        }
-        /*a.button-page:hover { background: cornflowerblue; color: gold }*/
-        /*a.button-page:active { background: snow; }*/
 
     </style>
 
 </head>
 <body>
 
-    <?php
+<?php
 
     require 'captcha.php';
 
@@ -111,21 +92,25 @@
     endif;
     if (\Library\Session::getContent('first') > 1):
         $msg_err = \Library\Session::getMessage();
-//        if ($msg_err !== null):
+        if ($msg_err !== null):
             echo '<div class="message">', $msg_err, '</div>';
-        echo \Library\Session::getContent('first');
-//        endif;
+        endif;
         \Library\Session::setMessage(null);
     elseif (isset($_SESSION['registered']) && \Library\Session::getContent('first') == 1):
         $msg_err = \Library\Session::getContent('registered');
-        \Library\Session::remove('registered');
         echo '<div class="message">', $msg_err, '</div>';
+        \Library\Session::remove('registered');
+?>
+        <script>
+                sessionStorage.setItem('login_stor', '');
+                sessionStorage.setItem('email_stor', '');
+                sessionStorage.setItem('pass_stor', '');
+                sessionStorage.setItem('pass_re_stor', '');
+        </script>
+
+<?php
     endif;
-//    $login_for_form
-//    $email_for_form
-//    $pass_for_form
-//    $pass_r_for_form
-    ?>
+?>
 
 <h2 class="style-middle"><i>Реєстрація нового користувача</i></h2>
 <form method="post">
@@ -209,25 +194,7 @@
     <label class="style-small">Введіть код із зображення</label><br>
     <input class="input" type="text" name="code" ><br><br>
 
-    <button class="button" onclick="send_form()">Зареєструватись</button>
-    <script>
-        function send_form()
-        {
-//            if (sessionStorage.setItem('login_stor') {
-//                // do something
-//            } else {
-//                sessionStorage.setItem('login_stor', '');
-//                sessionStorage.setItem('email_stor', '');
-//                sessionStorage.setItem('pass_stor', '');
-//                sessionStorage.setItem('pass_re_stor', '');
-                // do something else
-//            }
-//            document.getElementsByTagName('input')[0].value = sessionStorage.getItem('login_stor');
-//            document.getElementsByTagName('input')[1].value = sessionStorage.getItem('email_stor');
-//            document.getElementsByTagName('input')[2].value = sessionStorage.getItem('pass_stor');
-//            document.getElementsByTagName('input')[3].value = sessionStorage.getItem('pass_re_stor');
-        }
-    </script>
+    <button class="button" >Зареєструватись</button>
 
 </form>
 

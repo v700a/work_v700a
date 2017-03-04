@@ -54,10 +54,12 @@ class BusinessController extends Controller
             $s->save_feed_by_id($array_feed_for_save);
         endif;
         $array_s = $s->find_by_id($id, 'business');
+        $count_comment = $s->find_count_feed_by_id($id_news_feed, 'business');
         $array_feed = $s->find_feed_by_id($id_news_feed, 'business');
         $array = array(
             'array_s' => $array_s,
-            'array_feed' => $array_feed
+            'array_feed' => $array_feed,
+            'count_comment' => $count_comment
         );
 
         return $this->render('read.phtml', $array);

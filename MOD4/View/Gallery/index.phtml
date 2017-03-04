@@ -48,7 +48,7 @@
         .buttonup {
         }
         .buttonUpLabel {
-            width: 10.7%;
+            width: 15%;
             height: 20px;
             overflow: inherit;
             display: inline-block;
@@ -131,16 +131,15 @@
     <hr>
 
     <?php
-
     $current_dir = getcwd();
-    chdir($current_dir . '\\gallery');
+    chdir($current_dir . '/gallery');
     $current_dir = getcwd();
     $open_dir = opendir($current_dir);
     $count = 1;
     while (($item_dir = readdir($open_dir)) !== false):
         if (is_file($item_dir) == 1):
             $checkbox = $count;
-            $current_file = "\\gallery\\{$item_dir}";
+            $current_file = "/gallery/{$item_dir}";
             ?>
 
             <a href= "<?= $current_file; ?>" target='_blank'><img src = '<?= $current_file; ?>' width="150" height="120"></a>

@@ -11,12 +11,8 @@ class GalleryController extends Controller
 {
     function indexAction (Request $request)
     {
-//        $function = new Functions();
-//        $request = new Request();
         $checked = 0;
         $over = '';
-            //if (isset($_COOKIE)):
-            //    if (isset($_COOKIE['username_in'])):
                     if ($request->isFilesOf('file') == null):
                         $_FILES ['file'] = 0;
                     endif;

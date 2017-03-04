@@ -27,7 +27,7 @@ class SiteController extends Controller
         return $this->render('index.phtml', $array);
     }
 
-    function loginAction (Request $request)
+    function loginAction ($request)
     {
         $user_model = new User();
         $logerr = null;
@@ -122,7 +122,7 @@ class SiteController extends Controller
             $pass_md5 = md5(Session::getContent('password') . 'phpsalt');
             $email_md5 = md5(Session::getContent('email') . 'phpsalt');
 //            $email_ = Session::getContent('email');
-//            $user_model->insert($login, $pass_md5, $email_md5);
+            $user_model->insert($login, $pass_md5, $email_md5);
             Session::setContent('registered', "Ви зареєстровані як - {$login}. Перейдіть на сторінку - \"Авторизація\"");
         endif;
         if ($_SERVER['REQUEST_METHOD'] == 'POST'):

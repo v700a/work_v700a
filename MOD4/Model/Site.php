@@ -81,6 +81,18 @@ class Site
         return $sql_query_string_find;
     }
 
+    function find_count_feed_by_id($id_news, $category)
+    {
+        $pdo = ConnectionPDO::getInstance()->getPDO();
+        $sql_query_string_find = $pdo->query("SELECT COUNT(*) AS 'count' FROM feedback WHERE category_news = '$category' 
+                                AND id_news = '$id_news'");
+        $count = $sql_query_string_find->fetch(\PDO::FETCH_ASSOC);
+        if ($sql_query_string_find !== false):
+            return $count;
+        else:
+            return null;
+        endif;
+    }
     function find_feed_by_id($id_news, $category)
     {
         $pdo = ConnectionPDO::getInstance()->getPDO();
@@ -89,7 +101,7 @@ class Site
         if ($sql_query_string_find !== false):
            return $sql_query_string_find->fetchAll(\PDO::FETCH_ASSOC);
         else:
-            return null;
+           return null;
         endif;
     }
 

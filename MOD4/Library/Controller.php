@@ -189,7 +189,7 @@ abstract class Controller
         if (@opendir('gallery') == false):
             mkdir('gallery');
         endif;
-        $target_path = ($current_dir . '\gallery');
+        $target_path = ($current_dir . '/gallery');
         $v = current($b['name']);
         if ($v !== ''):
             foreach ($b['name'] as $value):
@@ -204,7 +204,7 @@ abstract class Controller
                 $file_name_arr = explode('.', $file_old_name);
                 $file_extention = '.' . end($file_name_arr);
                 $file_name_new = uniqid() . $file_extention;
-                $copy_to = $target_path . '\\' . $file_name_new;
+                $copy_to = $target_path . '/' . $file_name_new;
                 if (self::file_types($value_type) == true):
                     if ($value_size < 2000000):
                         copy($file_tmp_path, $copy_to);
@@ -219,10 +219,10 @@ abstract class Controller
     {
         $current_dir = getcwd();
         $back_dir = $current_dir;
-        if (opendir($current_dir . '\\gallery') == false):
-            mkdir($current_dir . '\\gallery');
+        if (opendir($current_dir . '/gallery') == false):
+            mkdir($current_dir . '/gallery');
         endif;
-        chdir($current_dir . '\\gallery');
+        chdir($current_dir . '/gallery');
         $current_dir = getcwd();
         $delete_file = '';
         if ( !array_search('reset',$b) && !array_search('all',$b)):
