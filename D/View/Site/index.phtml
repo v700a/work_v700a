@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--    <meta http-equiv="Refresh" content="5" />-->
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .p {
+            font-family: "Arial Narrow";
+            font-weight: bold;
+            font-size: 240% ;
+            color: darkcyan;
+            position: fixed;
+            top: 6.3%;
+            width: 70%;
+            height: auto;
+            background: lightyellow ;
+        }
+        .div_0 {
+            margin: 4% 0 0 0;
+            width: 99%;
+            height: 20%;
+        }
+
+        .business {
+            width: 99%;
+            height: 100px;
+        }
+
+    </style>
+</head>
+<body style="margin: 0">
+<?php
+\Library\Session::setContent('REQUEST_URI', $_SERVER['REQUEST_URI']);
+?>
+
+
+<div class="p" "><i>Новини:</i>
+<div style="border: solid 1px; border-color:grey ;"></div>
+</div>
+<div class="div_0">
+    &nbsp
+</div>
+<?php
+    $array_category = array('business' => 'Бізнес', 'policy' => 'Політика', 'sport' => 'Спорт', 'science' => 'Наука',
+                        'vacation' => 'Відпочинок');
+    foreach ($array_category as $key => $item):
+?>
+<a href="/index.php?route=<?= $key ?>/index"><?= $item ?></a><br><br>
+<div class="business">
+    <?php
+    $b = $array[$key];
+        foreach ($b as $value):
+    ?>
+            <a href="index.php?route=<?= $key ?>/read&description=<?= $value['id'] ?>&page=1"><?php
+                    echo $value['title'];
+                    echo '&nbsp.&nbsp';
+                    echo $value['time_stamp'];
+                    echo '<br>';
+        endforeach;
+    ?></a>
+</div>
+<div style="border: solid 1px; border-color:grey; margin: 0 0 1% 0 ;"></div>
+
+    <?php
+    endforeach;
+    ?>
+?>
+<!--</label>-->
+</body>
+</html>

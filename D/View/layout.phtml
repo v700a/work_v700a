@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>MVC - Victor</title>
+    <style>
+         body{
+            margin: 0;
+        }
+         .cat{
+             color: darkgray;
+             text-decoration: none;
+             font-family: Arial, Verdana ;
+             font-size: larger ;
+             background: black;
+         }
+         .cat:hover{color: white;}
+         .cat:active {background: lightskyblue;}
+
+         .menu{
+             z-index: 1;
+            background: black;
+            width: 100%;
+            float: left;
+            position: fixed;
+            padding: 1%;
+            /*border-radius: 5px;*/
+        }
+        .content{
+            background: lightyellow;
+            border-radius: 5px;
+            width: 70%;
+            height: 50%;
+            padding: 0 0 1% 1%;
+            margin: 3% 0 0 14%;
+            float: left;
+        }
+        .a-menu {
+            text-decoration: none;
+            color: darkgray;
+            font-family: Arial, Verdana ;
+            font-size: larger ;
+        }
+        .a-menu:hover{color: white;}
+        .a-menu:active {background: lightskyblue;}
+
+        .left_block {
+            /*margin: 2.3% 0 0 0;*/
+            width: 14%;
+            height: 93%;
+            /*padding: 7% 0 0 0;*/
+            float: left;
+            position: fixed;
+            left: 0%;
+            top: 5.9%;
+            /*border: dimgray solid;*/
+        }
+        .head_recl {
+            width: 13%;
+            height: 3%;
+            font-size: larger ;
+            /*margin: 1% 0 0 0;*/
+            /*float: left;*/
+            position: fixed;
+            border: greenyellow solid;
+
+        }
+
+        .recl_1 {
+            width: 13%;
+            height: 21%;
+            font-size: 90%;
+            margin: 3% 0 0 0;
+            text-decoration: none;
+            /*padding: 7% 0 0 0;*/
+            /*float: left;*/
+            position: fixed;
+            /*border: greenyellow solid;*/
+
+        }
+         .recl_2 {
+            width: 13%;
+            height: 21%;
+             font-size: 90%;
+             margin: 17.5% 0 0 0;
+             text-decoration: none;
+            /*float: left;*/
+            position: fixed;
+            /*border: greenyellow solid;*/
+
+        }
+         .recl_3 {
+            width: 13%;
+            height: 22%;
+             font-size: 90%;
+             margin: 32% 0 0 0;
+             text-decoration: none;
+            /*padding: 7% 0 0 0;*/
+            /*float: left;*/
+            position: fixed;
+            /*border: greenyellow solid;*/
+
+        }
+         .recl_4 {
+            width: 13%;
+            height: 21%;
+             font-size: 90%;
+             margin: 47% 0 0 0;
+             text-decoration: none;
+            /*padding: 7% 0 0 0;*/
+            /*float: left;*/
+            position: fixed;
+            /*border: greenyellow solid;*/
+
+        }
+         .right_block {
+             /*margin: 2.3% 0 0 85%;*/
+             width: 14%;
+             height: 93%;
+             /*padding: 7% 0 0 0;*/
+             float: left;
+             position: fixed;
+             top: 5.7%;
+             right: 0%;
+             /*border: dimgray solid;*/
+         }
+        .p_recl {
+            text-decoration: none;
+        }
+        .p_recl:hover{font-size: 150%; color: crimson; font-style: oblique; font-weight: bold}
+
+    </style>
+</head>
+<body.onload = 'start'>
+
+<script>
+
+    if (sessionStorage.getItem('popup') == 1) {
+    }
+    else {
+        var email = setTimeout("prompt('Залиште свій E-mail для отримання новин з нашого сайту')", 10000);
+        sessionStorage.setItem('popup', 1);
+    };
+</script>
+        <div class="menu">
+            <div style="float: left">
+            <?php if (isset($_COOKIE['username_in'])):
+                $d = explode('-', $_COOKIE['username_in']);
+                $user_in = $d['0'];
+            ?>
+            <label class="a-menu">Вітаємо <?= $user_in ?></label>$nbsp$nbsp
+            <?php else: ?>
+            <label class="a-menu"> ! </label>$nbsp$nbsp
+            <?php endif; ?>
+
+
+                <select id='menu_' class="cat" onchange='category_main()' >
+                    <option value="0" hidden>Головна</option>
+                    <option value="1">Головна</option>
+                    <option value='2'>Коментарі</option>
+                    <option value='3'>Галерея</option>
+                    <?php if (isset($_COOKIE['username_in'])): ?>
+                    <option value='4'>Вихід</option>
+                    <?php
+                        \Library\Session::setContent('logmsg', 'out');
+                    else: ?>
+                    <option value='4'>Авторизація</option>
+                    <?php endif; ?>
+                </select>$nbsp$nbsp
+                <script>
+                    function category_main()
+                    {
+                        var sel = document.getElementById('menu_');
+                        if (sel.value == 1) {
+                            location.href='/index.php';
+                        }else if (sel.value == 2){
+                            location.href='/index.php?route=comment/index';
+                            sessionStorage.setItem('menu_page', 2)
+                        }else if (sel.value == 3){
+                            location.href='/index.php?route=gallery/index';
+                            sessionStorage.setItem('menu_page', 3)
+                        }else {
+                            location.href='/index.php?route=site/login';
+                            sessionStorage.setItem('menu_page', 4)
+                        }
+
+                    }
+                </script>
+                <a class="a-menu" href="/index.php?route=book/index">Книги</a>$nbsp$nbsp
+                <a class="a-menu" href="/index.php?route=book2/index">Книги2</a>$nbsp$nbsp
+                <a class="a-menu" href="/index.php?route=comment/index">Коментарі</a>$nbsp$nbsp
+                <a class="a-menu" href="/index.php?route=gallery/index">Галерея</a>$nbsp$nbsp
+                <?php if (!isset($_COOKIE['username_in'])): ?>
+                <a class="a-menu" href="/index.php?route=site/login">Авторизація</a>$nbsp$nbsp
+                <?php else:
+                \Library\Session::setContent('logmsg', 'out');
+                ?>
+                <a class="a-menu" href="/index.php?route=site/login">Вихід</a>$nbsp$nbsp
+                <?php endif; ?>
+            </div>
+            <div>
+                <form method="get">
+                    <input type="search" name="search" placeholder="Search">
+                    <button type="button" onclick="not_work()">Пошук</button>
+                </form>
+            </div>
+            <script>
+                function not_work() {
+                    alert('Вибачте, поки що, не працює...' );
+                }
+            </script>
+        </div>
+<br>
+<div align="center" class="left_block">
+    <div class="head_recl">
+        Реклама
+    </div>
+    <div class="recl_1">
+        <a style="text-decoration: none" href="http://rozetka.com.ua/dell_inspiron_i755810ndw_46/p6936923/" target="_blank">
+        <img width="90%" height="60%"
+        src="http://i1.rozetka.ua/goods/1438446/dell_inspiron_i755810ndw_46_images_1438446118.jpg" alt="">
+            Ноутбук Dell Inspiron 7559</a><br>
+        <a class="p_recl" href="#">Ціна: 27 444 грн.</a>
+        <a href="http://rozetka.com.ua/" target="_blank">ROZETKA.COM.UA</a>
+    </div>
+    <div class="recl_2">
+        <a style="text-decoration: none" href="https://f.ua/lenovo/a1000-black_34586.html"target="_blank">
+            <img width="90%" height="60%"
+                 src="https://f.ua/statik/images/products/400/lenovo/a1000_black_451843912781.jpg" alt="">
+            Смартфон Lenovo A1000 Black</a><br>
+        <a class="p_recl" href="#">Ціна: 1 895 грн.</a><br>
+        <a href="https://f.ua/" target="_blank">F.UA</a>
+
+    </div>
+    <div class="recl_3">
+        <a style="text-decoration: none" href="http://www.eldorado.com.ua/stiralnaja-mashina-samsung-ww-60-k-42101-wdua/p1404888/"
+           target="_blank">
+            <img width="90%" height="60%"
+                 src="http://i.eldorado.com.ua//goods/4283/4283132.jpg" alt="">
+            Пральна машина SAMSUNG WW 60 </a><br>
+        <a class="p_recl" href="#">Ціна: 11 999 грн.</a><br>
+        <a href="http://www.eldorado.com.ua/" target="_blank">ELDORADO.COM.UA</a>
+
+    </div>
+    <div class="recl_4">
+        <a style="text-decoration: none" href="http://comfy.ua/televizor-sony-kd43xd8099br2.html" target="_blank">
+            <img width="90%" height="60%"
+                 src="http://cdn.comfy.ua/media/catalog/product/cache/4/thumbnail/279x221/9df78eab33525d08d6e5fb8d27136e95/s/o/sony_kd43xd8099br2_7.jpg" alt="">
+            Телевiзор Sony KD43XD8099BR2</a><br>
+        <a class="p_recl" href="#">Ціна: 28 999 грн.</a><br>
+        <a href=http://comfy.ua//" target="_blank">COMFY.UA</a>
+
+    </div>
+
+</div>
+<div class="content">
+<?= $content ?>
+</div>
+    <div align="center" class="right_block">
+        <div class="head_recl">
+            Реклама
+        </div>
+        <div class="recl_1">
+            <a style="text-decoration: none" href="https://sofino.ua/livs-divan-d-p-daniehlla-2-2000-930-860/g-168158_144333"
+               target="_blank">
+                <img width="90%" height="50%"
+                     src="https://i.sofino.ua/img/goods/168158_2016_08_29-08_21_43-1.png" alt="">
+                Диван Д/П «Данieлла-2»</a><br>
+            <a class="p_recl" href="#">Ціна: 9 274 грн.</a><br>
+            <a href="https://sofino.ua/" target="_blank">SOFINO.UA</a>
+
+        </div>
+        <div class="recl_2">
+            <a style="text-decoration: none" href="http://eney-plus.com.ua/ua/detail/79006/" target="_blank">
+                <img width="90%" height="50%"
+                     src="http://eney-plus.com.ua/newphoto/normal-375/T0141_1.jpg" alt="">
+                Полуторна постільна білизна Т0141</a><br>
+            <a class="p_recl" href="#">Ціна: 355 грн.</a><br>
+            <a href="http://eney-plus.com.ua/" target="_blank">ENEY-PLUS.COM.UA</a>
+
+        </div>
+        <div class="recl_3">
+            <a style="text-decoration: none" href="https://intertop.ua/ua/catalog/zhenskaya_obuv/blink_155/" target="_blank">
+                <img width="90%" height="50%"
+                     src="https://intertop.ua/load/BL1796/MAIN.jpg" alt="">
+                ТУФЛІ ЖІНОЧІ МОДЕЛЬ BL1796</a><br>
+            <a class="p_recl" href="#">Ціна: 1 299 грн.</a><br>
+            <a href="https://intertop.ua/" target="_blank">INTERTOP.UA</a>
+
+        </div>
+        <div class="recl_4">
+            <a style="text-decoration: none" href="http://moto.infocar.ua/suzuki/gsx-r750_1371/" target="_blank">
+                <img width="90%" height="50%"
+                     src="http://i.infocar.ua/i/1/1371/300x198.jpg" alt="">
+                Suzuki GSX-R750</a><br>
+            <a class="p_recl" href="#">Ціна: 5 000$</a><br>
+            <a href="http://moto.infocar.ua/" target="_blank">MOTO.INFOCAR.UA</a>
+
+        </div>
+
+    </div>
+
+<script src="/js/jquery-3.1.1.min.js"></script>
+
+</body.onload>
+</html>

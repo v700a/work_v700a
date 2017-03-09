@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .meesage {
+            width: 26%;
+            height: 50px;
+            background-color: #e7c3c3;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 1%;
+        }
+        .d{
+            width: auto;
+            height: 20%;
+            padding: 10px 10px 10px 40%;
+        }
+        .d2{
+            width: 36%;
+            height: auto;
+            padding: 15px 15px 15px 15px;
+            background: #c9e2b3;
+            border-radius: 5px;
+        }
+        .button {
+            display: inline-block;
+            color: black;
+            font-size: large;
+            font-family: Arial, Verdana;
+            font-weight: 500 ;
+            text-decoration: none;
+            padding: 7px 25px;
+            outline: none;
+
+            border-width: 2px;
+            border-style: solid;
+            border-color: blue;
+            border-radius: 6px;
+            background: lightblue;
+            transition: 0.2s;
+        }
+        button:hover { background: deepskyblue; }
+        button:active { background: lightgoldenrodyellow; }
+        .button-r {
+            display: inline-block;
+            color: black;
+            font-size: large;
+            font-family: Arial, Verdana;
+            font-weight: 500 ;
+            text-decoration: none;
+            padding: 7px 25px;
+            outline: none;
+
+            border-width: 2px;
+            border-style: solid;
+            border-color: blue;
+            border-radius: 6px;
+            background: palegreen;
+            transition: 0.2s;
+        }
+        a.button-r:hover { background: greenyellow; color: limegreen}
+        a.button-r:active { background: snow; }
+        .input {
+            width: 180px;
+            height: 25px;
+            text-decoration: none;
+            font-size: large;
+            color: blue;
+            border-width: 2px;
+            border-style: solid;
+            border-color: blue;
+            border-radius: 6px;
+            background: lightcyan;
+
+        }
+        input:focus {
+            border: 2px solid;
+            color: red;
+            border-radius: 6px;
+            outline: none;
+        }
+        .label-1 {
+            font-family: Arial, Verdana;
+            font-size: larger;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+<?php
+\Library\Session::setContent('REQUEST_URI', $_SERVER['REQUEST_URI']);
+?>
+
+<div class="d">
+<form method="post">
+    <script>
+    </script>
+    <?php
+    if (isset($_COOKIE['username_in'])):
+        if (isset($_SESSION['desc'])):
+            if ($_SESSION['desc'] == 'comments'):
+                \Library\Session::remove('desc');
+                header('location: index.php?route=comment/index');
+                die;
+            endif;
+            $desc = $_SESSION['desc'];
+            \Library\Session::remove('desc');
+            header("location: index.php?route={$_SESSION['category']}/read&description={$desc}&page={$_SESSION['page']}");
+            die;
+        else:
+            header('location: index.php?route=site/index');
+            die;
+        endif;
+    else:
+        if ($logerr !== null):
+            echo '<div class="meesage"><b>', $logerr, '</b></div>' ;
+        endif;
+        ?>
+        <div class="d2">
+        <input class="input" type="text" name="login" id="login" placeholder="&nbsp Логін"><br><br>
+        <input class="input" type="email" name="email" id="email" placeholder="&nbsp E-mail"><br><br>
+        <input class="input" type="password" name="password" id="password" placeholder="&nbsp Пароль"><br><br>
+        <button class="button">Авторизуватись</button><br><br>
+        <a class="button-r" href = "/index.php?route=site/register">Реєстрація<a/>
+
+        </div>
+    <?php endif;?>
+</form>
+</div>
+
+</body>
+</html>
